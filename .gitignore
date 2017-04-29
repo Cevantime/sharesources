@@ -11,5 +11,4 @@
 /assets/vendor/css/custom.css
 /dbchanges/liquibase/update.php
 /uploads/
-/tools/composer
 /application/composer.lock
