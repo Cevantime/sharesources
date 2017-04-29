@@ -5,7 +5,7 @@
     },
     "tasks": {
         "browserSync": {
-            "proxy": "localhost\/webforce-resources"
+            "proxy": "localhost\/resources"
         },
         "static": {
             "src": "static",
