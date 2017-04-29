@@ -7,6 +7,7 @@
 /assets/local/js/
 /assets/local/fonts/
 /assets/local/css/
+/assets/cache/
 /assets/vendor/css/custom.css
 /dbchanges/liquibase/update.php
 /uploads/
