@@ -153,10 +153,10 @@
 }
 
 .slider.noUi-connect {
-  background-color: #236778;
+  background-color: #226475;
 }
 .slider .noUi-handle {
-  border-color: #236778;
+  border-color: #226475;
 }
 .slider.slider-info .noUi-connect, .slider.slider-info.noUi-connect {
   background-color: #00bcd4;
@@ -1974,7 +1974,7 @@ svg {
   margin: 0;
   border-width: 0;
   background-color: transparent;
-  color: #236778;
+  color: #226475;
   box-shadow: none;
 }
 .bootstrap-datetimepicker-widget a[data-action]:hover {
@@ -1982,7 +1982,7 @@ svg {
 }
 .bootstrap-datetimepicker-widget a[data-action]:hover span {
   background-color: #eeeeee;
-  color: #236778;
+  color: #226475;
 }
 .bootstrap-datetimepicker-widget a[data-action]:active {
   box-shadow: none;
@@ -2143,16 +2143,16 @@ svg {
   content: '';
   display: inline-block;
   border: 0 0 7px 7px solid transparent;
-  border-bottom-color: #236778;
+  border-bottom-color: #226475;
   border-top-color: rgba(0, 0, 0, 0.2);
   position: absolute;
   bottom: 4px;
   right: 4px;
 }
 .bootstrap-datetimepicker-widget table td.active > div, .bootstrap-datetimepicker-widget table td.active:hover > div {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .bootstrap-datetimepicker-widget table td.active.today:before > div {
   border-bottom-color: #FFFFFF;
@@ -2176,7 +2176,7 @@ svg {
   background: #eeeeee;
 }
 .bootstrap-datetimepicker-widget table td span.active {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
 }
 .bootstrap-datetimepicker-widget table td span.old {
@@ -2380,7 +2380,7 @@ NOTE: use percentage font sizes or else old IE chokes
   box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
 }
 .fc button, .fc button:hover, .fc button:focus, .fc button:active, .fc button.active, .fc button:active:focus, .fc button:active:hover, .fc button.active:focus, .fc button.active:hover, .open > .fc button.dropdown-toggle, .open > .fc button.dropdown-toggle:focus, .open > .fc button.dropdown-toggle:hover, .fc button.btn-primary, .fc button.btn-primary:hover, .fc button.btn-primary:focus, .fc button.btn-primary:active, .fc button.btn-primary.active, .fc button.btn-primary:active:focus, .fc button.btn-primary:active:hover, .fc button.btn-primary.active:focus, .fc button.btn-primary.active:hover, .open > .fc button.btn-primary.dropdown-toggle, .open > .fc button.btn-primary.dropdown-toggle:focus, .open > .fc button.btn-primary.dropdown-toggle:hover {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
 }
 .fc button:focus, .fc button:active, .fc button:hover, .fc button.btn-primary:focus, .fc button.btn-primary:active, .fc button.btn-primary:hover {
@@ -2391,12 +2391,12 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 .fc button.btn-simple, .fc button.btn-primary.btn-simple {
   background-color: transparent;
-  color: #236778;
+  color: #226475;
   box-shadow: none;
 }
 .fc button.btn-simple:hover, .fc button.btn-simple:focus, .fc button.btn-simple:active, .fc button.btn-primary.btn-simple:hover, .fc button.btn-primary.btn-simple:focus, .fc button.btn-primary.btn-simple:active {
   background-color: transparent;
-  color: #236778;
+  color: #226475;
 }
 
 .fc button[disabled],
@@ -2754,8 +2754,8 @@ temporary rendered events).
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
 }
 .fc-event.event-rose {
-  background-color: #7DD2AE;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  background-color: #0C847C;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 .fc-event.event-default {
   background-color: #999999;
@@ -3741,27 +3741,27 @@ be a descendant of the grid when it is being dragged.
   font-weight: 500;
 }
 .wizard-card[data-color="purple"] .moving-tab {
-  background-color: #236778;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  background-color: #226475;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .wizard-card[data-color="purple"] .picture:hover {
-  border-color: #236778;
+  border-color: #226475;
 }
 .wizard-card[data-color="purple"] .choice:hover .icon, .wizard-card[data-color="purple"] .choice.active .icon {
-  border-color: #236778;
-  color: #236778;
+  border-color: #226475;
+  color: #226475;
 }
 .wizard-card[data-color="purple"] .form-group .form-control {
-  background-image: linear-gradient(#236778, #236778), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#226475, #226475), linear-gradient(#D2D2D2, #D2D2D2);
 }
 .wizard-card[data-color="purple"] .checkbox input[type=checkbox]:checked + .checkbox-material .check {
-  background-color: #236778;
+  background-color: #226475;
 }
 .wizard-card[data-color="purple"] .radio input[type=radio]:checked ~ .check {
-  background-color: #236778;
+  background-color: #226475;
 }
 .wizard-card[data-color="purple"] .radio input[type=radio]:checked ~ .circle {
-  border-color: #236778;
+  border-color: #226475;
 }
 .wizard-card[data-color="green"] .moving-tab {
   background-color: #4caf50;
@@ -3856,27 +3856,27 @@ be a descendant of the grid when it is being dragged.
   border-color: #f44336;
 }
 .wizard-card[data-color="rose"] .moving-tab {
-  background-color: #7DD2AE;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  background-color: #0C847C;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 .wizard-card[data-color="rose"] .picture:hover {
-  border-color: #7DD2AE;
+  border-color: #0C847C;
 }
 .wizard-card[data-color="rose"] .choice:hover .icon, .wizard-card[data-color="rose"] .choice.active .icon {
-  border-color: #7DD2AE;
-  color: #7DD2AE;
+  border-color: #0C847C;
+  color: #0C847C;
 }
 .wizard-card[data-color="rose"] .form-group .form-control {
-  background-image: linear-gradient(#7DD2AE, #7DD2AE), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#0C847C, #0C847C), linear-gradient(#D2D2D2, #D2D2D2);
 }
 .wizard-card[data-color="rose"] .checkbox input[type=checkbox]:checked + .checkbox-material .check {
-  background-color: #7DD2AE;
+  background-color: #0C847C;
 }
 .wizard-card[data-color="rose"] .radio input[type=radio]:checked ~ .check {
-  background-color: #7DD2AE;
+  background-color: #0C847C;
 }
 .wizard-card[data-color="rose"] .radio input[type=radio]:checked ~ .circle {
-  border-color: #7DD2AE;
+  border-color: #0C847C;
 }
 .wizard-card .picture input[type="file"] {
   cursor: pointer;
@@ -4193,10 +4193,10 @@ be a descendant of the grid when it is being dragged.
 }
 
 .ct-series-d .ct-point, .ct-series-d .ct-line, .ct-series-d .ct-bar, .ct-series-d .ct-slice-donut {
-  stroke: #236778;
+  stroke: #226475;
 }
 .ct-series-d .ct-slice-pie, .ct-series-d .ct-area {
-  fill: #236778;
+  fill: #226475;
 }
 
 .ct-series-e .ct-point, .ct-series-e .ct-line, .ct-series-e .ct-bar, .ct-series-e .ct-slice-donut {
@@ -4702,7 +4702,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .ct-purple {
-  stroke: #236778 !important;
+  stroke: #226475 !important;
 }
 
 .ct-azure {
@@ -4726,7 +4726,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .ct-rose {
-  stroke: #7DD2AE !important;
+  stroke: #0C847C !important;
 }
 
 /*!
@@ -4914,7 +4914,7 @@ select.selectpicker {
   outline: 0;
 }
 .bootstrap-select.btn-group .dropdown-menu li a:focus, .bootstrap-select.btn-group .dropdown-menu li a:hover {
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 
 .bootstrap-select.btn-group .dropdown-menu li a.opt {
@@ -5076,7 +5076,7 @@ select.selectpicker {
 
 .select-with-transition {
   border: 0 !important;
-  background-image: linear-gradient(#236778, #236778), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#226475, #226475), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 0 2px, 100% 1px;
   background-repeat: no-repeat;
   background-position: center bottom, center calc(100% - 1px);
@@ -5097,7 +5097,7 @@ select.selectpicker {
 
 .btn-group.bootstrap-select.show-tick.open .select-with-transition {
   outline: none !important;
-  background-image: linear-gradient(#236778, #236778), linear-gradient(#D2D2D2, #D2D2D2) !important;
+  background-image: linear-gradient(#226475, #226475), linear-gradient(#D2D2D2, #D2D2D2) !important;
   background-size: 100% 2px, 100% 1px !important;
   box-shadow: none;
   transition-duration: 0.3s !important;
@@ -5336,7 +5336,7 @@ h2.title {
 }
 
 .text-primary {
-  color: #236778;
+  color: #226475;
 }
 
 .text-danger {
@@ -5352,7 +5352,7 @@ h2.title {
 }
 
 .text-rose {
-  color: #7DD2AE;
+  color: #0C847C;
 }
 
 .text-gray {
@@ -5661,8 +5661,8 @@ h2.title {
 }
 .sidebar[data-active-color="purple"] li.active > a,
 .off-canvas-sidebar[data-active-color="purple"] li.active > a {
-  background-color: #236778;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  background-color: #226475;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .sidebar[data-active-color="blue"] li.active > a,
 .off-canvas-sidebar[data-active-color="blue"] li.active > a {
@@ -5686,9 +5686,9 @@ h2.title {
 }
 .sidebar[data-active-color="rose"] li.active > a,
 .off-canvas-sidebar[data-active-color="rose"] li.active > a {
-  background-color: #7DD2AE;
-  color: rgb(0,0,0);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  background-color: #0C847C;
+  color: rgb(255,255,255);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 
 .off-canvas-sidebar .nav > li > a,
@@ -5836,8 +5836,8 @@ h2.title {
     border-radius: 3px;
   }
   .sidebar-mini .sidebar[data-active-color="purple"] .nav li.active > [data-toggle="collapse"] {
-    background-color: #236778;
-    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+    background-color: #226475;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
   }
   .sidebar-mini .sidebar[data-active-color="red"] .nav li.active > [data-toggle="collapse"] {
     background-color: #f44336;
@@ -5848,9 +5848,9 @@ h2.title {
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
   }
   .sidebar-mini .sidebar[data-active-color="rose"] .nav li.active > [data-toggle="collapse"] {
-    background-color: #7DD2AE;
-	color: rgb(0,0,0);
-    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+    background-color: #0C847C;
+	color: rgb(255,255,255);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
   }
   .sidebar-mini .sidebar[data-active-color="blue"] .nav li.active > [data-toggle="collapse"] {
     background-color: #00bcd4;
@@ -6069,14 +6069,14 @@ h2.title {
 .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle, .open >
 .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:focus, .open >
 .navbar .navbar-nav > li > a.btn.btn-primary.dropdown-toggle:hover {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
 }
 .btn.btn-primary:focus, .btn.btn-primary:active, .btn.btn-primary:hover,
 .navbar .navbar-nav > li > a.btn.btn-primary:focus,
 .navbar .navbar-nav > li > a.btn.btn-primary:active,
 .navbar .navbar-nav > li > a.btn.btn-primary:hover {
-  box-shadow: 0 14px 26px -12px rgba(35,103,120, 0.4), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);
+  box-shadow: 0 14px 26px -12px rgba(34,100,117, 0.4), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);
 }
 .btn.btn-primary.disabled, .btn.btn-primary.disabled:hover, .btn.btn-primary.disabled:focus, .btn.btn-primary.disabled.focus, .btn.btn-primary.disabled:active, .btn.btn-primary.disabled.active, .btn.btn-primary:disabled, .btn.btn-primary:disabled:hover, .btn.btn-primary:disabled:focus, .btn.btn-primary:disabled.focus, .btn.btn-primary:disabled:active, .btn.btn-primary:disabled.active, .btn.btn-primary[disabled], .btn.btn-primary[disabled]:hover, .btn.btn-primary[disabled]:focus, .btn.btn-primary[disabled].focus, .btn.btn-primary[disabled]:active, .btn.btn-primary[disabled].active, fieldset[disabled] .btn.btn-primary, fieldset[disabled] .btn.btn-primary:hover, fieldset[disabled] .btn.btn-primary:focus, fieldset[disabled] .btn.btn-primary.focus, fieldset[disabled] .btn.btn-primary:active, fieldset[disabled] .btn.btn-primary.active,
 .navbar .navbar-nav > li > a.btn.btn-primary.disabled,
@@ -6108,7 +6108,7 @@ h2.title {
 .btn.btn-primary.btn-simple,
 .navbar .navbar-nav > li > a.btn.btn-primary.btn-simple {
   background-color: transparent;
-  color: #236778;
+  color: #226475;
   box-shadow: none;
 }
 .btn.btn-primary.btn-simple:hover, .btn.btn-primary.btn-simple:focus, .btn.btn-primary.btn-simple:active,
@@ -6116,7 +6116,7 @@ h2.title {
 .navbar .navbar-nav > li > a.btn.btn-primary.btn-simple:focus,
 .navbar .navbar-nav > li > a.btn.btn-primary.btn-simple:active {
   background-color: transparent;
-  color: #236778;
+  color: #226475;
 }
 .btn.btn-info,
 .navbar .navbar-nav > li > a.btn.btn-info {
@@ -6384,7 +6384,7 @@ h2.title {
 }
 .btn.btn-rose,
 .navbar .navbar-nav > li > a.btn.btn-rose {
-  box-shadow: 0 2px 2px 0 rgba(125,210,174, 0.14), 0 3px 1px -2px rgba(125,210,174, 0.2), 0 1px 5px 0 rgba(125,210,174, 0.12);
+  box-shadow: 0 2px 2px 0 rgba(12,132,124, 0.14), 0 3px 1px -2px rgba(12,132,124, 0.2), 0 1px 5px 0 rgba(12,132,124, 0.12);
 }
 .btn.btn-rose, .btn.btn-rose:hover, .btn.btn-rose:focus, .btn.btn-rose:active, .btn.btn-rose.active, .btn.btn-rose:active:focus, .btn.btn-rose:active:hover, .btn.btn-rose.active:focus, .btn.btn-rose.active:hover, .open > .btn.btn-rose.dropdown-toggle, .open > .btn.btn-rose.dropdown-toggle:focus, .open > .btn.btn-rose.dropdown-toggle:hover,
 .navbar .navbar-nav > li > a.btn.btn-rose,
@@ -6399,14 +6399,14 @@ h2.title {
 .navbar .navbar-nav > li > a.btn.btn-rose.dropdown-toggle, .open >
 .navbar .navbar-nav > li > a.btn.btn-rose.dropdown-toggle:focus, .open >
 .navbar .navbar-nav > li > a.btn.btn-rose.dropdown-toggle:hover {
-  background-color: #7DD2AE;
-  color: rgb(0,0,0);
+  background-color: #0C847C;
+  color: rgb(255,255,255);
 }
 .btn.btn-rose:focus, .btn.btn-rose:active, .btn.btn-rose:hover,
 .navbar .navbar-nav > li > a.btn.btn-rose:focus,
 .navbar .navbar-nav > li > a.btn.btn-rose:active,
 .navbar .navbar-nav > li > a.btn.btn-rose:hover {
-  box-shadow: 0 14px 26px -12px rgba(125,210,174, 0.4), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(125,210,174, 0.2);
+  box-shadow: 0 14px 26px -12px rgba(12,132,124, 0.4), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(12,132,124, 0.2);
 }
 .btn.btn-rose.disabled, .btn.btn-rose.disabled:hover, .btn.btn-rose.disabled:focus, .btn.btn-rose.disabled.focus, .btn.btn-rose.disabled:active, .btn.btn-rose.disabled.active, .btn.btn-rose:disabled, .btn.btn-rose:disabled:hover, .btn.btn-rose:disabled:focus, .btn.btn-rose:disabled.focus, .btn.btn-rose:disabled:active, .btn.btn-rose:disabled.active, .btn.btn-rose[disabled], .btn.btn-rose[disabled]:hover, .btn.btn-rose[disabled]:focus, .btn.btn-rose[disabled].focus, .btn.btn-rose[disabled]:active, .btn.btn-rose[disabled].active, fieldset[disabled] .btn.btn-rose, fieldset[disabled] .btn.btn-rose:hover, fieldset[disabled] .btn.btn-rose:focus, fieldset[disabled] .btn.btn-rose.focus, fieldset[disabled] .btn.btn-rose:active, fieldset[disabled] .btn.btn-rose.active,
 .navbar .navbar-nav > li > a.btn.btn-rose.disabled,
@@ -6438,7 +6438,7 @@ h2.title {
 .btn.btn-rose.btn-simple,
 .navbar .navbar-nav > li > a.btn.btn-rose.btn-simple {
   background-color: transparent;
-  color: #7DD2AE;
+  color: #0C847C;
   box-shadow: none;
 }
 .btn.btn-rose.btn-simple:hover, .btn.btn-rose.btn-simple:focus, .btn.btn-rose.btn-simple:active,
@@ -6446,7 +6446,7 @@ h2.title {
 .navbar .navbar-nav > li > a.btn.btn-rose.btn-simple:focus,
 .navbar .navbar-nav > li > a.btn.btn-rose.btn-simple:active {
   background-color: transparent;
-  color: #7DD2AE;
+  color: #0C847C;
 }
 .btn.btn-white, .btn.btn-white:focus, .btn.btn-white:hover,
 .navbar .navbar-nav > li > a.btn.btn-white,
@@ -6844,7 +6844,7 @@ h2.title {
 }
 .btn-group.open > .dropdown-toggle.btn.btn-primary,
 .btn-group-vertical.open > .dropdown-toggle.btn.btn-primary {
-  background-color: #236778;
+  background-color: #226475;
 }
 .btn-group.open > .dropdown-toggle.btn.btn-success,
 .btn-group-vertical.open > .dropdown-toggle.btn.btn-success {
@@ -6864,7 +6864,7 @@ h2.title {
 }
 .btn-group.open > .dropdown-toggle.btn.btn-rose,
 .btn-group-vertical.open > .dropdown-toggle.btn.btn-rose {
-  background-color: #7DD2AE;
+  background-color: #0C847C;
 }
 .btn-group .dropdown-menu,
 .btn-group-vertical .dropdown-menu {
@@ -6954,7 +6954,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
 }
 
 a {
-  color: #236778;
+  color: #226475;
 }
 a:hover, a:focus {
   color: #89229b;
@@ -7285,7 +7285,7 @@ output {
   background-color: #212121;
 }
 .label.label-primary {
-  background-color: #236778;
+  background-color: #226475;
 }
 .label.label-success {
   background-color: #4caf50;
@@ -7300,13 +7300,13 @@ output {
   background-color: #f44336;
 }
 .label.label-rose {
-  background-color: #7DD2AE;
+  background-color: #0C847C;
 }
 
 .form-control,
 .form-group .form-control {
   border: 0;
-  background-image: linear-gradient(#236778, #236778), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#226475, #226475), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 0 2px, 100% 1px;
   background-repeat: no-repeat;
   background-position: center bottom, center calc(100% - 1px);
@@ -7368,13 +7368,13 @@ output {
 }
 .form-group.is-focused .form-control {
   outline: none;
-  background-image: linear-gradient(#236778, #236778), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#226475, #226475), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 100% 2px, 100% 1px;
   box-shadow: none;
   transition-duration: 0.3s;
 }
 .form-group.is-focused .form-control .material-input:after {
-  background-color: #236778;
+  background-color: #226475;
 }
 .form-group.is-focused.form-info .form-control {
   background-image: linear-gradient(#00bcd4, #00bcd4), linear-gradient(#D2D2D2, #D2D2D2);
@@ -7912,7 +7912,7 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   background-color: #af2cc5;
   color: #ffffff;
   border-radius: 3px;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .alert.alert-primary a, .alert.alert-primary .alert-link {
   color: #ffffff;
@@ -7957,7 +7957,7 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   background-color: #eb3573;
   color: #ffffff;
   border-radius: 3px;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 .alert.alert-rose a, .alert.alert-rose .alert-link {
   color: #ffffff;
@@ -7985,10 +7985,10 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   color: #00bcd4;
 }
 .alert.alert-primary i {
-  color: #236778;
+  color: #226475;
 }
 .alert.alert-rose i {
-  color: #7DD2AE;
+  color: #0C847C;
 }
 .alert.alert-with-icon {
   margin-top: 43px;
@@ -8113,7 +8113,7 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   color: #3C4858;
 }
 .table-shopping .td-name a:hover, .table-shopping .td-name a:focus {
-  color: #236778;
+  color: #226475;
 }
 .table-shopping .td-number {
   text-align: right;
@@ -8277,7 +8277,7 @@ fieldset[disabled] .form-group.is-focused .checkbox label {
   opacity: 0.2;
 }
 .checkbox input[type=checkbox]:checked + .checkbox-material .check {
-  background: #236778;
+  background: #226475;
 }
 .checkbox input[type=checkbox]:checked + .checkbox-material .check:before {
   color: rgb(255,255,255);
@@ -8375,7 +8375,7 @@ fieldset[disabled] .form-group.is-focused .radio label {
   height: 15px;
   width: 15px;
   border-radius: 100%;
-  background-color: #236778;
+  background-color: #226475;
   transform: scale3d(0, 0, 0);
 }
 .radio label .check:after {
@@ -8409,10 +8409,10 @@ fieldset[disabled] .form-group.is-focused .radio label {
   opacity: 1;
 }
 .radio input[type=radio]:checked ~ .check {
-  background-color: #236778;
+  background-color: #226475;
 }
 .radio input[type=radio]:checked ~ .circle {
-  border-color: #236778;
+  border-color: #226475;
 }
 .radio input[type=radio]:checked ~ .check {
   transform: scale3d(0.65, 0.65, 1);
@@ -8465,7 +8465,7 @@ fieldset[disabled] .form-group.is-focused .radio label {
   background-color: #212121;
 }
 .progress .progress-bar.progress-bar-primary {
-  background-color: #236778;
+  background-color: #226475;
 }
 .progress .progress-bar.progress-bar-success {
   background-color: #4caf50;
@@ -8480,7 +8480,7 @@ fieldset[disabled] .form-group.is-focused .radio label {
   background-color: #f44336;
 }
 .progress .progress-bar.progress-bar-rose {
-  background-color: #7DD2AE;
+  background-color: #0C847C;
 }
 .progress.progress-line-primary {
   background: rgba(156, 39, 176, 0.2);
@@ -8500,7 +8500,7 @@ fieldset[disabled] .form-group.is-focused .radio label {
 
 .progress .progress-bar,
 .progress .progress-bar.progress-bar-default {
-  background-color: #236778;
+  background-color: #226475;
 }
 
 .mytogglebutton {
@@ -8570,7 +8570,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   background-color: rgba(156, 39, 176, 0.7);
 }
 .mytogglebutton label input[type=checkbox]:checked + .toggle:after {
-  border-color: #236778;
+  border-color: #226475;
 }
 .mytogglebutton label input[type=checkbox]:checked + .toggle:active:after {
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 0 0 15px rgba(156, 39, 176, 0.1);
@@ -8617,7 +8617,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   /* Standard syntax */
 }
 .full-page[filter-color="purple"].lock-page .form-group .form-control, .full-page[filter-color="primary"].lock-page .form-group .form-control {
-  background-image: linear-gradient(#236778, #236778), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#226475, #226475), linear-gradient(#D2D2D2, #D2D2D2);
 }
 .full-page[filter-color="blue"]:after, .full-page[filter-color="info"]:after {
   background: rgba(178, 235, 242, 0.56);
@@ -8692,7 +8692,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   /* Standard syntax */
 }
 .full-page[filter-color="rose"].lock-page .form-group .form-control {
-  background-image: linear-gradient(#7DD2AE, #7DD2AE), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#0C847C, #0C847C), linear-gradient(#D2D2D2, #D2D2D2);
 }
 .full-page[data-image]:after {
   opacity: .8;
@@ -8795,7 +8795,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   text-align: left;
 }
 .lock-page .card-profile .form-group .form-control {
-  background-image: linear-gradient(#7DD2AE, #7DD2AE), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#0C847C, #0C847C), linear-gradient(#D2D2D2, #D2D2D2);
 }
 .lock-page .card-profile.with-animation {
   -webkit-transition: all 300ms ease-in;
@@ -8842,7 +8842,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   font-size: 2.6em;
 }
 .register-page .card-signup .info-horizontal .icon.icon-primary {
-  color: #236778;
+  color: #226475;
 }
 .register-page .card-signup .info-horizontal .icon.icon-info {
   color: #00bcd4;
@@ -8857,7 +8857,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   color: #f44336;
 }
 .register-page .card-signup .info-horizontal .icon.icon-rose {
-  color: #7DD2AE;
+  color: #0C847C;
 }
 .register-page .card-signup .info-horizontal .description {
   overflow: hidden;
@@ -8939,7 +8939,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   padding-left: 0.8em;
 }
 .bootstrap-tagsinput .tag.tag-primary {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
 }
 .bootstrap-tagsinput .tag.tag-info {
@@ -8959,8 +8959,8 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   color: #FFFFFF;
 }
 .bootstrap-tagsinput .tag.tag-rose {
-  background-color: #7DD2AE;
-  color: rgb(0,0,0);
+  background-color: #0C847C;
+  color: rgb(255,255,255);
 }
 .bootstrap-tagsinput .tag:hover {
   padding-right: 18px;
@@ -9078,9 +9078,9 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   border-bottom-left-radius: 50%;
 }
 .timeline > li > .timeline-badge.primary {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255)
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .timeline > li > .timeline-badge.success {
   background-color: #4caf50;
@@ -9208,7 +9208,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   color: #3C4858;
 }
 .panel .panel-heading a:hover, .panel .panel-heading a:active, .panel .panel-heading a[aria-expanded="true"] {
-  color: #7DD2AE;
+  color: #0C847C;
 }
 .panel .panel-heading a[aria-expanded="true"] .panel-title > i, .panel .panel-heading a.expanded .panel-title > i {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
@@ -9257,8 +9257,8 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
 .pagination > .active > span,
 .pagination > .active > span:focus,
 .pagination > .active > span:hover {
-  background-color: #236778;
-  border-color: #236778;
+  background-color: #226475;
+  border-color: #226475;
   color: rgb(255,255,255);
   box-shadow: 0 4px 5px 0 rgba(156, 39, 176, 0.14), 0 1px 10px 0 rgba(156, 39, 176, 0.12), 0 2px 4px -1px rgba(156, 39, 176, 0.2);
 }
@@ -9332,9 +9332,9 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   padding: 15px 0;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .nav-pills:not(.nav-pills-icons) > li > a {
   border-radius: 30px;
@@ -9359,8 +9359,8 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
 }
 .nav-pills.nav-pills-rose > li.active > a, .nav-pills.nav-pills-rose > li.active > a:focus, .nav-pills.nav-pills-rose > li.active > a:hover {
-  background-color: #7DD2AE;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  background-color: #0C847C;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 
 .tab-space {
@@ -9705,7 +9705,7 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   color: #fff;
 }
 .navbar.navbar-primary {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
 }
 .navbar.navbar-primary .navbar-form .form-group input.form-control::-moz-placeholder,
@@ -9725,13 +9725,13 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
 }
 .navbar.navbar-primary .dropdown-menu li > a:hover, .navbar.navbar-primary .dropdown-menu li > a:focus {
   color: rgb(255,255,255);
-  background-color: #236778;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  background-color: #226475;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .navbar.navbar-primary .dropdown-menu .active > a {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .navbar.navbar-primary .dropdown-menu .active > a:hover, .navbar.navbar-primary .dropdown-menu .active > a:focus {
   color: #ffffff;
@@ -9865,8 +9865,8 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   color: #ffffff;
 }
 .navbar.navbar-rose {
-  background-color: #7DD2AE;
-  color: rgb(0,0,0);
+  background-color: #0C847C;
+  color: rgb(255,255,255);
 }
 .navbar.navbar-rose .navbar-form .form-group input.form-control::-moz-placeholder,
 .navbar.navbar-rose .navbar-form input.form-control::-moz-placeholder {
@@ -9884,14 +9884,14 @@ fieldset[disabled] .form-group.is-focused .mytogglebutton label {
   border-radius: 3px !important;
 }
 .navbar.navbar-rose .dropdown-menu li > a:hover, .navbar.navbar-rose .dropdown-menu li > a:focus {
-  color: rgb(0,0,0);
-  background-color: #7DD2AE;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  color: rgb(255,255,255);
+  background-color: #0C847C;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 .navbar.navbar-rose .dropdown-menu .active > a {
-  background-color: #7DD2AE;
-  color: rgb(0,0,0);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  background-color: #0C847C;
+  color: rgb(255,255,255);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 .navbar.navbar-rose .dropdown-menu .active > a:hover, .navbar.navbar-rose .dropdown-menu .active > a:focus {
   color: #ffffff;
@@ -10102,7 +10102,7 @@ footer .btn {
 .dropdown-menu li a:hover,
 .dropdown-menu li a:focus,
 .dropdown-menu li a:active {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
 }
 .dropdown-menu .divider {
@@ -10115,9 +10115,9 @@ footer .btn {
 .navbar.navbar-default .dropdown-menu li a:active, .bootstrap-table .dropdown-menu li a:hover,
 .bootstrap-table .dropdown-menu li a:focus,
 .bootstrap-table .dropdown-menu li a:active {
-  background-color: #236778;
+  background-color: #226475;
   color: rgb(255,255,255);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 
 .btn-group.bootstrap-select .dropdown-menu,
@@ -10319,7 +10319,7 @@ footer .btn {
   margin: -20px 15px 0;
   border-radius: 3px;
   padding: 15px;
-  background-color: #236778;
+  background-color: #226475;
   position: relative;
 }
 .card [data-background-color] .card-title {
@@ -10450,10 +10450,10 @@ footer .btn {
 }
 .card [data-background-color="purple"] {
   background: linear-gradient(60deg, #ab47bc, #8e24aa);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(35,103,120, 0.4);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(34,100,117, 0.4);
 }
 .card [data-icon-bg-color="purple"] i {
-  color: #236778;
+  color: #226475;
 }
 .card [data-background-color="blue"] {
   background: linear-gradient(60deg, #26c6da, #00acc1);
@@ -10484,11 +10484,11 @@ footer .btn {
   color: #f44336;
 }
 .card [data-background-color="rose"] {
-  background: linear-gradient(60deg, #7DD2AE, #7DD2AE);
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(125,210,174, 0.4);
+  background: linear-gradient(60deg, #0C847C, #0C847C);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(12,132,124, 0.4);
 }
 .card [data-icon-bg-color="rose"] i {
-  color: #7DD2AE;
+  color: #0C847C;
 }
 .card [data-header-animation="true"] {
   -webkit-transform: translate3d(0, 0, 0);
@@ -10660,7 +10660,7 @@ footer .btn {
   height: 130px;
 }
 .card-pricing .icon.icon-primary {
-  color: #236778;
+  color: #226475;
 }
 .card-pricing .icon.icon-info {
   color: #00bcd4;
@@ -10675,7 +10675,7 @@ footer .btn {
   color: #f44336;
 }
 .card-pricing .icon.icon-rose {
-  color: #7DD2AE;
+  color: #0C847C;
 }
 .card-pricing h1 small {
   font-size: 18px;
@@ -10819,7 +10819,7 @@ footer .btn {
 }
 
 .nav-tabs {
-  background: #236778;
+  background: #226475;
   border: 0;
   border-radius: 3px;
   padding: 0 15px;
@@ -11170,7 +11170,7 @@ footer .btn {
 
 .selectize-input {
 	border: 0;
-    background-image: linear-gradient(#236778, #236778), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#226475, #226475), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 0 2px, 100% 1px;
     background-repeat: no-repeat;
     background-position: center bottom, center calc(100% - 1px);

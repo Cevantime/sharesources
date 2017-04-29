@@ -20,3 +20,19 @@ $db['default']['swap_pre'] = '{PRE}';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
+
+$db['recette']['hostname'] = 'localhost';
+$db['recette']['username'] = 'resources';
+$db['recette']['password'] = 'resources';
+$db['recette']['database'] = 'resources';
+$db['recette']['dbdriver'] =  'mysqli';
+$db['recette']['dbprefix'] =  '';
+$db['recette']['pconnect'] =  FALSE;
+$db['recette']['db_debug'] =  TRUE;
+$db['recette']['cache_on'] =  FALSE;
+$db['recette']['cachedir'] =  'application/cache';
+$db['recette']['char_set'] =  'utf8';
+$db['recette']['dbcollat'] =  'utf8_general_ci';
+$db['recette']['swap_pre'] =  '{PRE}';
+$db['recette']['autoinit'] =  TRUE;
+$db['recette']['stricton'] =  FALSE;
