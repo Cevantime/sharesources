@@ -1,0 +1,8 @@
+{
+    "description": "A site core for haveasite",
+    "name": "Cevantime\/resources",
+    "require": {
+        "jbbcode\/jbbcode": "^1.3",
+        "mikehaertl\/phpwkhtmltopdf": "^2.2"
+    }
+}

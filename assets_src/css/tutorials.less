@@ -1,0 +1,33 @@
+@import url("articles.less");
+
+.tutorial:extend(.article all) {
+	
+	counter-reset: section;
+	
+	h2 {
+		counter-reset: subsection;
+		counter-increment: section;
+		
+	}
+	h2::before {
+		content:counter(section, upper-roman)".";
+		margin-right: 10px;
+	}
+	h3 {
+		counter-increment: subsection;
+		counter-reset: subsubsection;
+	}
+	h3::before {
+		content: counter(subsection)")";
+		margin-right: 8px;
+	}
+	h4 {
+		counter-increment: subsubsection;
+	}
+	h4::before {
+		content: counter(subsubsection,lower-alpha)".";
+		margin-right: 8px;
+	}
+	
+}
+
