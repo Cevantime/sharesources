@@ -409,6 +409,7 @@ class Course extends Blogpost {
 
 		$this->prepareFiles();
 		$this->prepareShares();
+		$this->prepareAuthor();
 
 		$this->join(Linkcoursekeyword::$TABLE_NAME, $this->db->dbprefix(Linkcoursekeyword::$TABLE_NAME) . '.course_id=' . $this->db->dbprefix(self::TABLE_NAME) . '.id', 'right');
 		$this->join(Keyword::TABLE_NAME, $this->db->dbprefix(Keyword::TABLE_NAME) . '.id=' . $this->db->dbprefix(Linkcoursekeyword::$TABLE_NAME) . '.keyword_id', 'left');
