@@ -32,6 +32,12 @@ class SearchController extends MY_Controller {
 			$this->layout->assign('teachers', $teachers);
 		}
 		
+		if(user_can('see', 'teachsession')) {
+			$this->load->model('teachsession');
+			$sessions = $this->teachsession->search(null, null,$search, array('login', 'name'));
+			$this->layout->assign('sessions', $sessions);
+		}
+		
 		$this->layout->view('search/index');
 		
 	}

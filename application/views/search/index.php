@@ -24,3 +24,8 @@
 
 	<?php $this->load->view('admin/webforceteachers/all', array('users' => $teachers, 'modelName' => 'webforceteacher')); ?>
 <?php endif; ?>
+
+<?php if(isset($sessions)): ?>
+
+	<?php $this->load->view('sessions/includes/list-sessions', array('sessions' => $sessions)); ?>
+<?php endif; ?>

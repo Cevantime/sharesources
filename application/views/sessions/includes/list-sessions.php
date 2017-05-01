@@ -27,6 +27,7 @@
 								</tr>
 							</thead>
 							<tbody data-module="bootstrap_toggle">
+								<?php $user = user(); ?>
 								<?php $teachsession = teachsession(); ?>
 								<?php foreach ($sessions as $session): ?>
 									<tr>
@@ -49,7 +50,9 @@
 														data-toggle="toggle" 
 														data-teach-session-id="<?php echo $session->id; ?>" 
 														class="toggle-session-teacher-share"
-														<?php if (user_can('update', 'teachsession', $session->id)): ?>checked="checked"<?php endif; ?>>
+														<?php if (user_can('update', 'teachsession', $session->id) && $this->teachsession->isSharedTo($session->id, $user)): ?>
+														checked="checked"
+														<?php endif; ?>>
 													<span class="toggle"></span>
 												</label>                
 											</span>
