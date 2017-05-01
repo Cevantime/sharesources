@@ -33,12 +33,12 @@ $(function () {
 			render: {
 				option: function (item, escape) {
 					return '<div>' +
-							'<img class="avatar-sm" src="' + escape(window.baseURL + '/' + item.avatar) + '"/>' +
+							'<img class="avatar-sm" src="' + escape(window.baseURL + '/' + (item.avatar ? item.avatar : 'assets/local/images/default-avatar.png')) + '"/>' +
 							'<span class="name">' + escape(item.forname) + ' ' + escape(item.name) + '</span>' +
 							'</div>';
 				},
 				item: function (item, escape) {
-					return '<div class="item" data-value="' + item.id + '"><img class="avatar-sm" src="' + escape(window.baseURL + '/' + item.avatar) + '"/>' + escape(item.forname) + ' ' + escape(item.name) + '</div>';
+					return '<div class="item" data-value="' + item.id + '"><img class="avatar-sm" src="' + escape(window.baseURL + '/' +  (item.avatar ? item.avatar : 'assets/local/images/default-avatar.png')) + '"/>' + escape(item.forname) + ' ' + escape(item.name) + '</div>';
 				}
 			},
 			load: function (query, callback) {
