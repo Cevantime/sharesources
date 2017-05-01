@@ -13,8 +13,6 @@ $(function () {
 		
 		var options = JSON.parse(val);
 		
-		console.log(options);
-		
 		var items = [];
 
 		options.forEach(function (opt) {
