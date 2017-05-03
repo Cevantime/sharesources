@@ -161,13 +161,10 @@ class Teachsession extends Webforceuser {
 	
 	public function getUserTeachSessions($limit = null, $offset = null, $type = 'object', $columns = null) {
 		$this->load->model('linkusersteachsessions');
-		$this->load->model('memberspace/user');
 		$this->load->helper('memberspace/connection');
 		$table = $this->getTableName();
+		$this->prepareShares();
 		$linkTable = $this->linkusersteachsessions->getTableName();
-		$userTable = $this->user->getTableName();
-		$this->join($linkTable, $linkTable.'.teach_session_id='.$table.'.id', 'inner');
-		$this->join("$userTable as u", 'u.id='.$linkTable.'.user_id', 'inner');
 		$this->where($linkTable.'.user_id', user('id'));
 		$this->group_by($table.'.id');
 		
