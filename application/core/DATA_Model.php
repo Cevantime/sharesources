@@ -235,6 +235,7 @@ abstract class DATA_Model extends CI_Model {
 	}
 
 	protected function prepareSearch($limit = null, $offset = null, $search = null, $columns = null) {
+		
 		if ($columns === null && !$this->getData('columns')) {
 			$columns = $this->getDataColumns();
 		} else if ($columns === null) {
@@ -248,10 +249,13 @@ abstract class DATA_Model extends CI_Model {
 		if ($limit !== null) {
 			$this->db->limit($offset, $limit);
 		}
+		
 		$this->db->group_start();
+		
 		foreach ($columns as $col) {
 			$this->db->or_like($col, $search);
 		}
+		
 		$this->db->group_end();
 	}
 

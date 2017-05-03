@@ -38,11 +38,11 @@ class SessionsController extends MY_Controller {
 	public function all(){
 		$this->layout->title('Toutes les sessions');
 		$this->load->library('mypagination');
-		$sessionModel = 'teachsession';
-		$this->checkIfUserCan('see',$sessionModel,'*');
-		$this->load->model($sessionModel);
+		$this->checkIfUserCan('see','teachsession','*');
+		$this->load->model('teachsession');
 		$id_pagination = 'teachsessions-list';
-		$sessions = $this->$sessionModel->getList();
+		$this->teachsession->prepareShares();
+		$sessions = $this->teachsession->getList();
 		$this->layout->assign('sessions', $sessions);
 		$this->layout->assign('id_pagination_sessions_list', $id_pagination);
 		$this->layout->view('sessions/all');

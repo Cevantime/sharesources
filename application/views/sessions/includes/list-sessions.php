@@ -50,7 +50,7 @@
 														data-toggle="toggle" 
 														data-teach-session-id="<?php echo $session->id; ?>" 
 														class="toggle-session-teacher-share"
-														<?php if (user_can('update', 'teachsession', $session->id) && $this->teachsession->isSharedTo($session->id, $user)): ?>
+														<?php if (user_can('update', 'teachsession', $session->id) && $session->shared): ?>
 														checked="checked"
 														<?php endif; ?>>
 													<span class="toggle"></span>
