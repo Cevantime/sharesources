@@ -24,7 +24,7 @@
 							<td><?php echo htmlentities($course->title); ?></td>
 							<td><?php echo $course->description; ?></td>
 							<td class="td-author">
-								<img src="<?php echo imageresize($course->author_avatar, 30, 30); ?>"/><br/>
+								<img src="<?php echo imageresize($course->author_avatar ? $course->author_avatar : 'assets/local/images/default-avatar.png', 30, 30); ?>"/><br/>
 								<span class="author-name"><?php echo $course->author_forname.' '.$course->author_name; ?></span>
 							</td>
 							<td class="td-actions">
