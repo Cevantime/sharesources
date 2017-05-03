@@ -85,11 +85,9 @@ class SessionsController extends MY_Controller {
 	
 	public function mines() {
 		$this->layout->title('Mes sessions');
-		$sessionModel = 'teachsession';
-		$this->checkIfUserCan('see',$sessionModel,'*');
-		$this->load->model($sessionModel);
-		$this->teachsession->prepareShares();
-		$sessions = $this->$sessionModel->getUserTeachSessions();
+		$this->load->model('teachsession');
+		$this->checkIfUserCan('see','teachsession','*');
+		$sessions = $this->teachsession->getUserTeachSessions();
 		$this->layout->assign('sessions', $sessions);
 		$this->layout->view('sessions/mines');
 	}
