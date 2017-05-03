@@ -88,6 +88,55 @@ class Webforceuser extends User {
 		return array_merge($uploadPath, array('avatar' => 'uploads/avatars'));
 	}
 	
+	protected function prepareSearch($limit = null, $offset = null, $search = null, $columns = null) {
+		if ($columns === null && !$this->getData('columns')) {
+			$columns = $this->getDataColumns();
+		} else if ($columns === null) {
+			$columns = $this->getData('columns');
+		}
+
+		if ($search === null) {
+			$search = $this->search;
+		}
+
+		if ($limit !== null) {
+			$this->db->limit($offset, $limit);
+		}
+		
+		$this->db->group_start();
+		
+		if( ! is_array($search)) {
+			$search = explode(' ', $search);
+		}
+		
+		foreach ($columns as $col) {
+			foreach($search as $s) {
+				$this->db->or_like($col, $s);
+			}
+		}
+		
+		$this->db->group_end();
+	}
+	
+	public function search($limit = null, $offset = null, $search = null, $columns = null) {
+		$this->db->query('SET @matching := 0');
+		if( ! is_array($search)) {
+			$search = explode(' ', $search);
+		}
+		
+		foreach ($columns as $col) {
+			foreach($search as $s) {
+				$this->select("if($col LIKE '%$s%' ESCAPE '!', @matching := @matching + 1, 'dummy')", FALSE);
+			}
+			
+		}
+		$this->select("(@matching) as matching");
+		// weird but could not make it working with @matching != 0 
+		$this->select("(@matching := @matching - @matching) as 'reset' ");
+		$this->order_by('matching DESC');
+		return parent::search($limit, $offset, $search, $columns);
+	}
+	
 	public function validationRulesForInsert($datas) {
 		$rules = parent::validationRulesForInsert($datas);
 		
