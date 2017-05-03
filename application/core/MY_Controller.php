@@ -9,6 +9,7 @@ class MY_Controller extends MX_Controller {
 		
 		$this->load->library('memberspace/loginManager', 'webforceuser');
 		if(!is_connected()) {
+			$this->session->set_userdata('login_redirect_url', current_url());
 			redirect('login');
 		}
 		
