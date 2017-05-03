@@ -24,7 +24,7 @@ class NotificationsController extends MY_Controller {
 	}
 
 	public function markAsSeen($id) {
-		$this->checkIfUserCan('mark-as-seen', 'notification', $id);
+		$this->checkIfUserCan('see', 'notification', $id);
 		$notif = $this->notification->getId($id);
 		if (!$notif) {
 			die(json_encode(array('status' => 'ko')));
