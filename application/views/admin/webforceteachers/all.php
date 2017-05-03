@@ -41,13 +41,17 @@
 								<td><?php echo htmlspecialchars($user->login) ?></td>
 								<td><?php echo htmlspecialchars($user->email) ?></td>
 								<td class="td-actions">
+									<?php  if(user_can('edit','webforceteacher', $user->id)): ?>
 									<a class="btn btn-success" href="<?php echo base_url('teacher/edit/' . $user->id) ?>"><i class="fa fa-pencil"></i></a>
+									<?php endif; ?>
+									<?php if(user_can('delete','webforceteacher', $user->id)): ?>
 									<a href="#" class="btn btn-danger confirm" 
 									   data-url="<?php echo base_url('teacher/delete/' . $user->id) ?>" 
 									   data-header="Suppression d'un utilisateur" 
 									   data-body="<p>Attention!</p><p>Vous êtes sur le point de supprimer un utilisateur.</p><p>Continuer?</p> ">
 										<i class="fa fa-trash-o"></i>
 									</a>
+									<?php endif; ?>
 								</td>
 							</tr>
 

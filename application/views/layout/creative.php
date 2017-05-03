@@ -162,7 +162,7 @@
 								</div>
 							</li>
 						<?php endif; ?>
-						<?php if (user_can('*', 'webforceteacher')): ?>
+						<?php if (user_can('see', 'webforceteacher')): ?>
 							<li>
 								<a data-toggle="collapse" <?php if( route_is('teacher')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#tablesExamples">
 									<i class="material-icons">account_box</i>
@@ -175,9 +175,11 @@
 										<li>
 											<a href="<?php echo base_url('teachers/all'); ?>">Tous les formateurs</a>
 										</li>
+										<?php if(user_can('add', 'webforceteacher')) : ?>
 										<li>
 											<a href="<?php echo base_url('teacher/add'); ?>">Ajouter un formateur</a>
 										</li>
+										<?php endif; ?>
 									</ul>
 								</div>
 							</li>
