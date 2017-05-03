@@ -853,3 +853,12 @@ SET @addAdminRightId := LAST_INSERT_ID();
 
 INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@adminGroupId, @addAdminRightId);
 
+--changeset thibault:add_right_see_teachers_to_teachers
+SELECT id INTO @teachersGroupId FROM groups WHERE `name` = 'teacher';
+
+INSERT INTO `rights` (`name`, `type`, `object_key`) VALUES ('see','webforceteacher','*');
+
+SET @seeTeachersRightId := LAST_INSERT_ID();
+
+INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@teachersGroupId, @seeTeachersRightId);
+

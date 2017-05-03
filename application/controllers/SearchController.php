@@ -26,7 +26,7 @@ class SearchController extends MY_Controller {
 		$courses = $this->course->keySearch(null, null, $search);
 		$this->layout->assign('courses', $courses);
 		
-		if(user_can('see', 'teacher')) {
+		if(user_can('see', 'webforceteacher')) {
 			$this->load->model('webforceteacher');
 			$teachers = $this->webforceteacher->search(null, null,$search, array('login', 'forname', 'name'));
 			$this->layout->assign('teachers', $teachers);

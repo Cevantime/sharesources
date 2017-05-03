@@ -41,7 +41,7 @@ class UsersController extends MY_Controller{
 	public function edit($userModel = 'memberspace-user', $id = null) {
 		$this->layout->title(translate('Modification d\'un formateur'));
 		$userModelFormated = $this->filterModel($userModel);
-		$this->checkIfUserCan('see', $userModelFormated, $id);
+		$this->checkIfUserCan('edit', $userModelFormated, $id);
 		$this->usermanager->setUserModel($userModelFormated);
 		$datas = $this->usermanager->save($id, $this->redirectAction($userModelFormated));
 		$this->layout->view('admin/'.$userModel.'s/save', array('popSaveUser'=> $datas, 'isEditUser'=>true,'modelName'=>$userModelFormated));
