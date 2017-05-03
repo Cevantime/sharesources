@@ -862,3 +862,14 @@ SET @seeTeachersRightId := LAST_INSERT_ID();
 
 INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@teachersGroupId, @seeTeachersRightId);
 
+--changeset thibault:add_right_see_notification_for_webforceusers
+SELECT id INTO @teachersGroupId FROM groups WHERE `name` = 'teacher';
+SELECT id INTO @usersGroupId FROM groups WHERE `name` = 'users';
+SELECT id INTO @adminGroupId FROM groups WHERE `name` = 'administrators';
+
+INSERT INTO `rights` (`name`, `type`, `object_key`) VALUES ('see','notification','model[notification]::isVisibleByUser({object},{user})');
+
+SET @seeNotificationRightId := LAST_INSERT_ID();
+
+INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@teachersGroupId, @seeNotificationRightId),(@usersGroupId, @seeNotificationRightId),(@adminGroupId, @seeNotificationRightId);
+

@@ -21,8 +21,8 @@ class Notification extends DATA_Model {
 	const TYPE_NEW_COURSE_SHARE_SESSION = 'NEW_COURSE_SHARE_SESSION';
 	const TYPE_CUSTOM = 'CUSTOM';
 	
-	
 	public static $VALUE_LABEL_ASSOC;
+	public static $VISIBILITY_GROUP_ASSOC;
 
 	public function __construct() {
 		parent::__construct();
@@ -36,6 +36,11 @@ class Notification extends DATA_Model {
 			self::VISIBILITY_ADMINS + self::VISIBILITY_TEACHERS => translate('formateurs et administrateurs'),
 			self::VISIBILITY_SESSIONS + self::VISIBILITY_ADMINS => translate('administrateurs et apprenants'),
 
+		);
+		self::$VISIBILITY_GROUP_ASSOC = array(
+			'administrators' => self::VISIBILITY_ADMINS,
+			'teacher' => self::VISIBILITY_TEACHERS,
+			'users' => self::VISIBILITY_SESSIONS
 		);
 	}
 	
@@ -178,6 +183,44 @@ class Notification extends DATA_Model {
 			}
 			$this->userhasnotification->updateGroup($links);
 		}
+	}
+	
+	public function isVisibleByUser($notification, $user) {
+		$this->load->model('webforceuser');
+		
+		if(ctype_digit($user)) {
+			$user = $this->webforceuser->getId($user);
+		}
+		
+		if(ctype_digit($notification)) {
+			$notification = $this->getId($notification);
+		}
+		
+		if( ! $user || ! $notification) {
+			log_message('error', 'error in notification visibility check : '
+					. 'invalid user or notification supplied');
+			return false;
+		}
+		
+		$userGroups = $this->webforceuser->getGroups($user->id);
+		
+		// first check if notification is visible by one of user groups
+		foreach($userGroups as $group) {
+			$groupVisibility = self::$VISIBILITY_GROUP_ASSOC[$group->name];
+			if($notification->visibility & $groupVisibility) {
+				return true;
+			}
+		}
+		
+		// if not, check if the the notification is addressed to the user
+		$this->load->model('userhasnotification');
+		
+		$this->userhasnotification->where('notification_id='.$notification->id);
+		$this->userhasnotification->where('user_id='.$user->id);
+		
+		$link = $this->userhasnotification->getRow();
+		
+		return !! $link;
 	}
 	
 	public function markAsSeen($notificationId = null, $userId = null) {
