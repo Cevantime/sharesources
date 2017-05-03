@@ -408,21 +408,20 @@ class Course extends Blogpost {
 		$this->load->model('memberspace/user');
 
 		$this->prepareFiles();
-		$this->prepareShares();
 		$this->prepareAuthor();
+		$this->prepareShares();
 
-		$this->join(Linkcoursekeyword::$TABLE_NAME, $this->db->dbprefix(Linkcoursekeyword::$TABLE_NAME) . '.course_id=' . $this->db->dbprefix(self::TABLE_NAME) . '.id', 'right');
+		$this->join(Linkcoursekeyword::$TABLE_NAME, $this->db->dbprefix(Linkcoursekeyword::$TABLE_NAME) . '.course_id=' . $this->db->dbprefix(self::TABLE_NAME) . '.id', 'left');
 		$this->join(Keyword::TABLE_NAME, $this->db->dbprefix(Keyword::TABLE_NAME) . '.id=' . $this->db->dbprefix(Linkcoursekeyword::$TABLE_NAME) . '.keyword_id', 'left');
-		$this->join(User::$TABLE_NAME, User::$TABLE_NAME . '.id = ' . $this->db->dbprefix(Post::$TABLE_NAME) . '.user_id', 'left');
+//		$this->join(User::$TABLE_NAME, User::$TABLE_NAME . '.id = ' . $this->db->dbprefix(Post::$TABLE_NAME) . '.user_id', 'left');
 
 		$this->db->select('count(*) as matchings');
-		$this->db->select('login as author');
 
 		$table_hash = Keyword::TABLE_NAME;
-		if (is_string($search))
-			$this->db->where("$table_hash.content", $search);
-		else if (is_array($search))
-			$this->db->where_in("$table_hash.content", $search);
+		if ( ! is_array($search))
+			$search = explode (' ', $search);
+			
+		$this->db->where_in("$table_hash.content", $search);
 
 //		$this->db->where($this->db->escape($search)." LIKE CONCAT('%',$table_hash.content,'%')");
 

@@ -34,6 +34,7 @@ class SearchController extends MY_Controller {
 		
 		if(user_can('see', 'teachsession')) {
 			$this->load->model('teachsession');
+			$this->teachsession->prepareShares();
 			$sessions = $this->teachsession->search(null, null,$search, array('login', 'name'));
 			$this->layout->assign('sessions', $sessions);
 		}

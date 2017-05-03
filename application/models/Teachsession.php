@@ -32,6 +32,18 @@ class Teachsession extends Webforceuser {
 		
 	}
 	
+	public function prepareShares() {
+		$this->load->model('linkusersteachsessions');
+		$tableLink = $this->linkusersteachsessions->getTableName();
+		
+		$table = $this->getTableName();
+		
+		$this->join($tableLink, 
+		$tableLink.'.user_id='.user_id().' AND '.$tableLink.'.teach_session_id='.$table.'.id', 'left');
+		
+		$this->select($tableLink.'.user_id as shared');
+	}
+	
 	public function validationRulesForInsert($datas) {
 		$rules = parent::validationRulesForInsert($datas);
 		
