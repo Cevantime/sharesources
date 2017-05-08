@@ -82,6 +82,11 @@ var codeModal = function (command, opt, queryState) {
 		$removeBtn.off('click');
 		var lang = $form.find('[name="language"]').val();
 		var code = $form.find('[name="code"]').val();
+		// encoding html if any
+		var div = document.createElement('div');
+		var text = document.createTextNode(code);
+		div.appendChild(text);
+		code = div.innerHTML;
 		$('#popup-wysibb-code-form').remove();
 		those.lastRange = pos;
 		those.wbbInsertCallback(command, {LANGUAGE: lang, CODE: code});
