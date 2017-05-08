@@ -3,6 +3,10 @@ var sessionCalendar = require('./calendar');
 
 var locale = window.locale || 'fr';
 
+if(locale === 'en') {
+	locale = 'en-gb';
+}
+
 require('moment/locale/' + locale);
 
 require('./bootstrap-datetimepicker/bootstrap-datetimepicker');

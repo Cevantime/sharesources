@@ -9,6 +9,7 @@ class FileController extends MY_Controller {
 		$this->load->model('filebrowser/file');
 		
 		$file = $this->file->getId($fileId);
+		
 		if(!$file) {
 			die('Unable to find the file !');
 		}

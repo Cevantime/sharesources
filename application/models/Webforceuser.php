@@ -131,7 +131,7 @@ class Webforceuser extends User {
 			
 		}
 		$this->select("(@matching) as matching");
-		// weird but could not make it working with @matching != 0 
+		// weird but could not make it working with @matching := 0 
 		$this->select("(@matching := @matching - @matching) as 'reset' ");
 		$this->order_by('matching DESC');
 		return parent::search($limit, $offset, $search, $columns);
