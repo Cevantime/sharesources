@@ -29,7 +29,7 @@
 								<span class="author-name"><?php echo $course->author_forname.' '.$course->author_name; ?></span>
 							</td>
 							<td>
-								<?php echo date('d/m/Y', $course->creation_time); ?>
+								<?php echo date('Y/m/d', $course->creation_time); ?>
 							</td>
 							<td class="td-actions">
 								<?php if (user_can('see_files', 'course', $course->id)): ?>

@@ -11,11 +11,7 @@ class CategoriesController extends MY_Controller {
 	}
 
 	public function all() {
-		if (!user_can('see', 'category', '*')) {
-			redirect('home');
-		}
-		
-//		$this->addDataTableScripts();
+		$this->checkIfUserCan('see', 'category');
 
 		$categories = $this->category->get();
 		
@@ -25,12 +21,15 @@ class CategoriesController extends MY_Controller {
 	}
 
 	public function add() {
+		$this->checkIfUserCan('add', 'category');
+		
 		$this->layout->title('Ajouter une categorie');
 		$datas = $this->save();
 		$this->layout->view('categories/add', array('datas' => $datas));
 	}
 
 	public function edit($id) {
+		$this->checkIfUserCan('edit', 'category', $id);
 		$this->layout->title('Modifier une categorie');
 		$datas = $this->save($id);
 		$this->layout->view('categories/edit', array('datas' => $datas));
@@ -38,10 +37,16 @@ class CategoriesController extends MY_Controller {
 
 	public function delete($id) {
 		if (user_can('delete', 'category', $id)) {
-			$this->category->deleteId($id);
-			add_success('Cette catégorie a bien été supprimée');
+			$category = $this->category->getId($id);
+			if( ! $category) {
+				add_error(translate('La catégorie n\'existe pas !'));
+			} else {
+				$this->category->deleteId($id);
+				add_success(translate('La catégorie ').$category->name.translate(' a bien été supprimée'));
+				
+			}
 		} else {
-			add_error('Vous n\'avez pas les droits nécessaires à la suppression de cette catégorie');
+			add_error(translate('Vous n\'avez pas les droits nécessaires à la suppression de cette catégorie'));
 		}
 		redirect('categories/all');
 	}
