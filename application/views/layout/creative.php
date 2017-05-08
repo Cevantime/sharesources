@@ -51,7 +51,7 @@
 						<?php echo config('app_title_small', 'R'); ?>
 					</a>
 				</div>
-				<div class="sidebar-wrapper" data-module="perfect-scrollbar">
+				<div class="sidebar-wrapper" data-module="perfect_scrollbar">
 					<div class="user">
 						<div class="photo">
 							<img src="<?php echo imageresize(user('avatar') ? user('avatar') : config('default_avatar', 'assets/local/images/default-avatar.png'), 80, 80, true); ?>" />
