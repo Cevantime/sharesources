@@ -158,6 +158,20 @@ td p {
 	}
 }
 
+.course-footer {
+	font-size: 0.85em;
+	small {
+		&::before {
+			content: '(';
+		}
+		&::after {
+			content: ')';
+		}
+		font-size: 0.95em;
+		font-style: italic;
+	}
+}
+
 @keyframes swipenotif {
 	0% {
 		height: 39px;

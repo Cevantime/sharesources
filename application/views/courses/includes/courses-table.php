@@ -11,6 +11,7 @@
 					<th>Titre</th>
 					<th>Description</th>
 					<th>Auteur</th>
+					<th>Date d'ajout</th>
 					<th>Fichiers</th>
 					<th>Actions</th>
 					<th>Partager</th>
@@ -26,6 +27,9 @@
 							<td class="td-author">
 								<img src="<?php echo imageresize($course->author_avatar ? $course->author_avatar : 'assets/local/images/default-avatar.png', 30, 30); ?>"/><br/>
 								<span class="author-name"><?php echo $course->author_forname.' '.$course->author_name; ?></span>
+							</td>
+							<td>
+								<?php echo date('d/m/Y', $course->creation_time); ?>
 							</td>
 							<td class="td-actions">
 								<?php if (user_can('see_files', 'course', $course->id)): ?>

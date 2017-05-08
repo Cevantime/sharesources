@@ -1,3 +1,4 @@
+<?php $this->load->helper('readabledate'); ?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
@@ -16,6 +17,14 @@
 
 				<div class="tutorial course-content">
 					<?php echo $course->content; ?>
+				</div>
+				
+				<hr>
+				
+				<div class="course-footer">
+					rédigé par <span class="course-author"><?php echo htmlspecialchars($course->author_forname.' '.$course->author_name); ?></span>
+					<span class="course-creation-time"><?php echo zero_date($course->creation_time); ?></span>
+					<small>dernière mise à jour <span class="course-creation-time"><?php echo zero_date($course->update_time); ?></span></small>
 				</div>
 
 				<br/>
