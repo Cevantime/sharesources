@@ -5,3 +5,4 @@
 		<a class="btn btn-success" href="<?php echo base_url('courses/edit/' . $course->id); ?>">Modifier</a>
 	<?php endif; ?>
 </div>
+<hr/>
