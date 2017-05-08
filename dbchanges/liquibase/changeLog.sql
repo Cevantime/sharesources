@@ -873,3 +873,16 @@ SET @seeNotificationRightId := LAST_INSERT_ID();
 
 INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@teachersGroupId, @seeNotificationRightId),(@usersGroupId, @seeNotificationRightId),(@adminGroupId, @seeNotificationRightId);
 
+--changeset thibault:remove_rights_for_teachers_to_edit_or_delete_categories
+
+SELECT id INTO @anyOncatRightId FROM rights WHERE `name` = '*' AND `type` = 'category' AND `object_key` = '*' ;
+SELECT id INTO @teacherGroupId FROM groups WHERE `name` = 'teacher';
+
+DELETE FROM `links_groups_rights` WHERE group_id = @teacherGroupId AND right_id = @anyOncatRightId;
+
+INSERT INTO rights (`name`,`type`, `object_key`) VALUES ('see', 'category', '*');
+
+SET @seeCatRightId := LAST_INSERT_ID();
+
+INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@teacherGroupId, @seeCatRightId);
+

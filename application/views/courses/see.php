@@ -22,7 +22,7 @@
 				<hr>
 				
 				<div class="course-footer">
-					rédigé par <span class="course-author"><?php echo htmlspecialchars($course->author_forname.' '.$course->author_name); ?></span>
+					publié par <span class="course-author"><?php echo htmlspecialchars($course->author_forname.' '.$course->author_name); ?></span>
 					<span class="course-creation-time"><?php echo zero_date($course->creation_time); ?></span>
 					<small>dernière mise à jour <span class="course-creation-time"><?php echo zero_date($course->update_time); ?></span></small>
 				</div>
