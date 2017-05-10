@@ -10,6 +10,7 @@ if (!function_exists('colortext')) {
 
 	function colortext($r, $g = null, $b = null) {
 		if( is_null($g) || is_null($b)){
+			$r = trim($r, "#\t\n\r\0\x0B");
 			list($r,$g,$b) = hex2rgb($r);
 		}
 		$d = 0;

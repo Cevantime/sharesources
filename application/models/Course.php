@@ -275,7 +275,7 @@ class Course extends Blogpost {
 			$this->parser->parse($datas['description_bbcode']);
 			$datas['description'] = $this->parser->getAsHtml();
 		}
-		if($datas['publish']){
+		if(isset($datas['publish']) && $datas['publish']) {
 			$this->load->model('notification');
 			$where = $where ? $where : $this->buildPrimaryWhere($datas);
 			$courses = $this->get($where);
@@ -284,6 +284,9 @@ class Course extends Blogpost {
 					$this->notification->create(Notification::TYPE_NEW_PUBLIC_COURSE, NULL, array('courseId' => $course->id));
 				}
 			}
+		}
+		if( isset($datas['user_id']) ){
+			unset($datas['user_id']);
 		}
 //		if(isset($datas['title']) && $datas['title']) {
 //			$datas['alias'] = $this->createAliasFrom($datas['title'], true);
