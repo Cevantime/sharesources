@@ -155,10 +155,11 @@ class Index extends FILEBROWSER_Controller {
 			return $post;
 		}
 
-		$datas = $this->{$this->modelName}->getLastSavedDatas();
+		$modelInst = $this->{$this->modelName};
+		$datas = $modelInst->getLastSavedDatas();
 
 		if ($redirect) {
-			$lastRow = $modelInst->getLastSavedDatas();
+			$lastRow = $datas->getLastSavedDatas();
 			$regex = '/\{row:(.+?)\}/';
 			if (preg_match_all($regex, $redirect, $matches)) {
 				for ($j = 0; $j < count($matches[0]); $j++) {
@@ -171,10 +172,13 @@ class Index extends FILEBROWSER_Controller {
 
 			$parentId = isset($datas['parent_id']) && $datas['parent_id'] ? $datas['parent_id'] : null;
 			$files = $this->{$this->modelName}->getGrouped(array('parent_id' => $parentId), $this->filters);
+			$file = $modelInst->getId($datas['id']);
+			$html = $this->load->view('includes/_file_row',array('file'=>$file), true);
 			$rep = array(
 				'status' => 'success',
 				'files' => $files,
-				'datas' => $datas
+				'datas' => $datas,
+				'html' => $html
 			);
 			die(json_encode($rep));
 		}

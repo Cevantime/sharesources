@@ -25,7 +25,7 @@ h2 {
 	font-size: 18px;
 	color: @dimgray;
 	text-shadow: 1px 1px 1px white, 1px 1px 1px @dimgray;
-	
+
 	.file-actions * {
 		color: gray;
 	}
@@ -102,6 +102,9 @@ h2 {
 		text-decoration: none;
 
 	}
+	> ul {
+		border-left: 1px dotted gray;
+	}
 }
 #file-browser {
 	padding-left: 35px;
@@ -113,12 +116,14 @@ h2 {
 		font-size: 15px;
 		vertical-align: top;
 	}
-	
+
 	button {
 		font-size: 12px;
 	}
 	input {
 		line-height: 14px;
+		font-size: 15px;
+		padding: 1px;
 	}
 	.folder-contents {
 		margin : 0;
@@ -143,7 +148,9 @@ h2 {
 			}
 		}
 		& > li > .folder-contents {
-			padding : 0 0 0 25px;
+			padding: 0 0 0 10px;
+			margin-left: 10px;
+
 		}
 
 	}
@@ -173,36 +180,36 @@ h2 {
 
 #forms {
 	display: none;
-/*	font-size:0;
-	border-top: 1px solid lightgray;
-	background-color: #eee;
-	border-radius: 0px 0px 5px 5px;
-	padding: 5px;
-	fieldset {
-
-		legend {
-			display: block;
-		}
-		&:first-child {
-			width: 42%;
-		}
-		&:last-child {
-			width: 53%;
-		}
-		border: none;
-		margin-right:2%; 
-		box-sizing: border-box;
-		vertical-align: top;
-		display: inline-block;
-		width: 48%;
-		&:last-child {
-			margin-right: 0;
-		}
-		height: 30px;
-		& > form > * {
-			vertical-align: middle;
-		}
-	}*/
+	/*	font-size:0;
+		border-top: 1px solid lightgray;
+		background-color: #eee;
+		border-radius: 0px 0px 5px 5px;
+		padding: 5px;
+		fieldset {
+	
+			legend {
+				display: block;
+			}
+			&:first-child {
+				width: 42%;
+			}
+			&:last-child {
+				width: 53%;
+			}
+			border: none;
+			margin-right:2%; 
+			box-sizing: border-box;
+			vertical-align: top;
+			display: inline-block;
+			width: 48%;
+			&:last-child {
+				margin-right: 0;
+			}
+			height: 30px;
+			& > form > * {
+				vertical-align: middle;
+			}
+		}*/
 }
 
 button {
@@ -233,6 +240,7 @@ button {
 	font-size: 0.7em;
 	margin: 10px 0 0;
 }
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
