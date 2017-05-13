@@ -10,7 +10,6 @@ if (!function_exists('colortext')) {
 
 	function colortext($r, $g = null, $b = null) {
 		if( is_null($g) || is_null($b)){
-			$r = trim($r, "#\t\n\r\0\x0B");
 			list($r,$g,$b) = hex2rgb($r);
 		}
 		$d = 0;
@@ -40,8 +39,9 @@ if (!function_exists('hex2rgb')) {
 			$g = hexdec(substr($hex, 2, 2));
 			$b = hexdec(substr($hex, 4, 2));
 		}
+		
 		$rgb = array($r, $g, $b);
-		//return implode(",", $rgb); // returns the rgb values separated by commas
+		
 		return $rgb; // returns an array with the rgb values
 	}
 	

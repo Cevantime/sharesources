@@ -14,23 +14,6 @@ function userVal($key, $pop) {
 				<h4 class="card-title">Mon profil</h4>
 				<?php echo form_open_multipart(current_url()); ?>
 				<div class="form-group">
-					<label for="InputUserName">Prénom<sup>*</sup></label>
-					<input type="text" class="form-control" id="InputUserName" name="forname" value="<?php echo userVal('forname', $datas) ?>">
-				</div>
-				<div class="form-group">
-					<label for="InputUserName">Nom<sup>*</sup></label>
-					<input type="text" class="form-control" id="InputUserName" name="name" value="<?php echo userVal('name', $datas) ?>">
-				</div>
-				<div class="form-group">
-					<label for="InputUserName">Login<sup>*</sup></label>
-					<input type="text" class="form-control" id="InputUserName" name="login" value="<?php echo userVal('login', $datas) ?>">
-				</div>
-
-				<div class="form-group">
-					<label for="InputEmail">Email<sup>*</sup></label>
-					<input type="email" class="form-control" id="InputEmail" name="email" value="<?php echo userVal('email', $datas); ?>">
-				</div>
-				<div class="form-group">
 
 					<div class="fileinput fileinput-new text-center" data-provides="fileinput">
 						<div class="fileinput-new thumbnail img-circle">
@@ -47,6 +30,23 @@ function userVal($key, $pop) {
 							<a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Enlever</a>
 						</div>
 					</div>
+				</div>
+				<div class="form-group">
+					<label for="InputUserName">Prénom<sup>*</sup></label>
+					<input type="text" class="form-control" id="InputUserName" name="forname" value="<?php echo userVal('forname', $datas) ?>">
+				</div>
+				<div class="form-group">
+					<label for="InputUserName">Nom<sup>*</sup></label>
+					<input type="text" class="form-control" id="InputUserName" name="name" value="<?php echo userVal('name', $datas) ?>">
+				</div>
+				<div class="form-group">
+					<label for="InputUserName">Login<sup>*</sup></label>
+					<input type="text" class="form-control" id="InputUserName" name="login" value="<?php echo userVal('login', $datas) ?>">
+				</div>
+
+				<div class="form-group">
+					<label for="InputEmail">Email<sup>*</sup></label>
+					<input type="email" class="form-control" id="InputEmail" name="email" value="<?php echo userVal('email', $datas); ?>">
 				</div>
 				
 				<input type="hidden" name="id" value="<?php echo userVal('id', $datas);

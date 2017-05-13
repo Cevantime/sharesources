@@ -53,7 +53,7 @@ class Category extends DATA_Model {
 			'color' => array(
 				'field' => 'color',
 				'label' => translate('Couleur'),
-				'rules' => 'regex_match[/([A-Fa-f0-9]{6})/]'
+				'rules' => 'required|regex_match[/^([A-Fa-f0-9]{6})$/i]'
 			)
 		);
 	}

@@ -1,4 +1,10 @@
-var $ = require('jquery');
+var $ = window.jQuery || require('jquery');
+
+global.jQuery = $;
+global.$ = $;
+
+require('jquery-ui/ui/widgets/draggable');
+require('jquery-ui/ui/widgets/droppable');
 
 function seeFile(fileId) {
 	addWait(fileId);
@@ -17,11 +23,11 @@ function fetchFolder(folderId, callback) {
 		$.get(url('filebrowser/index/seeFolderContent/' + folderId), function (html) {
 			$folderEl.append(html);
 			$folderEl.addClass('folder-fetched');
-			parseNewFiles();
 			removeWait(folderId);
 			if (callback !== undefined) {
 				callback();
 			}
+			parseNewFiles();
 		});
 	} else {
 		if (callback !== undefined) {
@@ -71,7 +77,7 @@ function deleteFile(fileId) {
 }
 
 function url(action) {
-	return window.baseURL+action+"?model="+window.filebrowser_model.replace('/','-')+"&filters="+window.filebrowser_filters.replace(' ','').replace(',','-').replace('/','_');
+	return window.baseURL + action + "?model=" + window.filebrowser_model.replace('/', '-') + "&filters=" + window.filebrowser_filters.replace(' ', '').replace(',', '-').replace('/', '_');
 }
 
 function renameFile(fileId) {
@@ -81,16 +87,16 @@ function renameFile(fileId) {
 	var $filename = null;
 	var $formToAppend = $('#form-add-folder').clone()
 			.css('display', 'inline-block');
-	$formToAppend.find('button').text('Valider').click(function(e){
+	$formToAppend.find('button').text('Valider').click(function (e) {
 		e.preventDefault();
 		$(this).closest('form').submit();
 	});
-	var $formWrapper = $('<span></span>');
-	$formWrapper.append($formToAppend);
-	$formWrapper.click(function(e){e.stopPropagation();})
-//	$formToAppend.click(function(e){e.stopPropagation();})
-	$(document).on('click.lostfocus',function() {
+	$formToAppend.click(function (e) {
+		e.stopPropagation();
+	})
+	$(document).on('click.lostfocus', function () {
 		$filename.html(defaultName);
+		$file.removeClass('being-edited');
 		$(document).off('click.lostfocus');
 	});
 	if ($file.hasClass('file-file')) {
@@ -112,19 +118,19 @@ function renameFile(fileId) {
 		$formToAppend.find('input[name="parent_id"]').val(0);
 	}
 	$formToAppend.append(
-		$('<input>').attr('type', 'hidden').attr('name', 'id').attr('value', fileId)
-	);
+			$('<input>').attr('type', 'hidden').attr('name', 'id').attr('value', fileId)
+			);
 	$formToAppend.submit(function (e) {
 		$(document).off('click.lostfocus');
 		e.preventDefault();
-		if(defaultName === $nameField.val()) {
+		if (defaultName === $nameField.val()) {
 			$filename.html(defaultName);
 			return false;
 		}
 		addWait(fileId);
 		var datas = $formToAppend.serialize();
 		$.post(url('filebrowser/index/save'), datas, function (rep) {
-			
+			parseNewFiles();
 			if (rep.status === 'success') {
 				$filename.html('').append(rep.datas.name);
 				$file.removeClass('being-edited');
@@ -134,9 +140,12 @@ function renameFile(fileId) {
 		return false;
 	});
 
-	$filename.html('').append($formWrapper);
+
+	$filename.text('').append($formToAppend);
 
 	$nameField.focus();
+
+	$nameField.select();
 
 }
 
@@ -151,18 +160,30 @@ function addFolder(fileId) {
 	doSelect($fileRow, function () {
 		var $formToAppend = $('#form-add-folder').clone();
 		$formToAppend.find('[name="parent_id"]').val(fileId);
+		$formToAppend.click(function (e) {
+			e.stopPropagation();
+		});
+
+		$(document).on('click.lostfocus', function () {
+			$formToAppend.remove();
+			$folder.removeClass('being-edited');
+			$(document).off('click.lostfocus');
+		});
 		$formToAppend.submit(function (e) {
 			e.preventDefault();
 			$formToAppend.append('<div class="loader"></div>');
 			var datas = $formToAppend.serialize();
 			$.post(url('filebrowser/index/add'), datas, function (rep) {
+				$formToAppend.parent().remove();
 				if (rep.status === 'success') {
-					$folder.removeClass('folder-fetched');
-					$folder.children('ul').remove();
-					fetchFolder(fileId);
+					var ul = $folder.children('ul');
+					if (!ul.children('li').length) {
+						ul.html('');
+					}
+					ul.append(rep.html);
 				}
-				$formToAppend.find('.loader').remove();
 				$folder.removeClass('being-edited');
+				parseNewFiles();
 			}, 'json');
 			return false;
 		});
@@ -182,6 +203,15 @@ function addFile(fileId) {
 	doSelect($fileRow, function () {
 		var $formToAppend = $('#form-add-file').clone();
 		$formToAppend.find('[name="parent_id"]').val(fileId);
+		$formToAppend.click(function (e) {
+			e.stopPropagation();
+		});
+
+		$(document).on('click.lostfocus', function () {
+			$formToAppend.remove();
+			$folder.removeClass('being-edited');
+			$(document).off('click.lostfocus');
+		});
 		$formToAppend.submit(function (e) {
 			e.preventDefault();
 			var datas = new FormData(this);
@@ -196,14 +226,16 @@ function addFile(fileId) {
 				type: 'post',
 				data: datas,
 				success: function (rep) {
+					$formToAppend.parent().remove();
 					if (rep.status === 'success') {
-						$folder.removeClass('folder-fetched');
-						$folder.children('ul').remove();
-						fetchFolder(fileId);
+						var ul = $folder.children('ul');
+						if (!ul.children('li').length) {
+							ul.html('');
+						}
+						ul.append(rep.html);
 					}
-
 					$folder.removeClass('being-edited');
-					$formToAppend.find('.loader').remove();
+					parseNewFiles();
 				}
 			});
 
@@ -219,13 +251,13 @@ function moveFile(fileId, targetId) {
 	var $inputCsrf = $('[name^="csrf_"]');
 	var csrfToken = $inputCsrf.val();
 	var csrfName = $inputCsrf.attr('name');
-	var datas =  {
-			id: fileId,
-			parent_id: targetId,
+	var datas = {
+		id: fileId,
+		parent_id: targetId,
 	};
-	
+
 	datas[csrfName] = csrfToken;
-	
+
 	$.ajax({
 		url: url('filebrowser/index/save'),
 		data: datas,
@@ -234,17 +266,27 @@ function moveFile(fileId, targetId) {
 		success: function (data) {
 			if (data.status === 'success') {
 				if (targetId === 0) {
-					$.get(url('filebrowser/index/seeFolderContent'), function (html) {
-						$('#main-folder').html(html);
-						parseNewFiles();
-					});
-					return ;
+//					$.get(url('filebrowser/index/seeFolderContent'), function (html) {
+//						$('#main-folder').html(html);
+//						parseNewFiles();
+//					});
+
+//					return;
+					var $target = $('#main-folder');
+				} else {
+					var $target = $('.file[data-file="' + targetId + '"]');
 				}
-				var $target = $('.file[data-file="' + targetId + '"]');
 				$('.file[data-file="' + fileId + '"]').remove();
-				$target.removeClass('folder-fetched');
-				$target.children('ul').remove();
+				var ul = $target.children('ul');
+				if (!ul.children('li').length) {
+					ul.html('');
+				}
 				fetchFolder(targetId);
+				$target.children('ul').append(data.html);
+				parseNewFiles();
+//				$target.removeClass('folder-fetched');
+//				$target.children('ul').remove();
+//				fetchFolder(targetId);
 			}
 		}
 	});
@@ -280,35 +322,19 @@ function parseNewFiles() {
 	$('.file-row:not(.parsed)').addClass('parsed').click(function (e) {
 		e.preventDefault();
 		doSelect($(this));
-	}).on({
-		dragstart: function (e) {
-			$dragged = $(this).parent('.file');
-		},
-		dragend: function (e, ui) {
-			if ($dragged === null)
-				return true;
-			e.preventDefault();
-			var $file = $dragged;
-			if ($draggedIn === null) {
-				moveFile($file.data('file'), 0);
-			} else {
-				var $target = $draggedIn.parent();
-				if ($target.hasClass('file-file')) {
-					$target = $target.parent().parent();
-				}
-				moveFile($file.data('file'), $target.data('file'));
-
+	}).draggable({
+		revert: 'invalid',
+		helper: "clone"
+	}).parent().droppable({
+		drop: function (event, ui) {
+			var $target = $(this);
+			if ($(this).hasClass('file-file')) {
+				$target = $target.parent().parent();
 			}
-			$draggedIn = null;
-			$dragged = null;
+			moveFile(ui.helper.parent().data('file'), $target.data('file'));
+
 		},
-		dragover: function (e) {
-			$draggedIn = $(this);
-			e.preventDefault();
-		},
-		dragleave: function (e) {
-			$draggedIn = null;
-		}
+		greedy: true
 	});
 
 	$('.file.file-file:not(.parsed)').addClass('parsed').dblclick(function () {
@@ -376,7 +402,7 @@ function initForms() {
 			submitFolder($clone, e);
 		}).prependTo('#file-browser');
 	});
-	
+
 	$('h2 [data-action="add-file"]').click(function (e) {
 		e.preventDefault();
 		var $clone = $formFile.clone();
@@ -403,7 +429,7 @@ function onSelect($elm) {
 		type: type,
 		infos: infos
 	};
-	
+
 	filebrowser_callback(obj);
 	window.close();
 }
@@ -411,5 +437,12 @@ function onSelect($elm) {
 $(function () {
 	parseNewFiles();
 	initForms();
+	$('#main').droppable({
+		drop: function (event, ui) {
 
+			moveFile(ui.helper.parent().data('file'), 0);
+
+		},
+		greedy: true
+	});
 });
