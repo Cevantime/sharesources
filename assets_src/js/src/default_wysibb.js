@@ -18,9 +18,22 @@ var openFile = function (command, value, queryState) {
 	window.document.exitFullscreen();
 	openFileBrowser({
 		callback: function (file) {
+			
+			var fileType = file.infos.type.split('/')[0];
+			those.wbbInsertCallback(command, {NAME: file.infos.name, SRC: file.src});
+		},
+		filters: 'image/png,image/jpg,image/gif'
+	});
+};
 
-			those.wbbInsertCallback(command, {TYPE: "image", SELTEXT: file.src});
-		}
+var openZip = function (command, value, queryState) {
+	var those = this;
+	window.document.exitFullscreen();
+	openFileBrowser({
+		callback: function (file) {
+			those.wbbInsertCallback(command, {NAME: file.infos.name, SRC: encodeURI(file.src)});
+		},
+		filters: 'application/zip'
 	});
 };
 
@@ -59,7 +72,7 @@ var codeModal = function (command, opt, queryState) {
 
 	form += '</select></div>';
 	form += '<div class="form-group"><label>Code : </label>';
-	form += '<textarea name="code" class="form-control"></textarea></div>';
+	form += '<textarea name="code" class="form-control" rows="7"></textarea></div>';
 	var $form = $(form);
 
 	var those = this;
@@ -96,20 +109,21 @@ var codeModal = function (command, opt, queryState) {
 
 };
 
-var imgTransform = '<img src="'+window.baseURL+'{SELTEXT}" />';
-var zipTransform = '<img class="zip" data-source="{TYPE}" src="'+window.baseURL+'{SELTEXT}"/></div>';
+var imgTransform = '<img src="'+window.baseURL+'{SRC}" alt="{NAME}"/>';
+var zipTransform = '<a href="'+window.baseURL+'{SRC}">{NAME}</a>';
 
-var fileTransformOpt = {};
+var imgTransformOpt = {};
+var zipTransformOpt = {};
 
-fileTransformOpt[imgTransform] = '[file=image]{SELTEXT}[/file]';
-fileTransformOpt[zipTransform] = '[file=zip]{SELTEXT}[/file]';
+imgTransformOpt[imgTransform] = '[image={SRC}]{NAME}[/image]';
+zipTransformOpt[zipTransform] = '[zip={SRC}]{NAME}[/zip]';
 
 var wbbOpt = {
 	hotkeys: false, //disable hotkeys (native browser combinations will work)
 	showHotkeys: false, //hide combination in the tooltip when you hover.
 	lang: "fr",
 	traceTextarea: false,
-	buttons: 'bold,italic,underline,strike,sup,sub,|,h2,h3,h4,h5,h6,|,warning,keynotion,|,img,video,link,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,|,code,table,fullscreen',
+	buttons: 'bold,italic,underline,strike,sup,sub,|,h2,h3,h4,h5,h6,|,warning,keynotion,|,img,zip,video,link,|,bullist,numlist,|,justifyleft,justifycenter,justifyright,|,code,table,fullscreen',
 	allButtons: {
 		targetlink: {
 			title: 'New page link',
@@ -169,7 +183,13 @@ var wbbOpt = {
 		img: {
 			title: "Insert your own images !",
 			cmd: openFile,
-			transform: fileTransformOpt
+			transform: imgTransformOpt
+		},
+		zip: {
+			title: "Insert your own zips !",
+			buttonText : 'zip',
+			cmd: openZip,
+			transform: zipTransformOpt
 		},
 		code: {
 			title: "Insert code snippet",
