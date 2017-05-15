@@ -20,6 +20,7 @@ function fetchFolder(folderId, callback) {
 	if (!$folderEl.hasClass('folder-fetched')) {
 
 		addWait(folderId);
+		
 		$.get(url('filebrowser/index/seeFolderContent/' + folderId), function (html) {
 			$folderEl.append(html);
 			$folderEl.addClass('folder-fetched');
@@ -77,7 +78,7 @@ function deleteFile(fileId) {
 }
 
 function url(action) {
-	return window.baseURL + action + "?model=" + window.filebrowser_model.replace('/', '-') + "&filters=" + window.filebrowser_filters.replace(' ', '').replace(',', '-').replace('/', '_');
+	return window.baseURL + action + "?model=" + window.filebrowser_model + "&filters=" + window.filebrowser_filters;
 }
 
 function renameFile(fileId) {

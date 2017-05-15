@@ -14,12 +14,9 @@ class Index extends FILEBROWSER_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->layout->setLayout('filebrowser/layout/filebrowser');
-		$this->filters = explode('-',$this->input->get('filters'));
-		for($i=0; $i<count($this->filters);$i++) {
-			$this->filters[$i] = str_replace('_', '/', $this->filters[$i]);
-			
-		}
-		$this->model = str_replace('-', '/', $this->input->get('model'));
+		$this->filters = explode(',',$this->input->get('filters'));
+		
+		$this->model = $this->input->get('model');
 		$this->modelName = pathinfo($this->model)['filename'];
 		$this->load->model($this->model);
 //		$this->output->enable_profiler(true);

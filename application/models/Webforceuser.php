@@ -126,6 +126,7 @@ class Webforceuser extends User {
 		
 		foreach ($columns as $col) {
 			foreach($search as $s) {
+				$s = $this->escape_like_str($s);
 				$this->select("if($col LIKE '%$s%' ESCAPE '!', @matching := @matching + 1, 'dummy')", FALSE);
 			}
 			
@@ -134,6 +135,7 @@ class Webforceuser extends User {
 		// weird but could not make it working with @matching := 0 
 		$this->select("(@matching := @matching - @matching) as 'reset' ");
 		$this->order_by('matching DESC');
+		
 		return parent::search($limit, $offset, $search, $columns);
 	}
 	

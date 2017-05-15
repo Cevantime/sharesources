@@ -15,13 +15,14 @@ class BBCodeParser extends JBBCode\Parser {
 	public function __construct() {
 		parent::__construct();
 		$this->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
-
+		
+		$baseUrl = base_url();
 
 		$builder = new JBBCode\CodeDefinitionBuilder('code', '<pre><code class="{option}">{param}</code></pre>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 
-		$builder = new JBBCode\CodeDefinitionBuilder('image', '<img src="{option}" alt="{param}"/>');
+		$builder = new JBBCode\CodeDefinitionBuilder('image', '<img src="'.$baseUrl.'{option}" alt="{param}"/>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 
@@ -44,11 +45,11 @@ class BBCodeParser extends JBBCode\Parser {
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 
-		$builder = new JBBCode\CodeDefinitionBuilder('zip', '<a href="{option}" target="_blank" class="ziplink resourcelink">{param}</a>');
+		$builder = new JBBCode\CodeDefinitionBuilder('zip', '<a href="'.$baseUrl.'{option}" target="_blank" class="ziplink resourcelink">{param}</a>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 
-		$builder = new JBBCode\CodeDefinitionBuilder('pdf', '<a href="{option}" target="_blank" class="pdflink resourcelink">{param}</a>');
+		$builder = new JBBCode\CodeDefinitionBuilder('pdf', '<a href="'.$baseUrl.'{option}" target="_blank" class="pdflink resourcelink">{param}</a>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 
