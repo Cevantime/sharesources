@@ -6,6 +6,8 @@ require('bootstrap');
 
 require('./fullscreen');
 
+console.log(window.document.exitFullscreen);
+
 
 
 
