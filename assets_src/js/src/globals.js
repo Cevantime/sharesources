@@ -4,6 +4,8 @@ global.$ = $;
 
 require('bootstrap');
 
+require('./fullscreen');
+
 
 
 
