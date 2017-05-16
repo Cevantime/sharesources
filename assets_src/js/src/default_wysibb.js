@@ -4,6 +4,8 @@ require('wysibb');
 
 require('./compiled/homePopup');
 
+require('./fullscreen');
+
 var fsc = require('./compiled/full_screen.js');
 
 var openFileBrowser = require('./compiled/filebrowser');
@@ -53,16 +55,17 @@ var codeModal = function (command, opt, queryState) {
 	
 	window.document.exitFullscreen();
 	var languages = [
-		'java',
-		'python',
-		'shell',
 		'php',
 		'html',
 		'css',
+		'javascript',
+		'shell',
+		'java',
+		'python',
+		
 		'cpp',
 		'c#',
-		'sql',
-		'javascript'
+		'sql'
 	]
 	var form = '<form id="wysibb-code-form">\n\
 		<div class="form-group"><label>Language :</label><select class="form-control" name="language">';
