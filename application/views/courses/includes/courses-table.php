@@ -31,11 +31,11 @@
 							<td>
 								<?php echo date('Y/m/d', $course->creation_time); ?>
 							</td>
-							<td class="td-actions">
+							<td>
 								<?php if (user_can('see_files', 'course', $course->id)): ?>
 									<?php if ($course->files): ?>
 										<?php foreach ($course->files as $file): ?>
-											<a class="btn" target="_blank" style="margin: 5px;"href="<?php echo base_url($file->file); ?>" >
+											<a class="btn" target="_blank" style="margin: 5px; padding: 5px;"href="<?php echo base_url($file->file); ?>" >
 												<i class="fa <?php echo filefaclass($file->infos); ?>"></i> <?php echo $file->name; ?>
 											</a>
 											<br/>

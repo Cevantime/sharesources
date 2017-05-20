@@ -172,6 +172,30 @@ td p {
 	}
 }
 
+// input len track
+
+.input-len {
+	color: green;
+	.input-remaining {
+		display: initial;
+	}
+	
+	.input-exceeded {
+		display: none;
+	}
+	
+	&.limit-exceeded {
+		color: red;
+		.input-remaining {
+			display: none;
+		}
+		
+		.input-exceeded {
+			display: initial;
+		}
+	}
+}
+
 @keyframes swipenotif {
 	0% {
 		height: 39px;
