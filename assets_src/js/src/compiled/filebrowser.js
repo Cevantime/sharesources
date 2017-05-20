@@ -1,4 +1,4 @@
-var jQuery = require('jquery');
+var jQuery = window.jQuery || require('jquery');
 
 var openFileBrowser = function (params) {
 	var defaults = {

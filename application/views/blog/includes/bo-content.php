@@ -101,13 +101,15 @@
 		<?php endforeach; ?>
 	<?php endif; ?>
 </div>
-<div class="form-group">
+<div class="form-group" data-module="show_input_len">
 	<label>Mot clés</label>
 	<textarea id="blogpost_add_keywordss" 
 			  name="keywords" 
 			  rows="4" 
-			  class="form-control"><?php echo isset($blogpost_add_pop['keywords']) ? $blogpost_add_pop['keywords'] : '' ?></textarea>
-	<small class="text-muted">Ce champs sert au référencement dans le moteur de recherche <strong>local</strong></small>
+			  data-limit="255" 
+			  class="form-control input-tracked"><?php echo isset($blogpost_add_pop['keywords']) ? $blogpost_add_pop['keywords'] : '' ?></textarea>
+			  <small class="text-muted input-len"><span class="input-len-num"></span> caractères <span class="input-remaining">restants</span><span class="input-exceeded">à supprimer</span></small><br>
+			  <small class="text-muted">Ce champs sert au référencement dans le moteur de recherche <strong>local</strong></small>
 </div>
 <div class="form-group" data-module="select_tags">
 
@@ -115,8 +117,9 @@
 
 	<textarea id="blogpost_add_tags" 
 			  name="tags" 
+			  data-limit="255" 
 			  rows="4" 
-			  class="to-selectize"><?php echo isset($blogpost_add_pop['tags']) ? $blogpost_add_pop['tags'] : '' ?></textarea>
+			  class="to-selectize input-tracked"><?php echo isset($blogpost_add_pop['tags']) ? $blogpost_add_pop['tags'] : '' ?></textarea>
 	<small class="text-muted">Si un tag n'existe pas, il sera automatiquement rajouté</small>
 
 </div>

@@ -1,4 +1,4 @@
-var $ = require('jquery');
+var $ =  window.jQuery || require('jquery');
 
 require('../../compiled/homePopup');
 
