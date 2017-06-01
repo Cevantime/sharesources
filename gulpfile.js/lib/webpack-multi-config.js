@@ -49,7 +49,7 @@ module.exports = function (env) {
 		webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin())
 	}
 
-	if (env === 'test') {
+	if (env !== 'test') {
 		// Karma doesn't need entry points or output settings
 		webpackConfig.entry = config.tasks.javascript.entries
 
