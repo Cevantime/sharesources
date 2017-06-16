@@ -154,8 +154,12 @@ class Teachsession extends Webforceuser {
 
 	protected function beforeUpdate(&$datas = null, $where = null) {
 		parent::beforeUpdate($datas, $where);
-		$datas['date_start'] = DateTime::createFromFormat('d/m/Y', $datas['date_start'])->format('U');
-		$datas['date_end'] = DateTime::createFromFormat('d/m/Y', $datas['date_end'])->format('U');
+		if( !empty($datas['date_start'])) {
+			$datas['date_start'] = DateTime::createFromFormat('d/m/Y', $datas['date_start'])->format('U');
+		}
+		if( !empty($datas['date_end'])) {
+			$datas['date_end'] = DateTime::createFromFormat('d/m/Y', $datas['date_end'])->format('U');
+		}
 	}
 	
 	
