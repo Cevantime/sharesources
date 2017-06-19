@@ -260,6 +260,18 @@ class BBCodeParser extends JBBCode\Parser {
 					return translate('image non trouvée');
 				}
 			},
+			'[image=(.*?)](.*?)[/image]' => function($matches) {
+				$filerealpath = realpath(latex_decode($matches[1]));
+				if($filerealpath) {
+					$infos = getimagesize($filerealpath);
+					$maxwidth = 380;
+					$width = min(array($infos[0], $maxwidth));;
+					return '\includegraphics[width='.$width.'px]{' . $filerealpath . '}';
+					
+				} else {
+					return translate('image non trouvée');
+				}
+			},
 			'[video](.*?)[/video]' => function($matches) {
 				return '\href{'.latex_decode($matches[1]).'}';
 			},
