@@ -2,7 +2,7 @@
 define('BASEPATH', 'toto');
 $db = array();
 putenv('LANG=fr_FR.UTF-8');
-putenv('APPLICATION_ENV=default');
+putenv('APPLICATION_ENV=thibault');
 
 require_once __DIR__.'/../../application/config/database.php';
 

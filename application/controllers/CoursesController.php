@@ -444,5 +444,24 @@ class CoursesController extends MY_Controller {
 			redirect('home');
 		}
 	}
+	
+	public function search() {
+		
+//		if(!$this->input->is_ajax_request()) {
+//			show_404();
+//		}
+		$this->output->enable_profiler(false);
+		$search = $this->input->get('q');
+		$this->load->model('course');
+		if(!$search) {
+			$foundCourses = $this->course->getList();
+		} else {
+			$foundCourses = $this->course->search(null, null,$search, array('title'));
+		}
+		if(!$foundCourses) {
+			$foundCourses = array();
+		}
+		die( json_encode(array('datas' => $foundCourses)) );
+	}
 
 }
