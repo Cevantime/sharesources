@@ -82,6 +82,7 @@ $route['courses/tag/(:any)'] = 'CoursesController/allByTag/$1';
 $route['courses/changedateshare'] = 'CoursesController/changeDateShare';
 $route['courses/sendmsg'] = 'CoursesController/sendMsg';
 $route['courses/sendmsg/(:num)'] = 'CoursesController/sendMsg/$1';
+$route['courses/search'] = 'CoursesController/search';
 
 $route['search'] = 'SearchController/index';
 

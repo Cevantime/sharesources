@@ -212,6 +212,19 @@ class BBCodeParser extends JBBCode\Parser {
 
 		$newstr = latex_special_chars($newstr);
 		
+		$parseFiles = function($matches) {
+			$filerealpath = realpath(latex_decode($matches[2]));
+			if($filerealpath) {
+				$infos = getimagesize($filerealpath);
+				$maxwidth = 380;
+				$width = min(array($infos[0], $maxwidth));;
+				return '\includegraphics[width='.$width.'px]{' . realpath(latex_decode($matches[2])) . '}';
+
+			} else {
+				return translate('image non trouvée');
+			}
+		} ;
+		
 		$map = array(
 			'[h2](.*?)[/h2]' => '\section{$1}' . "\n" . '',
 			'[h3](.*?)[/h3]' => '\subsection{$1}' . "\n" . '',
@@ -248,30 +261,8 @@ class BBCodeParser extends JBBCode\Parser {
 			'[url=(.*?)](.*?)[/url]' => function($matches) {
 				return '\href{'.latex_decode($matches[1]).'}{'.$matches[2].'}';
 			},
-			'[file=(.*?)](.*?)[/file]' => function($matches) {
-				$filerealpath = realpath(latex_decode($matches[2]));
-				if($filerealpath) {
-					$infos = getimagesize($filerealpath);
-					$maxwidth = 380;
-					$width = min(array($infos[0], $maxwidth));;
-					return '\includegraphics[width='.$width.'px]{' . realpath(latex_decode($matches[2])) . '}';
-					
-				} else {
-					return translate('image non trouvée');
-				}
-			},
-			'[image=(.*?)](.*?)[/image]' => function($matches) {
-				$filerealpath = realpath(latex_decode($matches[1]));
-				if($filerealpath) {
-					$infos = getimagesize($filerealpath);
-					$maxwidth = 380;
-					$width = min(array($infos[0], $maxwidth));;
-					return '\includegraphics[width='.$width.'px]{' . $filerealpath . '}';
-					
-				} else {
-					return translate('image non trouvée');
-				}
-			},
+			'[file=(.*?)](.*?)[/file]' => $parseFiles,
+			'[image=(.*?)](.*?)[/image]' => $parseFiles,
 			'[video](.*?)[/video]' => function($matches) {
 				return '\href{'.latex_decode($matches[1]).'}';
 			},

@@ -7,9 +7,9 @@ class TeachersController extends MY_Controller {
 	
 	public function search() {
 		
-//		if(!$this->input->is_ajax_request()) {
-//			show_404();
-//		}
+		if(!$this->input->is_ajax_request()) {
+			show_404();
+		}
 		$this->output->enable_profiler(false);
 		$search = $this->input->get('q');
 		$this->load->model('webforceteacher');

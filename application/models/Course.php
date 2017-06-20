@@ -438,7 +438,7 @@ class Course extends Blogpost {
 		}
 
 		$results = $this->get();
-
+		
 		return $this->formatFiles($results);
 	}
 

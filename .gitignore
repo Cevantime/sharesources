@@ -12,3 +12,4 @@
 /dbchanges/liquibase/update.php
 /uploads/
 /application/composer.lock
+/application/nbproject/private/
