@@ -491,6 +491,7 @@ class Picture {
 
 		/*      while( strpos( $string, '--' ) > 0 )
 		 $string = str_replace( "--", "-", $string );
-		*/		return( strtolower( $string ) );
+		*/		
+		return( strtolower( $string ) );
 	}
 }

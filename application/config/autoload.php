@@ -67,7 +67,21 @@ $autoload['libraries'] = array('layout/layout', 'session');
   |	$autoload['helper'] = array('url', 'file');
  */
 
-$autoload['helper'] = array('config','alias', 'teachsession', 'locale', 'url', 'traduction', 'module', 'memberspace/authorization', 'memberspace/connection', 'form', 'images/image','route');
+$autoload['helper'] = array(
+	'config',
+	'alias', 
+	'teachsession', 
+	'locale', 
+	'url', 
+	'traduction', 
+	'module', 
+	'memberspace/authorization', 
+	'memberspace/connection', 
+	'form', 
+	'images/image',
+	'route',
+	'text'
+);
 
 
 /*

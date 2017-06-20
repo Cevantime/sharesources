@@ -41,6 +41,7 @@ if (!defined('BASEPATH'))
 if (!function_exists('imageresize')) {
 	// very useful
 	function imageresize($src, $width, $height=null, $crop = true) {
+		return 'test';
 		$path_request = $src;
 		$remote = true;
 		
@@ -49,7 +50,7 @@ if (!function_exists('imageresize')) {
 		
 		$explode = explode('.',$path_request);
 		if(!in_array(strtolower(end($explode)), $ext_allowed)) {
-			return 'What ?';
+			return $src;
 		}
 
 		$source = $path_request;
