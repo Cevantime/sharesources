@@ -48,7 +48,9 @@ if (!function_exists('imageresize')) {
 		$ext_allowed = array('jpg','jpeg','gif','png');
 		
 		$explode = explode('.',$path_request);
-		if(!in_array(strtolower(end($explode)), $ext_allowed)) return $src;
+		if(!in_array(strtolower(end($explode)), $ext_allowed)) {
+			return 'What ?';
+		}
 
 		$source = $path_request;
 		$CI =& get_instance();
@@ -66,7 +68,7 @@ if (!function_exists('imageresize')) {
 			else
 				$pict->dimensionTo( $width, $height );
 
-			$pict->toFile($searchfilename, $quality=90 );
+			$pict->toFile( $searchfilename, $quality=90 );
 		}
 
 		$output = base_url() . 'assets/cache/'.$filename;
