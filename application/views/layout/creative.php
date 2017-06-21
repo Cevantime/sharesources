@@ -246,7 +246,7 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="#"> <?php echo ellipsize( $title_for_layout, 60, 0.5 ); ?> </a>
+							<a class="navbar-brand" href="#" title="<?php echo $title_for_layout; ?>"> <?php echo ellipsize( $title_for_layout, 45, 0.5 ); ?> </a>
 						</div>
 						<div class="collapse navbar-collapse">
 							<ul class="nav navbar-nav navbar-right">
