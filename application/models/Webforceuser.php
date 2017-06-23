@@ -27,31 +27,6 @@ class Webforceuser extends User {
 		parent::afterUpdate($datas, $where);
 	}
 	
-	public function connect($id = null) {
-		$this->load->library('teachSessionManager');
-		
-		$this->load->library('memberspace/loginManager');
-		
-		if( ! $id ) {
-			$id = $this->getData('id');
-		}
-		$this->normalConnect($id);
-		
-		$session = $this->teachsessionmanager->createSessionFromUserId($id);
-		
-		if($this->is('teacher', $id)) {
-			$this->loginmanager->setUserModel('webforceteacher');
-			
-		} else if($session && $session->id == $id){
-			$this->loginmanager->setUserModel('teachsession');
-		}
-		
-	}
-	
-	public function normalConnect($id = null) {
-		return parent::connect($id);
-	}
-	
 	public function getCourses($userId = null, $refresh = false) {
 		if(!$userId) {
 			$userId = $this->getData('user_id');

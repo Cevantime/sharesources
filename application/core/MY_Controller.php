@@ -7,7 +7,16 @@ class MY_Controller extends MX_Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		$this->load->library('memberspace/loginManager', 'webforceuser');
+		if(($userId = $this->session->userdata('user_id'))){
+			if(user_is('administrators', $userId)){
+				$this->loginmanager->setUserModel('webforceadmin');
+			} else if(user_is('teacher', $userId)){
+				$this->loginmanager->setUserModel('webforceteacher');
+			} else {
+				$this->loginmanager->setUserModel('webforceuser');
+			}
+		}
+		
 		if(!is_connected()) {
 			$this->session->set_userdata('login_redirect_url', current_url());
 			redirect('login');

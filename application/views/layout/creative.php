@@ -37,7 +37,7 @@
 		<?php echo $this->layout->block(); ?>
 	</head>
 
-	<body data-module="globals">
+	<body data-module="globals" <?php if(pref_is('sidebar_collapsed', '1')): ?>class="sidebar-mini"<?php endif; ?>>
 		<div class="wrapper">
 			<div class="sidebar" data-active-color="rose" data-background-color="white" data-image="<?php echo base_url(config('app_sidebar_image') ? config('app_sidebar_image') : "assets/local/images/sidebar-1.jpg"); ?>">
 
@@ -86,13 +86,13 @@
 					</div>
 					<ul class="nav">
 						<li>
-							<a data-toggle="collapse" <?php if( route_is('courses')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#pagesExamples">
+							<a data-toggle="collapse" <?php if( pref_is('sidebar_collapsed', '0') && route_is('courses')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#pagesExamples">
 								<i class="material-icons">library_books</i>
 								<p>Les cours
 									<b class="caret"></b>
 								</p>
 							</a>
-							<div  class="collapse<?php if( route_is('courses')): ?> in<?php endif; ?>" id="pagesExamples">
+							<div  class="collapse<?php if( pref_is('sidebar_collapsed', '0') && route_is('courses')): ?> in<?php endif; ?>" id="pagesExamples">
 									
 								<ul class="nav">
 									<li>
@@ -116,13 +116,13 @@
 						</li>
 						<?php if (user_can('*', 'category')): ?>
 							<li>
-								<a data-toggle="collapse" <?php if( route_is('categorie')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#componentsExamples">
+								<a data-toggle="collapse" <?php if( pref_is('sidebar_collapsed', '0') && route_is('categorie')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#componentsExamples">
 									<i class="material-icons">apps</i>
 									<p>Les catégories
 										<b class="caret"></b>
 									</p>
 								</a>
-								<div class="collapse<?php if( route_is('categorie')): ?> in<?php endif; ?>" id="componentsExamples">
+								<div class="collapse<?php if( pref_is('sidebar_collapsed', '0') && route_is('categorie')): ?> in<?php endif; ?>" id="componentsExamples">
 									<ul class="nav">
 										<li>
 											<a href="<?php echo base_url('categories/all'); ?>">Toutes les catégories</a>
@@ -136,13 +136,13 @@
 						<?php endif; ?>
 						<?php if (user_can('see', 'teachsession')): ?>
 							<li>
-								<a data-toggle="collapse" <?php if( route_is('sessions')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#formsExamples">
+								<a data-toggle="collapse" <?php if( pref_is('sidebar_collapsed', '0') && route_is('sessions')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#formsExamples">
 									<i class="material-icons">date_range</i>
 									<p>Les sessions
 										<b class="caret"></b>
 									</p>
 								</a>
-								<div class="collapse<?php if( route_is('sessions')): ?> in<?php endif; ?>" id="formsExamples">
+								<div class="collapse<?php if( pref_is('sidebar_collapsed', '0') && route_is('sessions')): ?> in<?php endif; ?>" id="formsExamples">
 									<ul class="nav">
 										<li>
 											<a href="<?php echo base_url('sessions/mines'); ?>">Mes sessions</a>
@@ -164,13 +164,13 @@
 						<?php endif; ?>
 						<?php if (user_can('see', 'webforceteacher')): ?>
 							<li>
-								<a data-toggle="collapse" <?php if( route_is('teacher')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#tablesExamples">
+								<a data-toggle="collapse" <?php if( pref_is('sidebar_collapsed', '0') && route_is('teacher')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#tablesExamples">
 									<i class="material-icons">account_box</i>
 									<p>Les formateurs
 										<b class="caret"></b>
 									</p>
 								</a>
-								<div class="collapse<?php if( route_is('teacher')): ?> in<?php endif; ?>" id="tablesExamples">
+								<div class="collapse<?php if( pref_is('sidebar_collapsed', '0') && route_is('teacher')): ?> in<?php endif; ?>" id="tablesExamples">
 									<ul class="nav">
 										<li>
 											<a href="<?php echo base_url('teachers/all'); ?>">Tous les formateurs</a>
@@ -186,13 +186,13 @@
 						<?php endif; ?>
 						<?php if (user_can('see', 'webforceadmin')): ?>
 							<li>
-								<a data-toggle="collapse" <?php if( route_is('administrator')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#adminExamples">
+								<a data-toggle="collapse" <?php if( pref_is('sidebar_collapsed', '0') && route_is('administrator')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#adminExamples">
 									<i class="material-icons">account_circle</i>
 									<p>Les administrateurs
 										<b class="caret"></b>
 									</p>
 								</a>
-								<div class="collapse<?php if( route_is('administrator')): ?> in<?php endif; ?>" id="adminExamples">
+								<div class="collapse<?php if( pref_is('sidebar_collapsed', '0') && route_is('administrator')): ?> in<?php endif; ?>" id="adminExamples">
 									<ul class="nav">
 										<li>
 											<a href="<?php echo base_url('administrators'); ?>">Tous les administrateurs</a>
@@ -209,13 +209,13 @@
 						<?php endif; ?>
 						<?php if(user_can('*','configuration')): ?>
 							<li>
-								<a data-toggle="collapse" <?php if( route_is('admin/')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#configuration">
+								<a data-toggle="collapse" <?php if( pref_is('sidebar_collapsed', '0') && route_is('admin/')): ?> aria-expanded="true" <?php else: ?> class="collapsed"<?php endif; ?> href="#configuration">
 									<i class="material-icons">settings</i>
 									<p>Administration
 										<b class="caret"></b>
 									</p>
 								</a>
-								<div class="collapse<?php if( route_is('admin/')): ?> in<?php endif; ?>" id="configuration">
+								<div class="collapse<?php if( pref_is('sidebar_collapsed', '0') && route_is('admin/')): ?> in<?php endif; ?>" id="configuration">
 									<ul class="nav">
 										<li>
 											<a href="<?php echo base_url('admin/configuration'); ?>">Configuration</a>

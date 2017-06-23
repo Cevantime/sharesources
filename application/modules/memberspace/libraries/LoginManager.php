@@ -26,7 +26,6 @@ class LoginManager {
 		if($this->_userModel == $userModel) {
 			return;
 		}
-		
 		$this->_ci->load->model($userModel);
 		$exp = explode('/', $userModel);
 		$modelName = end($exp);

@@ -885,3 +885,7 @@ INSERT INTO rights (`name`,`type`, `object_key`) VALUES ('see', 'category', '*')
 SET @seeCatRightId := LAST_INSERT_ID();
 
 INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@teacherGroupId, @seeCatRightId);
+
+--changeset thibault:add_preferences_to_teachers
+ALTER TABLE `webforce_teachers` ADD `preferences` TEXT NOT NULL;
+

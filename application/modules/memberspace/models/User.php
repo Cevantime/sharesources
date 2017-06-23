@@ -139,6 +139,7 @@ class User extends DATA_Model {
 		}
 		$CI->load->library('session');
 		$user_id_in_session = $CI->session->userdata('user_id');
+		
 		return $user_id_in_session && $user_id_in_session == $id && $this->getData('id') == $id;
 	}
 
@@ -155,12 +156,18 @@ class User extends DATA_Model {
 	protected function beforeInsert(&$to_insert = null) {
 		parent::beforeInsert($to_insert);
 		$to_insert['password'] = password_hash($to_insert['password'], PASSWORD_DEFAULT);
+		if(isset($to_insert['preferences'])) {
+			$to_insert['preferences'] = json_encode($to_insert['preferences']);
+		}
 	}
 	
 	protected function beforeUpdate(&$datas = null, $where = null) {
 		parent::beforeUpdate($datas, $where);
 		if(isset($datas['password']) && $datas['password']) {
 			$datas['password'] = password_hash($datas['password'], PASSWORD_DEFAULT);
+		}
+		if(isset($to_insert['preferences'])) {
+			$to_insert['preferences'] = json_encode($to_insert['preferences']);
 		}
 	}
 

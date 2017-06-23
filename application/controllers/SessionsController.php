@@ -52,12 +52,10 @@ class SessionsController extends MY_Controller {
 		$this->load->library('teachSessionManager');
 		if(user_can('set_current', 'teachsession', $teachSessionId)){
 			$this->teachsessionmanager->setCurrentTeachSession($teachSessionId);
-			if(user_is('teacher') && $this->webforceteacher) {
-				$this->webforceteacher->current_teachsession = $teachSessionId;
-				$this->webforceteacher->update(
-					array('current_teachsession' => $teachSessionId),
-					array('users.id' => $this->webforceteacher->id)
-				);
+			if(user_is('teacher')) {
+				$user = user();
+				$user->current_teachsession = $teachSessionId;
+				$user->save();
 			}
 			add_success('Votre session a bien été changée');
 			

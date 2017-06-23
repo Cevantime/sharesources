@@ -80,7 +80,8 @@ $autoload['helper'] = array(
 	'form', 
 	'images/image',
 	'route',
-	'text'
+	'text',
+	'userpref'
 );
 
 

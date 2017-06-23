@@ -106,5 +106,7 @@ $route['teacher/profile'] = 'TeachersController/profile';
 $route['notifications/index'] = 'NotificationsController/index';
 $route['notifications/see/(:num)'] = 'NotificationsController/see/$1';
 $route['notifications/markasseen/(:num)'] = 'NotificationsController/markAsSeen/$1';
+
+$route['userprefs/(:any)/(:any)'] = 'UserprefsController/index/$1/$2';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

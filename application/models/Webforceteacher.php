@@ -9,9 +9,21 @@ class Webforceteacher extends Webforceuser {
 	public function getTableName() {
 		return self::TABLE_NAME;
 	}
+	
+	public function getRow($where = array(), $type = 'object', $columns = null) {
+		$row = parent::getRow($where, $type, $columns);
+		if(is_array($row)){
+			$row['preferences'] = json_decode($row['preferences'], true);
+			
+		} else if(is_object($row)) {
+			$row->preferences = json_decode($row->preferences);
+		}
+		
+		return $row;
+	}
 
 	public function connect($id = null) {
-		parent::normalConnect($id);
+		parent::connect($id);
 		$this->load->library('teachSessionManager');
 		if ($this->current_teachsession) {
 			$this->teachsessionmanager->setCurrentTeachSession($this->current_teachsession);

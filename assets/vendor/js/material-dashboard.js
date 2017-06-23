@@ -33,9 +33,10 @@
  * ========================================================= */
 
  (function(){
-     isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
+     isNotMac = navigator.platform.indexOf('Win') > -1 
+	 || navigator.platform.indexOf('Linux') > - 1;
 
-     if (isWindows && !$('body').hasClass('sidebar-mini')){
+     if (isNotMac && !$('body').hasClass('sidebar-mini')){
         // if we are on windows OS we activate the perfectScrollbar function
         $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
@@ -221,7 +222,7 @@ md = {
                 $('body').removeClass('sidebar-mini');
                 md.misc.sidebar_mini_active = false;
 
-                if(isWindows){
+                if(isNotMac){
                     $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
                 }
 
@@ -231,7 +232,7 @@ md = {
                     $(this).css('height','auto');
                 });
 
-                if(isWindows){
+                if(isNotMac){
                     $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
                 }
 

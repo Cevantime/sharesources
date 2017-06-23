@@ -300,9 +300,9 @@ abstract class DATA_Model extends CI_Model {
 	 * @param array $where the where sql clause in an array form
 	 */
 	public function loadRow($where) {
-		$rows = $this->get($where, 'array');
-		if ($rows && count($rows) == 1) {
-			$this->setDatas($rows[0]);
+		$row = $this->getRow($where, 'array');
+		if ($row ) {
+			$this->setDatas($row);
 			return true;
 		}
 		return false;
