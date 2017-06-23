@@ -419,7 +419,7 @@ class Course extends Blogpost {
 		$this->join(Keyword::TABLE_NAME, $this->db->dbprefix(Keyword::TABLE_NAME) . '.id=' . $this->db->dbprefix(Linkcoursekeyword::$TABLE_NAME) . '.keyword_id', 'left');
 //		$this->join(User::$TABLE_NAME, User::$TABLE_NAME . '.id = ' . $this->db->dbprefix(Post::$TABLE_NAME) . '.user_id', 'left');
 
-		$this->db->select('count(*) as matchings');
+		$this->db->select('count(distinct '.Keyword::TABLE_NAME.'.id) as matchings');
 
 		$table_hash = Keyword::TABLE_NAME;
 		if ( ! is_array($search))
