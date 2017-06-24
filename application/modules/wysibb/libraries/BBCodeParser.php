@@ -212,6 +212,8 @@ class BBCodeParser extends JBBCode\Parser {
 
 		$newstr = latex_special_chars($newstr);
 		
+		$baseUrl = base_url();
+		
 		$parseFiles = function($matches) {
 			$filerealpath = realpath(latex_decode($matches[2]));
 			if($filerealpath) {
