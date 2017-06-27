@@ -27,6 +27,20 @@ class Webforceuser extends User {
 		parent::afterUpdate($datas, $where);
 	}
 	
+	public function connect($id = null) {
+		parent::connect($id);
+		if( ! $id) {
+			$id = $this->getData('id');
+		}
+		$this->load->library('teachSessionManager');
+		if( ! user_is('teacher')) {
+				
+			$this->teachsessionmanager->setCurrentTeachSession($id);
+			
+		}
+		
+	}
+	
 	public function getCourses($userId = null, $refresh = false) {
 		if(!$userId) {
 			$userId = $this->getData('user_id');
