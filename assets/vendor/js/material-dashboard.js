@@ -35,7 +35,7 @@
  (function(){
      isNotMac = navigator.platform.indexOf('Win') > -1 
 	 || navigator.platform.indexOf('Linux') > - 1;
-
+     
      if (isNotMac && !$('body').hasClass('sidebar-mini')){
         // if we are on windows OS we activate the perfectScrollbar function
         $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();

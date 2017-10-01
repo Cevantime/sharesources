@@ -327,6 +327,9 @@
 		<!-- Forms Validations Plugin -->
 		<script src="<?php echo base_url('assets/vendor/js/jquery.validate.min.js'); ?>"></script>
 		<!--  Plugin for the Wizard -->
+        <!-- Perfect Scrollbar Jquery -->
+		<script src="<?php echo base_url('assets/vendor/js/perfect-scrollbar.jquery.min.js'); ?>"></script>
+        
 		<script src="<?php echo base_url('assets/vendor/js/jquery.bootstrap-wizard.js'); ?>"></script>
 		<!-- Vector Map plugin -->
 		<script src="<?php echo base_url('assets/vendor/js/jquery-jvectormap.js'); ?>"></script>
