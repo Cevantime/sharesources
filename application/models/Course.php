@@ -44,6 +44,10 @@ class Course extends Blogpost {
 	public function isPublished($course) {
 		return $course->publish != 0;
 	}
+	
+	public function isPublic($course) {
+		return $course->public != 0;
+	}
 
 	public function getPostWithAuthor($where) {
 		$this->prepareList();
@@ -254,8 +258,11 @@ class Course extends Blogpost {
 		$this->doFilesLinking($to_insert, $insert_id);
 		$this->doTeacherShares($to_insert, $insert_id);
 		$this->load->model('notification');
-		$this->notification->create(Notification::TYPE_NEW_COURSE, NULL, array('courseId' => $insert_id));
-		if ($to_insert['publish']) {
+		if($to_insert['published']){
+			$this->notification->create(Notification::TYPE_NEW_COURSE, NULL, array('courseId' => $insert_id));
+			
+		}
+		if ($to_insert['public']) {
 			$this->notification->create(Notification::TYPE_NEW_PUBLIC_COURSE, NULL, array('courseId' => $insert_id));
 		}
 		parent::afterInsert($insert_id, $to_insert);
@@ -275,13 +282,23 @@ class Course extends Blogpost {
 			$this->parser->parse($datas['description_bbcode']);
 			$datas['description'] = $this->parser->getAsHtml();
 		}
+		if(isset($datas['public']) && $datas['public']) {
+			$this->load->model('notification');
+			$where = $where ? $where : $this->buildPrimaryWhere($datas);
+			$courses = $this->get($where);
+			foreach($courses as $course){
+				if( ! $course->public) {
+					$this->notification->create(Notification::TYPE_NEW_PUBLIC_COURSE, NULL, array('courseId' => $course->id));
+				}
+			}
+		}
 		if(isset($datas['publish']) && $datas['publish']) {
 			$this->load->model('notification');
 			$where = $where ? $where : $this->buildPrimaryWhere($datas);
 			$courses = $this->get($where);
 			foreach($courses as $course){
 				if( ! $course->publish) {
-					$this->notification->create(Notification::TYPE_NEW_PUBLIC_COURSE, NULL, array('courseId' => $course->id));
+					$this->notification->create(Notification::TYPE_NEW_COURSE, NULL, array('courseId' => $course->id));
 				}
 			}
 		}
@@ -292,6 +309,45 @@ class Course extends Blogpost {
 //			$datas['alias'] = $this->createAliasFrom($datas['title'], true);
 //		}
 		parent::beforeUpdate($datas, $where);
+	}
+	
+	private function prepareMines($userId = null) {
+		if($userId === null){
+			$userId = $this->getData('id');
+		}
+		$shares = $this->getShares($userId);
+		if ($shares) {
+			$this->where_in(
+					'posts.id', array_map(function($share) {
+						return $share->course_id;
+					}, $shares)
+			);
+		}
+		$this->or_where(array('posts.user_id' => $userId));
+		$this->or_where(array('public' => 1));
+	}
+	
+	public function getMines($userId = null, $limit = null, $offset = null, $type = 'object', $columns = null) {
+		if($userId === null){
+			$userId = $this->getData('id');
+		}
+		$this->prepareMines($userId);
+		return $this->getListWithCategoriesTagsFilesAndShares($limit, $offset, $type, $columns);
+	}
+	
+	public function getAll($userId = null, $limit = null, $offset = null, $type = 'object', $columns = null) {
+		if($userId === null){
+			$userId = $this->getData('id');
+		}
+		$this->prepareMines($userId); 
+		$this->or_where(array('publish'=> 1));
+		
+		return $this->getListWithCategoriesTagsFilesAndShares($limit, $offset, $type, $columns);
+	}
+	
+	public function getSharedToSession($sessionId = null, $limit = null, $offset = null, $type = 'object', $columns = null) {
+		$this->prepareForSession($sessionId);
+		return $this->getListWithCategoriesTagsFilesAndShares($limit, $offset, $type, $columns);
 	}
 
 	public function afterUpdate(&$datas = null, $where = null) {
@@ -531,7 +587,7 @@ class Course extends Blogpost {
 			$course = $this->course->getId($course);
 		}
 
-		if ($course->publish) {
+		if ($course->public) {
 			return true;
 		}
 
@@ -657,8 +713,8 @@ class Course extends Blogpost {
 
 		return $this->formatFiles($this->get());
 	}
-
-	private function prepareForSessionOnPeriod($sessionId, $from, $to) {
+	
+	private function prepareForSession($sessionId) {
 		$this->load->model('sharecourseteachsession');
 
 		$linkTable = $this->sharecourseteachsession->getTableName();
@@ -668,9 +724,16 @@ class Course extends Blogpost {
 
 		$this->join($linkTable, $linkTable . '.course_id=' . $table . '.id');
 
+		$this->where($linkTable . '.teach_session_id', $sessionId);
+	}
+
+	private function prepareForSessionOnPeriod($sessionId, $from, $to) {
+		$this->prepareForSession($sessionId, $from, $to);
+		$this->load->model('sharecourseteachsession');
+
+		$linkTable = $this->sharecourseteachsession->getTableName();
 		$this->where($linkTable . '.date >= ', $from);
 		$this->where($linkTable . '.date <= ', $to);
-		$this->where($linkTable . '.teach_session_id', $sessionId);
 	}
 
 }

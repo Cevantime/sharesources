@@ -156,6 +156,7 @@ class Core_CLI {
 		
 		Core_utils::line('Running gulp...');
 		passthru('./node_modules/.bin/gulp production');
+		passthru('./node_modules/.bin/gulp css');
 		
 		Core_utils::line('Adjusting file permissions...');
 		if( ! Core_utils::is_os('windows')){

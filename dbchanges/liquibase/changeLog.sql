@@ -889,3 +889,18 @@ INSERT INTO `links_groups_rights` (`group_id`, `right_id`) VALUES (@teacherGroup
 --changeset thibault:add_preferences_to_teachers
 ALTER TABLE `webforce_teachers` ADD `preferences` TEXT NOT NULL;
 
+--changeset thibault:add_public_to_course
+ALTER TABLE `courses` ADD `public` TINYINT NOT NULL DEFAULT '0' AFTER `publish`;
+
+UPDATE courses SET `public` = `publish` WHERE 1;
+
+SELECT id INTO @seeCoursesRightId FROM rights WHERE `name` = 'see' AND `type` = 'course' AND `object_key` = '*' ;
+SELECT id INTO @teachersGroupId FROM groups WHERE `name` = 'teacher';
+
+DELETE FROM links_groups_rights WHERE group_id = @teachersGroupId AND right_id = @seeCoursesRightId ;
+
+INSERT INTO `rights` (`name`,`type`, `object_key`) VALUES ('see','course','model[course]::isPublished({object})') ;
+
+SET @idRightSeePublished := LAST_INSERT_ID();
+
+INSERT INTO links_groups_rights (group_id, right_id) VALUES (@teachersGroupId, @idRightSeePublished);

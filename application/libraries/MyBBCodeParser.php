@@ -42,12 +42,12 @@ class MyBBCodeParser extends BBCodeParser {
 		$baseUrl = base_url();
 		
 		$parseFiles = function($matches) {
-			$filerealpath = realpath(latex_decode($matches[2]));
+			$filerealpath = realpath(latex_decode($matches[1]));
 			if($filerealpath) {
 				$infos = getimagesize($filerealpath);
 				$maxwidth = 380;
 				$width = min(array($infos[0], $maxwidth));;
-				return '\includegraphics[width='.$width.'px]{' . realpath(latex_decode($matches[2])) . '}';
+				return '\includegraphics[width='.$width.'px]{' . realpath(latex_decode($matches[1])) . '}';
 
 			} else {
 				return translate('image non trouvée');

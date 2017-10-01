@@ -302,7 +302,11 @@ class CoursesController extends MY_Controller {
 	}
 
 	public function all() {
-		$courses = $this->course->getListWithCategoriesTagsFilesAndShares();
+		if(user_is('teacher')){
+			$courses = $this->course->getAll(user_id());
+		} else {
+			$course = $this->course->getForSession(user_id());
+		}
 		
 		$this->layout->title(translate('Tous les cours'));
 		$this->layout->view('courses/all', array('courses' => $courses));
@@ -326,17 +330,8 @@ class CoursesController extends MY_Controller {
 		if (user_is('users')) {
 			redirect('courses/all');
 		}
-		$shares = $this->course->getShares(user_id());
-		if ($shares) {
-			$this->course->where_in(
-					'posts.id', array_map(function($share) {
-						return $share->course_id;
-					}, $shares)
-			);
-		}
-		$this->course->or_where(array('posts.user_id' => user_id()));
-		$this->course->or_where(array('publish' => 1));
-		$courses = $this->course->getListWithCategoriesTagsFilesAndShares();
+		
+		$courses = $this->course->getMines(user_id());
 		$this->layout->title(translate('Mes cours'));
 		$this->layout->view('courses/all', array('courses' => $courses));
 	}
@@ -415,6 +410,11 @@ class CoursesController extends MY_Controller {
 		$courseId = $this->input->post('course-id');
 
 		$datetime = DateTime::createFromFormat('d/m/Y', $date);
+		
+		if( ! $datetime) {
+			return ;
+		}
+ 		
 		$date = $datetime->format('U');
 
 		$this->load->model('sharecourseteachsession');

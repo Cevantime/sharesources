@@ -251,6 +251,7 @@ $config['encryption_key'] = 'cledetest';
  */
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 0;
+
 $config['sess_use_database'] = TRUE;
 $config['sess_save_path'] = 'ci_sessions';
 $config['sess_table_name'] = 'ci_sessions';

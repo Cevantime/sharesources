@@ -101,8 +101,10 @@ class Webforceuser extends User {
 		
 		foreach ($columns as $col) {
 			foreach($search as $s) {
-				$s = $this->escape_like_str($s);
-				$this->select("if($col LIKE '%$s%' ESCAPE '!', @matching := @matching + 1, 'dummy')", FALSE);
+				if(trim($s)){
+					$s = $this->escape_like_str($s);
+					$this->select("if($col LIKE '%$s%' ESCAPE '!', @matching := @matching + 1, @matching)", FALSE);
+				}
 			}
 			
 		}

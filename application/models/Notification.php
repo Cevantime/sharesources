@@ -233,10 +233,12 @@ class Notification extends DATA_Model {
 		if(!$userId) {
 			if($this->getData('userId')) {
 				$userId = $this->getData('userId');
-			} else if(user_id()){
+			} else {
 				$userId = user_id();
 			}
 		}
+		
+		if(!$userId || !$notificationId) return;
 		
 		$this->load->model('usersawnotification');
 		

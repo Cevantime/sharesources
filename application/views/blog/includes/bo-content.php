@@ -59,7 +59,7 @@
 			  class="form-control"><?php echo isset($blogpost_add_pop['content_bbcode']) ? $blogpost_add_pop['content_bbcode'] : '' ?></textarea>
 </div>
 <div class="form-group">
-	<label for="publish-yes">Rendre public : </label>
+	<label for="publish-yes">Publier : </label>
 	<div class="radio">
 		<label>
 			<input id="publish-yes" value="1" name="publish" <?php if (isset($blogpost_add_pop['publish']) && $blogpost_add_pop['publish']) { ?> checked<?php } ?> type="radio"><span class="circle"></span><span class="check"></span> Oui
@@ -71,6 +71,19 @@
 		</label>
 	</div>
 
+</div>
+<div class="form-group">
+	<label for="public-yes">Rendre public : </label>
+	<div class="radio">
+		<label>
+			<input id="public-yes" value="1" name="public" <?php if (isset($blogpost_add_pop['public']) && $blogpost_add_pop['public']) { ?> checked<?php } ?> type="radio"><span class="circle"></span><span class="check"></span> Oui
+		</label>
+	</div>
+	<div class="radio">
+		<label>
+			<input id="public-no" value="0" name="public" <?php if (!isset($blogpost_add_pop['public']) || !$blogpost_add_pop['public']) { ?> checked<?php } ?> type="radio"><span class="circle"></span><span class="check"></span> Non
+		</label>
+	</div>
 </div>
 <?php if (user_can('share_to_teacher', 'course', isset($blogpost_add_pop['id']) ? $blogpost_add_pop['id'] : '*')): ?>
 	<div class="form-group">
