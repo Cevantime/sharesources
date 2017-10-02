@@ -13,3 +13,4 @@
 /uploads/
 /application/composer.lock
 /application/nbproject/private/
+npm-debug.log
