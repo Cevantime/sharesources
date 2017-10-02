@@ -245,6 +245,8 @@ class Core_CLI {
 					OR Core_utils::error(print_r($dbh->errorInfo(), true));
 			if ($app_env != 'default') {
 				Core_utils::line('The database has been successfully created. Copying config...');
+                // copy database.dist.php in database.php
+                copy("./application/config/database.dist.php", "./application/config/database.php");
 				$database_ci_config = file_get_contents("./application/config/database.php");
 				//$db['default']['dbdriver'] = 'mysqli';
 				$global_pattern = '#\$db.*?\[\'default\'\].*?\[(.*?)\].*?=(.*?);#';
