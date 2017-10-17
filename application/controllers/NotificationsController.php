@@ -72,7 +72,7 @@ class NotificationsController extends MY_Controller {
 
 			if ($this->notification->fromPost()) {
 				add_success('Le notification a bien été ajoutée');
-				redirect('notifications/index');
+				redirect('admin/notifications');
 			} else {
 				add_error($this->notification->getLastErrorsString());
 			}
