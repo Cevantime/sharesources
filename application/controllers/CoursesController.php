@@ -282,19 +282,20 @@ class CoursesController extends MY_Controller {
 					unlink($fullpath);
 				}
 			}
-//			header('Pragma: public');
-//			header('Expires: 0');
-//			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-//			header('Content-Type: application/pdf');
-//			header('Content-Transfer-Encoding: binary');
-//			header('Content-Length: ' . strlen($pdfcontent));
-//
-//			header("Content-Disposition: inline; filename=\"{$course->alias}\"");
-//
-//			echo $pdfcontent;
-//			exit();
-			$this->load->helper('download');
-			force_download($course->alias.'.pdf', $pdfcontent);
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Content-Type: application/pdf');
+			header('Content-Transfer-Encoding: binary');
+			header('Content-Length: ' . strlen($pdfcontent));
+			header('Content-Title: ' . $course->alias);
+
+			header("Content-Disposition: inline; filename='{$course->alias}.pdf'");
+
+			echo $pdfcontent;
+			exit();
+//			$this->load->helper('download');
+//			force_download($course->alias.'.pdf', $pdfcontent);
 		} else {
 			$this->load->helper('filerender');
 			$this->layout->view('courses/see', array('course' => $course));

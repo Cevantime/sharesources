@@ -10,9 +10,11 @@
 \usepackage{xcolor}
 \usepackage{textcomp}
 \usepackage{url}
-\usepackage{hyperref}
+
 \usepackage{graphicx}
 \usepackage{array}
+
+<?php $this->layout->block('pdfmetas'); ?>\usepackage{hyperref}<?php echo $this->layout->block(); ?>
 
 \def\arraystretch{1.5}
 
