@@ -22,9 +22,7 @@ var fullScreen = function(command, value, queryState) {
 var openFile = function (command, value, queryState) {
 	var those = this;
     var pos = this.getRange();
-	if(window.document.isFullScreen) {
-		window.document.exitFullscreen();
-	}
+	
 	openFileBrowser({
 		callback: function (file) {
 			
@@ -38,6 +36,10 @@ var openFile = function (command, value, queryState) {
                 case 'jpeg':
                 case 'png':
                 case 'gif':
+                    var isFullScreen = window.document.isFullScreen;
+                    if(isFullScreen) {
+                        window.document.exitFullscreen();
+                    }
                     var formImgTypeBody = '<form>'
                         +'<div class="form-group">'
                         +'<label>Comment souhaitez-vous insérer votre image ?</label><br>'
@@ -65,6 +67,11 @@ var openFile = function (command, value, queryState) {
                             those.wbbInsertCallback(command, {NAME: description ? description : file.infos.name, SRCIMGLEFT: encodeURI(file.src)});
                         } else {
                             those.wbbInsertCallback(command, {NAME: description ? description : file.infos.name, SRCIMGRIGHT: encodeURI(file.src)});
+                        }
+                        
+                        if(isFullScreen) {
+                            fsc.requestFullScreen($(those.$editor)[0]);
+                            adjustToolbars();
                         }
                         
                         return false;
