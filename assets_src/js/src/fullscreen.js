@@ -8,7 +8,7 @@ window.document.exitFullscreen = window.document.exitFullscreen || function () {
     }
 };
 
-window.document.isFullScreen = window.document.isFullScreen || function() {
+window.document.isFullScreen = function() {
     return (window.document.fullscreenElement && window.document.fullscreenElement !== null) ||
         (window.document.webkitFullscreenElement && window.document.webkitFullscreenElement !== null) ||
         (window.document.mozFullScreenElement && window.document.mozFullScreenElement !== null) ||

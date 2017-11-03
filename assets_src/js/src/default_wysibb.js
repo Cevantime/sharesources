@@ -36,7 +36,7 @@ var openFile = function (command, value, queryState) {
                 case 'jpeg':
                 case 'png':
                 case 'gif':
-                    var isFullScreen = window.document.isFullScreen;
+                    var isFullScreen = window.document.isFullScreen();
                     if(isFullScreen) {
                         window.document.exitFullscreen();
                     }
