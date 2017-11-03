@@ -11,10 +11,10 @@ var openFileBrowser = function (params) {
 	};
 
 	jQuery.extend(defaults, params);
-	var myWindow = window.open(window.baseURL + "filebrowser/index/index?model=" + encodeURI(defaults.model) + "&filters=" + encodeURI(defaults.filters), defaults.name, 'width=' + defaults.width + ',height=' + defaults.height);
-	myWindow.filebrowser_callback = defaults.callback;
-	myWindow.filebrowser_model = defaults.model;
-	myWindow.filebrowser_filters = defaults.filters;
+	window.open(window.baseURL + "filebrowser/index/index?model=" + encodeURI(defaults.model) + "&filters=" + encodeURI(defaults.filters), defaults.name, 'width=' + defaults.width + ',height=' + defaults.height);
+	window.filebrowser_callback = defaults.callback;
+	window.filebrowser_model = defaults.model;
+	window.filebrowser_filters = defaults.filters;
 	return false;
 };
 

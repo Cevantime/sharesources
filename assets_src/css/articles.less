@@ -48,10 +48,23 @@
 	}
 
 	img {
-		box-shadow: 0 0 6px gray;
-		border: 1px solid lightgray;
+		
 		width: auto;
 		max-width: 100%;
+        border: 1px solid lightgray;
+        box-shadow: 0 0 6px gray;
+        
+        &.left-image, &.right-image {
+            display: inline-block;
+        }
+        &.left-image {
+            float: left;
+            margin-right: 15px;
+        }
+        &.right-image {
+            float: right;
+            margin-left: 15px;
+        }
 	}
 
 	.info {

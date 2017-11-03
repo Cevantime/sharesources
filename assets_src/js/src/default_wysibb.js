@@ -21,29 +21,58 @@ var fullScreen = function(command, value, queryState) {
 
 var openFile = function (command, value, queryState) {
 	var those = this;
+    var pos = this.getRange();
 	if(window.document.isFullScreen) {
 		window.document.exitFullscreen();
 	}
 	openFileBrowser({
 		callback: function (file) {
 			
-			var fileType = file.infos.type.split('/')[0];
-			those.wbbInsertCallback(command, {NAME: file.infos.name, SRC: file.src});
-		},
-		filters: 'image/png,image/jpg,image/gif'
-	});
-};
-
-var openZip = function (command, value, queryState) {
-	var those = this;
-	if(window.document.isFullScreen) {
-		window.document.exitFullscreen();
-	}
-	openFileBrowser({
-		callback: function (file) {
-			those.wbbInsertCallback(command, {NAME: file.infos.name, SRC: encodeURI(file.src)});
-		},
-		filters: 'application/zip'
+			var fileType = file.infos.type.split('/')[1];
+            
+            switch (fileType) {
+                case 'zip':
+                    those.wbbInsertCallback(command, {NAME: file.infos.name, SRCZIP: encodeURI(file.src)});
+                break;
+                case 'jpg':
+                case 'jpeg':
+                case 'png':
+                case 'gif':
+                    var formImgTypeBody = '<form>'
+                        +'<div class="form-group">'
+                        +'<label>Comment souhaitez-vous insérer votre image ?</label><br>'
+                        +'<input type="radio" value="normal" name="imgDisplay" id="normalDisplay" checked> '
+                        +'<label for="blockDisplay">Normalement</label><br>'
+                        +'<input type="radio" value="left" name="imgDisplay" id="leftDisplay"> '
+                        +'<label for="leftDisplay">Flottante à gauche</label><br>'
+                        +'<input type="radio" value="right" name="imgDisplay" id="rightDisplay"> '
+                        +'<label for="rightDisplay">Flottante à droite</label><br>'
+                        +'</div>'
+                        +'<div class="form-group">'
+                        +'<label>Déscription de l\'image</label><br>'
+                        +'<textarea class="form-control" name="description" id="description"></textarea><br>'
+                        +'</div>'
+                        +'</form>';
+                    var $form = $(formImgTypeBody);
+                    var action = function (e, $modal, $validateBtn) {
+                        $modal.modal('hide');
+                        $validateBtn.off('click');
+                        those.lastRange = pos;
+                        var description = $('#description').val();
+                        if($('#normalDisplay').is(':checked')){
+                            those.wbbInsertCallback(command, {NAME: description ? description : file.infos.name, SRCIMG: encodeURI(file.src)});
+                        } else if($('#leftDisplay').is(':checked')) {
+                            those.wbbInsertCallback(command, {NAME: description ? description : file.infos.name, SRCIMGLEFT: encodeURI(file.src)});
+                        } else {
+                            those.wbbInsertCallback(command, {NAME: description ? description : file.infos.name, SRCIMGRIGHT: encodeURI(file.src)});
+                        }
+                        
+                        return false;
+                    };
+                    showModal('Affichage de l\'image', $form, action, 'success');
+                break;
+            }
+		}
 	});
 };
 
@@ -244,20 +273,20 @@ var addLink = function (command, opt, queryState) {
 	$form.find('.external-link-group').hide();
 	$form.find('.course-link-group').hide();
 	
-	// this.wbbInsertCallback(command, {LANGUAGE: lang, CODE: code});
-
-	console.log('insert link !');	
 
 };
 
-var imgTransform = '<img src="'+window.baseURL+'{SRC}" alt="{NAME}"/>';
-var zipTransform = '<a href="'+window.baseURL+'{SRC}">{NAME}</a>';
+var imgTransform = '<img src="'+window.baseURL+'{SRCIMG}" alt="{NAME}"/>';
+var imgLeftTransform = '<img class="image-left" src="'+window.baseURL+'{SRCIMGLEFT}" alt="{NAME}"/>';
+var imgRightTransform = '<img class="image-right" src="'+window.baseURL+'{SRCIMGRIGHT}" alt="{NAME}"/>';
+var zipTransform = '<a href="'+window.baseURL+'{SRCZIP}">{NAME}</a>';
 
-var imgTransformOpt = {};
-var zipTransformOpt = {};
+var fileTransformOpt = {};
 
-imgTransformOpt[imgTransform] = '[image={SRC}]{NAME}[/image]';
-zipTransformOpt[zipTransform] = '[zip={SRC}]{NAME}[/zip]';
+fileTransformOpt[imgTransform] = '[image={SRCIMG}]{NAME}[/image]';
+fileTransformOpt[imgLeftTransform] = '[imageLeft={SRCIMGLEFT}]{NAME}[/imageLeft]';
+fileTransformOpt[imgRightTransform] = '[imageRight={SRCIMGRIGHT}]{NAME}[/imageRight]';
+fileTransformOpt[zipTransform] = '[zip={SRCZIP}]{NAME}[/zip]';
 
 var wbbOpt = {
 	hotkeys: false, //disable hotkeys (native browser combinations will work)
@@ -305,7 +334,7 @@ var wbbOpt = {
 		img: {
 			title: "Insert your own images !",
 			cmd: openFile,
-			transform: imgTransformOpt
+			transform: fileTransformOpt
 		},
 		link : {
 			title: 'Link',
@@ -314,12 +343,6 @@ var wbbOpt = {
 				'<a class="course-link" href="{ID}">{SELTEXT}</a>' : '[course={ID}]{SELTEXT}[/course]'
 			},
 			 cmd : addLink
-		},
-		zip: {
-			title: "Insert your own zips !",
-			buttonText : 'zip',
-			cmd: openZip,
-			transform: zipTransformOpt
 		},
 		code: {
 			title: "Insert code snippet",
