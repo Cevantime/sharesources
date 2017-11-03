@@ -288,8 +288,9 @@ class CoursesController extends MY_Controller {
 			header('Content-Type: application/pdf');
 			header('Content-Transfer-Encoding: binary');
 			header('Content-Length: ' . strlen($pdfcontent));
+			header('Content-Title: ' . $course->alias);
 
-			header("Content-Disposition: inline; filename=\"{$course->alias}\"");
+			header("Content-Disposition: inline; filename='{$course->alias}.pdf'");
 
 			echo $pdfcontent;
 			exit();
