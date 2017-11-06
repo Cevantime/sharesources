@@ -78,7 +78,7 @@ function deleteFile(fileId) {
 }
 
 function url(action) {
-	return window.baseURL + action + "?model=" + window.filebrowser_model + "&filters=" + window.filebrowser_filters;
+	return window.baseURL + action + "?model=" + window.opener.filebrowser_model + "&filters=" + window.opener.filebrowser_filters;
 }
 
 function renameFile(fileId) {
@@ -431,8 +431,8 @@ function onSelect($elm) {
 		infos: infos
 	};
 
-	filebrowser_callback(obj);
 	window.close();
+	window.opener.filebrowser_callback(obj);
 }
 
 $(function () {

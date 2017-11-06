@@ -26,6 +26,13 @@ class MyBBCodeParser extends BBCodeParser {
 		$builder = new JBBCode\CodeDefinitionBuilder('course', '<a href="'.$baseUrl.'courses/see/{option}">{param}</a>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
+        
+		$builder = new JBBCode\CodeDefinitionBuilder('imageLeft', '<img class="left-image" src="'.$baseUrl.'{option}" alt="{param}"/>');
+		$builder->setUseOption(true);
+		$this->addCodeDefinition($builder->build());
+		$builder = new JBBCode\CodeDefinitionBuilder('imageRight', '<img class="right-image" src="'.$baseUrl.'{option}" alt="{param}"/>');
+		$builder->setUseOption(true);
+		$this->addCodeDefinition($builder->build());
 	}
 
 	public function convertToLatex($str) {
