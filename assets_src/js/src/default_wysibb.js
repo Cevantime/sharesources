@@ -165,7 +165,7 @@ var addLink = function (command, opt, queryState) {
 	
 	formBody += '<div class="form-group course-link-group">';
 	
-	formBody += '<label>Nom cu cours (à sélectionner)</label>';
+	formBody += '<label>Nom du cours (à sélectionner)</label>';
 	
 	formBody += '</div>';
 	
