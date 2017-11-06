@@ -180,10 +180,10 @@ class CoursesController extends MY_Controller {
 		$is_update = isset($post['id']);
 
 		if ($is_update && !user_can('update', $model, $post['id'])) {
-			add_error(translate('Vous ne pouvez pas modifier ce post.'));
+			add_error(translate('Vous ne pouvez pas modifier ce cours.'));
 			return $pop;
 		} else if (!user_can('add', $model)) {
-			add_error(translate('Vous ne pouvez pas ajouter de post.'));
+			add_error(translate('Vous ne pouvez pas ajouter de cours.'));
 			return $pop;
 		}
 
@@ -202,7 +202,7 @@ class CoursesController extends MY_Controller {
 		}
 //		$this->user->allowTo('*', $model, $new_id);
 
-		add_success(translate('Le post a bien été ') . ($is_update ? translate('mis à jour') : translate('ajouté')));
+		add_success(translate('Le cours a bien été ') . ($is_update ? translate('mis à jour') : translate('ajouté')));
 
 		if ($redirect) {
 			$lastRow = $modelInst->getLastSavedDatas();
