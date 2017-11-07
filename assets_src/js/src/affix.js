@@ -9,8 +9,7 @@ $(window).scroll(function () {
         $affix.removeClass('fixed');
         $affix.css({
           left: initial,
-          width: initial,
-          height: initial
+          width: initial
         });
       }
     } else {
@@ -19,8 +18,7 @@ $(window).scroll(function () {
         $affix.data('original-top', affixOffset.top);
         $affix.css({
           left: affixOffset.left,
-          width: $affix.outerWidth(),
-          height: $affix.height()
+          width: $affix.outerWidth()
         });
         $affix.addClass('fixed');
       }
