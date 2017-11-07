@@ -1,5 +1,7 @@
 var $ = window.jQuery || require('jquery');
 
+require('../../affix');
+
 global.jQuery = $;
 global.$ = $;
 

@@ -1,5 +1,7 @@
 var jQuery = window.jQuery || require('jquery');
 
+console.log('test');
+
 var openFileBrowser = function (params) {
 	var defaults = {
 		model: "filebrowser/file", //unused at the moment
@@ -22,9 +24,6 @@ var openFileBrowser = function (params) {
 {
 	$.fn.filebrowser = function (params)
 	{
-
-
-
 
 		return this.each(function ()
 		{
