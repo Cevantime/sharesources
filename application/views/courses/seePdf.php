@@ -5,5 +5,5 @@
 <br/>
 
 <div class="tutorial course-content">
-	<?php echo $course->content; ?>
+	<?php echo htmlspecialchars($course->content); ?>
 </div>

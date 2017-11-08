@@ -2,7 +2,7 @@
 \usepackage[pdftex,
     pdfauthor={<?php echo $course->author_forname.' '.$course->author_name ?>},
     pdftitle={<?php echo $course->title ?>},
-    pdfsubject={<?php echo strip_tags($course->description) ?>},
+    pdfsubject={<?php echo trim(strip_tags($course->description)) ?>},
     pdfkeywords={<?php echo $course->keywords ?>}]{hyperref}
 <?php $this->layout->block(); ?>
     

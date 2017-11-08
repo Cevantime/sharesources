@@ -150,7 +150,6 @@ class BBCodeParser extends JBBCode\Parser {
 
 	public function parse($str) {
 		$newstr = $this->clean($str);
-		$newstr = html_escape($newstr);
 		parent::parse($newstr);
 		$treeRoot = &$this->treeRoot;
 		$i = 0;

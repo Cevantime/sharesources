@@ -27,6 +27,11 @@ class Course extends Blogpost {
 		$rules['content_bbcode']['field'] = 'content_bbcode';
 		$rules['image'] = str_replace('file_required|', "", $rules['image']);
 		unset($rules['content']);
+        $rules['keywords'] = array(
+            'field' => 'keywords',
+            'label' => translate('Mots clé'),
+            'rules' => 'trim'
+        );
 		return $rules;
 	}
 
@@ -38,6 +43,11 @@ class Course extends Blogpost {
 		$rules['content_bbcode'] = $rules['content'];
 		$rules['content_bbcode']['field'] = 'content_bbcode';
 		unset($rules['content']);
+        $rules['keywords'] = array(
+            'field' => 'keywords',
+            'label' => translate('Mots clé'),
+            'rules' => 'trim'
+        );
 		return $rules;
 	}
 
@@ -308,6 +318,7 @@ class Course extends Blogpost {
 //		if(isset($datas['title']) && $datas['title']) {
 //			$datas['alias'] = $this->createAliasFrom($datas['title'], true);
 //		}
+        die();
 		parent::beforeUpdate($datas, $where);
 	}
 	

@@ -1,7 +1,5 @@
 var jQuery = window.jQuery || require('jquery');
 
-console.log('test');
-
 var openFileBrowser = function (params) {
 	var defaults = {
 		model: "filebrowser/file", //unused at the moment
@@ -13,6 +11,7 @@ var openFileBrowser = function (params) {
 	};
 
 	jQuery.extend(defaults, params);
+  
 	window.open(window.baseURL + "filebrowser/index/index?model=" + encodeURI(defaults.model) + "&filters=" + encodeURI(defaults.filters), defaults.name, 'width=' + defaults.width + ',height=' + defaults.height);
 	window.filebrowser_callback = defaults.callback;
 	window.filebrowser_model = defaults.model;
