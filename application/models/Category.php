@@ -23,7 +23,7 @@ class Category extends DATA_Model {
 			'image' => array(
 				'field' => 'image',
 				'label' => translate('Image'),
-				'rules' => 'file_required|file_image_mindim[300,300]|file_size_max[500KB]|file_allowed_type[image]'
+				'rules' => 'file_required|file_image_mindim[100,100]|file_size_max[500KB]|file_allowed_type[image]'
 			),
 			'color' => array(
 				'field' => 'color',

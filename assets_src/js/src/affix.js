@@ -38,7 +38,6 @@ $(window).resize(function(){
   $('.affix:not(.affix-clone)').each(function () {
     var $affix = $(this);
     var $clone = $affix.data('affix-clone');
-    console.log('resize');
     if ($clone) {
       $clone.css('width', $affix.outerWidth());
     }
