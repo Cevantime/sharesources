@@ -113,7 +113,8 @@ var codeModal = function (command, opt, queryState) {
         'python': 'Python',
         'cpp': 'C++',
         'c#': 'C#',
-        'sql': 'SQL'
+        'sql': 'SQL',
+        'markdown': 'Markdown'
     }
     var form = '<form id="wysibb-code-form">\n\
 		<div class="form-group"><label>Language :</label><select class="form-control" name="language">';
