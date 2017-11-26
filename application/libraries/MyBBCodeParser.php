@@ -35,7 +35,7 @@ class MyBBCodeParser extends BBCodeParser {
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
         
-        $builder = new JBBCode\CodeDefinitionBuilder('inlineCode', '<pre class="inline"><code class="{option}">{param}</code></pre>');
+        $builder = new JBBCode\CodeDefinitionBuilder('inlineCode', '<code class="{option} inline">{param}</code>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 	}
