@@ -9,7 +9,7 @@ $('#minimizeSidebar').click(function(){
 	$.ajax(window.baseURL+'userprefs/sidebar_collapsed/'+(miniActive ? 1 : 0));
 });
 
-if(hljs !== 'undefined'){
+if(typeof hljs !== 'undefined'){
   
   $(document).ready(function() {
     $('code.inline').each(function(i, block) {
