@@ -30,7 +30,12 @@ class MyBBCodeParser extends BBCodeParser {
 		$builder = new JBBCode\CodeDefinitionBuilder('imageLeft', '<img class="left-image" src="'.$baseUrl.'{option}" alt="{param}"/>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
+        
 		$builder = new JBBCode\CodeDefinitionBuilder('imageRight', '<img class="right-image" src="'.$baseUrl.'{option}" alt="{param}"/>');
+		$builder->setUseOption(true);
+		$this->addCodeDefinition($builder->build());
+        
+        $builder = new JBBCode\CodeDefinitionBuilder('inlineCode', '<pre class="inline"><code class="{option}">{param}</code></pre>');
 		$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 	}

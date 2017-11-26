@@ -102,6 +102,8 @@ var codeModal = function (command, opt, queryState) {
     if (isFullScreen) {
         window.document.exitFullscreen();
     }
+    
+    var defaultText = this.getSelectText();
 
     var languages = {
         'php': 'PHP',
@@ -117,6 +119,11 @@ var codeModal = function (command, opt, queryState) {
         'markdown': 'Markdown'
     }
     var form = '<form id="wysibb-code-form">\n\
+    <div class="form-group">\n\
+        <label>Type</label><br/>\n\
+        <input type="radio" name="mode" id="codeModeBlock" value="block" checked/> <label for="codeModeBlock">bloc</label> <br/>\n\
+        <input type="radio" name="mode" id="codeModeInline" value="inline"/>  <label for="codeModeInline">même ligne</label>\n\
+    </div>\n\
 		<div class="form-group"><label>Language :</label><select class="form-control" name="language">';
 
     for (var language in languages) {
@@ -125,7 +132,7 @@ var codeModal = function (command, opt, queryState) {
 
     form += '</select></div>';
     form += '<div class="form-group"><label>Code : </label>';
-    form += '<textarea name="code" class="form-control" rows="7"></textarea></div>';
+    form += '<textarea name="code" class="form-control" rows="7">'+defaultText+'</textarea></div>';
     var $form = $(form);
 
     var those = this;
@@ -136,13 +143,20 @@ var codeModal = function (command, opt, queryState) {
         $validateBtn.off('click');
         var lang = $form.find('[name="language"]').val();
         var code = $form.find('[name="code"]').val();
+        var mode = $form.find('#codeModeInline').is(':checked') ? 'inline' : 'block';
         // encoding html if any
         var div = document.createElement('div');
         var text = document.createTextNode(code);
         div.appendChild(text);
         code = div.innerHTML;
         those.lastRange = pos;
-        those.wbbInsertCallback(command, {LANGUAGE: lang, CODE: code});
+        
+        console.log(mode);
+        if(mode === 'inline'){
+          those.wbbInsertCallback(command, {LANGUAGE: lang, INLINECODE: code});
+        } else {
+          those.wbbInsertCallback(command, {LANGUAGE: lang, CODE: code});
+        }
         if (isFullScreen) {
             fsc.requestFullScreen($(those.$editor)[0]);
             adjustToolbars();
@@ -368,7 +382,8 @@ var wbbOpt = {
             buttonText: "code",
             cmd: codeModal,
             transform: {
-                '<pre class={LANGUAGE}>{CODE}</pre>': '[code={LANGUAGE}]{CODE}[/code]'
+                '<pre class="{LANGUAGE} inline">{INLINECODE}</pre>': '[inlineCode={LANGUAGE}]{INLINECODE}[/inlineCode]',
+                '<pre class="{LANGUAGE}">{CODE}</pre>': '[code={LANGUAGE}]{CODE}[/code]'
             }
         },
         fullscreen: {
