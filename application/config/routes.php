@@ -52,6 +52,10 @@ $route['blog.*'] = '';
 $route['tags/all'] = 'TagsController/all';
 $route['tags/(:any)'] = 'TagsController/courses/$1';
 
+$route['chat/chat'] = 'ChatController/index';
+$route['chat/chat/add'] = 'ChatController/add';
+$route['chat/chat/friends'] = 'ChatController/friends';
+
 $route['teachers(.*)'] = 'admin/UsersController/all/webforceteacher$1';
 $route['teacher/add(.*)'] = 'admin/UsersController/add/webforceteacher$1';
 $route['teacher/edit(.*)'] = 'admin/UsersController/edit/webforceteacher$1';

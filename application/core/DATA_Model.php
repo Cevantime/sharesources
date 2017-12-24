@@ -437,7 +437,7 @@ abstract class DATA_Model extends CI_Model {
 		$this->prepareGet($where, $type, $columns);
 
 		$sql = $this->db->get_compiled_select();
-		
+        
 		return $this->query($sql,$type);
 	}
 	
@@ -495,10 +495,11 @@ abstract class DATA_Model extends CI_Model {
 			$columns = array($columns);
 		}
 		if ($this->getTableName() !== $this->getBaseTableName()) {
-			$columns = array();
+			$cols = array();
 			foreach ($this->getSchema() as $col => $alias) {
-				$columns[] = $this->db->dbprefix($col) . ' AS ' . $alias;
+                $cols[] = $this->db->dbprefix($col) . ' AS ' . $alias;
 			}
+            $columns = $cols;
 		}
 		if (is_module_installed('traductions') && $this->columnsToTranslate()) {
 			foreach ($this->columnsToTranslate() as $col) {
@@ -507,6 +508,7 @@ abstract class DATA_Model extends CI_Model {
 			$columns[] = $this->db->dbprefix('lang') . ' AS lang';
 		}
 		$columns = implode(',', $columns);
+        
 		$this->db->select($columns);
 		$this->db->from($this->getTableName());
 		if ($where !== null) {

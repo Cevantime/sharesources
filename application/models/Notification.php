@@ -303,7 +303,7 @@ class Notification extends DATA_Model {
 				array(
 					'text' => $_POST['message'],
 					'url' => $_POST['url']
-			));
+                ));
 		}
 		$to_insert['created_time'] = time();
 	}

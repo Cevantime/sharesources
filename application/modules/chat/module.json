@@ -1,0 +1,15 @@
+{
+    "version": "1.0.0",
+    "dependencies": {
+        "npm": [
+            {
+                "name": "soxket.io",
+                "version": "^2.0.4"
+            },
+            {
+                "name": "request",
+                "version": "^2.83.0"
+            }
+        ]
+    }
+}

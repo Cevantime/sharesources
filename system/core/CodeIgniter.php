@@ -398,7 +398,6 @@ if ( ! is_php('5.4'))
 	$e404 = FALSE;
 	$class = ucfirst($RTR->class);
 	$method = $RTR->method;
-
 	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
 	{
 		$e404 = TRUE;
@@ -407,6 +406,7 @@ if ( ! is_php('5.4'))
 	{
 		require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
 
+        
 		if ( ! class_exists($class, FALSE) OR $method[0] === '_' OR method_exists('CI_Controller', $method))
 		{
 			$e404 = TRUE;
@@ -425,7 +425,7 @@ if ( ! is_php('5.4'))
 			$e404 = TRUE;
 		}
 	}
-
+    
 	if ($e404)
 	{
 		if ( ! empty($RTR->routes['404_override']))
@@ -481,7 +481,6 @@ if ( ! is_php('5.4'))
 	{
 		$params = array_slice($URI->rsegments, 2);
 	}
-
 /*
  * ------------------------------------------------------
  *  Is there a "pre_controller" hook?
@@ -497,7 +496,6 @@ if ( ! is_php('5.4'))
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 	$CI = new $class();
-
 /*
  * ------------------------------------------------------
  *  Is there a "post_controller_constructor" hook?
