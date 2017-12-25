@@ -16,9 +16,9 @@ class Chatroominvitation extends DATA_Model
         return self::TABLE_NAME;
     }
 
-    public function create($userId, $roomId)
+    public function create($roomId,$userId)
     {
-        $this->getRow([
+        $room = $this->getRow([
             'user_id' => $userId,
             'room_id' => $roomId
         ]);

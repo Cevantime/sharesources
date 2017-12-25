@@ -39,7 +39,7 @@ class Chat extends MY_Controller
         if (!$token || $token->creation_time < time() - 86400) {
             $token = $this->chattoken->generate();
         }
-        
+
         set_cookie('chat_token', $token->token, 0);
         set_cookie('user_id', user_id(), 0);
 
@@ -51,40 +51,50 @@ class Chat extends MY_Controller
         $this->load->model('memberspace/user');
         $this->json($this->user->get(array('id !=' => user_id()), 'array', array('id', 'email', 'login')));
     }
-    
-    public function room($roomId = null){
+
+    public function room($roomId = null)
+    {
         $this->load->model('chat/chatroom');
-        if($roomId) {
-            if($this->chatroom->isUserRoom($roomId)){
+        if ($roomId) {
+            if ($this->chatroom->isUserRoom($roomId)) {
                 $room = $this->chatroom->getWithMessages($roomId);
-                $this->json(['room'=>$room]);
+                $this->json(['room' => $room]);
             } else {
                 $this->json(['errors' => [translate('Impossible d\'accéder à cette conversation')]]);
             }
         } else {
             $rooms = $this->chatroom->getUserRooms();
-            if( ! $rooms){
+            if (!$rooms) {
                 $rooms = [];
             }
-            $this->json(['rooms'=>$rooms]);
+            $this->json(['rooms' => $rooms]);
         }
     }
 
-    public function invite($userId, $roomId)
+    public function invite($roomId, $userId)
     {
         $this->load->model('chat/chatinivitation');
 
-        if ($invitationId = $this->chatinvitation->create($userId, $roomId)) {
+        if ($invitationId = $this->chatinvitation->create($roomId, $userId)) {
             $this->json(['room_id' => $roomId]);
         } else {
-            $this->json(['errors' => [translate('Création de l\'inviation impossible')]]);
+            $this->json(['errors' => [translate('Création de l\'invitation impossible')]]);
         }
     }
 
-    public function createRoom($socketioId)
+    public function user()
+    {
+        $user = $this->user->getId(user_id());
+        unset($user->password);
+        unset($user->confirmed);
+        $this->json($user);
+    }
+
+    public function createRoom($toId = null)
     {
         $this->load->model('chat/chatroom');
-        if ($roomId = $this->chatroom->create($socketioId)) {
+        
+        if ($roomId = $this->chatroom->create($toId)) {
             $this->json(['room_id' => $roomId]);
         } else {
             $this->json(['errors' => [translate('Création de conversation impossible')]]);
@@ -96,7 +106,7 @@ class Chat extends MY_Controller
         if (!$this->chatmessage->fromPost()) {
             $this->json(['errors' => $this->chatmessage->getLastErrors()]);
         } else {
-            $this->json($this->chatmessage->getLastSavedDatas());
+            $this->json($this->chatmessage->getLastSavedDatas(), 201);
         }
     }
 
@@ -107,9 +117,9 @@ class Chat extends MY_Controller
             $data = [];
         }
         $json = $this->output
-            ->set_content_type('application/json')
-            ->set_status_header($code)
-            ->set_output(json_encode($data));
+                ->set_content_type('application/json')
+                ->set_status_header($code)
+                ->set_output(json_encode($data));
 
         if ($this->destroySession) {
             $this->loginmanager->disconnect();

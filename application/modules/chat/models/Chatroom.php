@@ -16,22 +16,22 @@ class Chatroom extends DATA_Model
         return self::TABLE_NAME;
     }
 
-    public function create($socketioId)
+    public function create($toId = null)
     {
         $userId = user_id();
 
-        $room = $this->getRow([
-            'socketio_id' => $socketioId
-        ]);
-
-        if ($room && $room->author_id != $userId) {
-            return false;
+        if($toId) {
+            $room = $this->getRow([
+                'to_id' => $toId,
+                'author_id' => $userId
+            ]);
         }
+        
 
         if (!$room) {
             return $this->insert([
-                    'socketio_id' => $socketioId,
-                    'author_id' => $userId
+                'to_id' => $toId,
+                'author_id' => $userId
             ]);
         }
 
@@ -75,7 +75,7 @@ class Chatroom extends DATA_Model
             return false;
         }
         
-        if ($room->author_id == $userId) {
+        if ($room->author_id == $userId || $room->to_id == $userId) {
             return true;
         }
 
@@ -102,6 +102,7 @@ class Chatroom extends DATA_Model
         $this->join($inviteTable, "$inviteTable.room_id=".self::TABLE_NAME.'.id', 'left');
         $this->where('user_id = ', $userId);
         $this->or_where('author_id = ', $userId);
+        $this->or_where('to_id = ', $userId);
         
         return $this->get();
     }

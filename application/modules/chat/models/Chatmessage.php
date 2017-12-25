@@ -31,7 +31,6 @@ class Chatmessage extends DATA_Model
                 'rules' => array(
                     'required',
                     'is_natural',
-                    array('exists', array($this->webforceteacher, 'exists')),
                     array('canBePostedInRoom', array($this->chatroom, 'isUserRoom'))
                 ))
         );
@@ -65,8 +64,7 @@ class Chatmessage extends DATA_Model
                 'rules' => array(
                     'required',
                     'is_natural',
-                    array('exists', array($this->webforceteacher, 'exists')),
-                    aarray('canBePostedInRoom', array($this->chatroom, 'isUserRoom'))
+                    array('canBePostedInRoom', array($this->chatroom, 'isUserRoom'))
                 ))
         );
         return $rules;

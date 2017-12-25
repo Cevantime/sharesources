@@ -15,6 +15,7 @@
 		<!--  Material Dashboard CSS    -->
 		<link href="<?php echo base_url("assets/vendor/css/custom.css"); ?>" rel="stylesheet" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/local/css/selectize.css'); ?>"/>
+		<link href="<?php echo base_url("assets/local/css/chat.css"); ?>" rel="stylesheet" />
 		<link href="<?php echo base_url("assets/local/css/stylesheet.css"); ?>" rel="stylesheet" />
 		<!--     Fonts and icons     -->
 		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
