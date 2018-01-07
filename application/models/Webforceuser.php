@@ -24,7 +24,7 @@ class Webforceuser extends User {
 		
 		$this->unlink('avatar', $datas);
 		
-		parent::afterUpdate($datas, $where);
+		parent::beforeUpdate($datas, $where);
 	}
 	
 	public function connect($id = null) {
