@@ -81,16 +81,17 @@ class CoursesController extends MY_Controller {
 
 		$datetime->modify('+' . (7 - $lastOfMonthInWeek) . ' day');
 
-		$to = $datetime->format('U');
-		$days = $this->course->getGroupByDayForSession(teachsession('id'), $from, $to);
-		
-		$this->load->view('courses/includes/calendar', array(
-			'firstOfMonth' => $firstOfMonth,
-			'lastOfMonth' => $lastOfMonth,
-			'days' => $days,
-			'prevMonth' => $prevMonth,
-			'nextMonth' => $nextMonth
-		));
+        $to = $datetime->format('U');
+        $days = $this->course->getGroupByDayForSession(teachsession('id'), $from, $to);
+
+        $this->load->view('courses/includes/calendar', array(
+            'firstOfMonth' => $firstOfMonth,
+            'lastOfMonth' => $lastOfMonth,
+            'days' => $days,
+            'prevMonth' => $prevMonth,
+            'nextMonth' => $nextMonth
+        ));
+        
 	}
 
 	public function courseDetails() {

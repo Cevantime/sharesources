@@ -148,7 +148,7 @@ var codeModal = function (command, opt, queryState) {
         var div = document.createElement('div');
         var text = document.createTextNode(code);
         div.appendChild(text);
-        code = div.innerHTML;
+        code = div.innerHTML.replace(/\n/g, '<br/>');
         those.lastRange = pos;
         
         console.log(mode);
