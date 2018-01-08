@@ -94,5 +94,12 @@ class Chatmessage extends DATA_Model
         $data['from_id'] = user_id();
         $data['update_time'] = time();
     }
+    
+    
+    public function afterInsert($insert_id,&$data = null)
+    {
+        $this->load->model('chat/chatuserroominfo');
+        $this->chatuserroominfo->create($data['from_id'], $data['room_id'], $insert_id);
+    }
 
 }

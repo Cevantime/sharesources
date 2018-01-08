@@ -166,8 +166,8 @@ class User extends DATA_Model {
 		if(isset($datas['password']) && $datas['password']) {
 			$datas['password'] = password_hash($datas['password'], PASSWORD_DEFAULT);
 		}
-		if(isset($to_insert['preferences'])) {
-			$to_insert['preferences'] = json_encode($to_insert['preferences']);
+		if(isset($datas['preferences'])) {
+			$datas['preferences'] = json_encode($datas['preferences']);
 		}
 	}
 

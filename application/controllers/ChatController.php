@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('BASEPATH'))
-	exit('No direct script access allowed');
+    exit('No direct script access allowed');
 
 require_once APPPATH . '/modules/chat/controllers/Chat.php';
 
@@ -20,22 +20,21 @@ class ChatController extends Chat
             show_404();
         }
     }
-    
-    public function friends() {
-         $this->load->model('webforceteacher');
-         
-         $search = $this->input->get('search');
-         $this->webforceteacher->where(array($this->webforceteacher->getTableName().'.id !='=>user_id()));
-         $friends = $this->webforceteacher->search(null, null,$search, array('login', 'forname', 'name'));
-         
-         if($friends) {
-             $friends = array_map(function($friend) {
-                 return array_filter ((array)$friend, function($key){
-                     return in_array($key, ['id', 'login','email','avatar','forname','name']);
-                 }, ARRAY_FILTER_USE_KEY);
-             }, $friends);
-         }
-         $this->json($friends);
+
+    protected function getUserModel()
+    {
+        $this->load->model('webforceteacher');
+        return $this->webforceteacher;
+    }
+
+    protected function filterUser($user)
+    {
+        parent::filterUser($user);
+        unset($user->reset);
+        unset($user->matching);
+        unset($user->current_teachsession);
+        unset($user->preferences);
+        unset($user->matchTmp);
     }
 
 }

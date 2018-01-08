@@ -16,18 +16,20 @@ class Chatroominvitation extends DATA_Model
         return self::TABLE_NAME;
     }
 
-    public function create($roomId,$userId)
+    public function create($userId, $roomId)
     {
-        $room = $this->getRow([
+        $invitation = $this->getRow([
             'user_id' => $userId,
             'room_id' => $roomId
         ]);
 
-        if (!$room) {
-            return $this->insert([
+        if (!$invitation) {
+            $this->insert([
                 'user_id' => $userId,
                 'room_id' => $roomId
             ]);
+            
+            return 1;
         }
 
         return 1;

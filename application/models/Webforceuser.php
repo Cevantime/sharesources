@@ -24,7 +24,7 @@ class Webforceuser extends User {
 		
 		$this->unlink('avatar', $datas);
 		
-		parent::afterUpdate($datas, $where);
+		parent::beforeUpdate($datas, $where);
 	}
 	
 	public function connect($id = null) {
@@ -117,7 +117,7 @@ class Webforceuser extends User {
 			foreach($search as $s) {
 				if(trim($s)){
 					$s = $this->escape_like_str($s);
-					$this->select("if($col LIKE '%$s%' ESCAPE '!', @matching := @matching + 1, @matching)", FALSE);
+					$this->select("if($col LIKE '%$s%' ESCAPE '!', @matching := @matching + 1, @matching) as matchTmp", FALSE);
 				}
 			}
 			

@@ -1,155 +1,80 @@
-<style>
-    .chat .chat-room-content {
-        display: none;
-    }
-    .chat .chat-room-content.displayed {
-        display: initial;
-    }
-</style>
+<html>
+    <head>
+        <title>Tchat</title>
 
-<div class="chat chat-templates" style="display: none">
-    <li class="chat chat-room">
-        <div class="chat chat-room-name">{{chat_room_name}}</div>
-        <div class="chat chat-room-content">
-            <ul class="chat chat-room-messages"></ul>
-            <form class="chat chat-form-message">
-                <label for="chat chat-message">
-                    Message
-                </label>
-                <input type="text" class="chat chat-message-content" name="chat chat-message-content"/>
-                <input type="submit" name="chat chat-send-message" value="envoyer"/>
-            </form> 
+        <link href="<?php echo base_url("assets/local/css/chat/chat.css"); ?>" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="chat-templates" style="display: none">
+            <div id="chat-room-template">
+                <li class="chat chat-room">
+                    <div class="chat chat-room-name" v-bind:class="{ 'has-been-updated': room.hasBeenUpdated }" v-on:click="toogleDisplayed">
+                        {{ name }}
+                        <a href="#" v-on:click="detach">&Cross;</a>
+                    </div>
+                    <div class="chat chat-room-content" v-bind:class="{ displayed: room.displayed }">
+
+                        <ul class="chat chat-room-messages" ref="container">
+                            <message v-for="message in room.messages" v-bind:message="message"></message>
+                        </ul>
+                        <form class="chat chat-form-message" v-on:submit.prevent="addMessage">
+                            <label for="chat chat-message">
+                                Message
+                            </label>
+                            <input type="text" v-model="message" class="chat chat-message-content" name="chat chat-message-content"/>
+                            <input type="submit" name="chat chat-send-message" value="envoyer"/>
+                        </form> 
+                    </div>
+                </li>
+            </div>
+            <div id="chat-message-template">
+                <li class="chat chat-room-message" v-bind:class="{ 'is-self' : isSelf }">
+                    <span>{{ message.content }}</span>
+                </li>
+            </div>
         </div>
-    </li>
+        <div id="chat" style="display: none;">
+            <div id="chat-search-friends" v-bind:focus="displaySearch">
+                <form v-on:submit.prevent="search">
+                    <input 
+                        type="text" 
+                        v-model="searched" 
+                        v-on:focus="displaySearch" 
+                        v-on:input="search" 
+                        name="search-friend" 
+                        id="search-friend" 
+                        placeholder="<?php echo translate('Rechercher un ami'); ?>"/>
+                    <div id="friend-suggestion" v-bind:class="{displayed: searchDisplayed}">
+                        <a href="#" v-on:click="hideSearch">&Cross;</a>
+                        <ul>
+                            <li v-for="suggestion in friendSuggestions" class="chat chat-friend-suggestion">
+                                <a v-on:click.prevent="select(suggestion)" href="#">{{ suggestion.login }} {{ suggestion.email }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
 
-    <li class="chat chat-room-message {{author_class}}">
-        <p>{{message.content}}</p>
-    </li>
+            <ul id="chat-attached-rooms">
+                <attached-room 
+                    v-on:room-change-display="roomChangeDisplay" 
+                    ref="roomComp" v-if="room.is_room_attached" 
+                    v-for="room in rooms" 
+                    v-bind:room="room"></attached-room>
+            </ul>
 
-    <li class="chat chat-friend-suggestion"><a href="#">{{user.login}} {{user.email}}</a></div>
-</div>
-<div id="chat-search-friends">
-    <form>
-        <label>Rechercher</label>
-        <input type="text" name="search-friend" id="search-friend"/>
-        <ul id="friend-suggestion">
-        </ul>
-    </form>
-</div>
+        </div>
 
-<div id="chat-rooms"></div>
-
-<script type="text/javascript" src="<?php echo base_url('assets/vendor/js/chat/cookie.js') ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/vendor/js/chat/ajax.js') ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/vendor/js/chat/socket.io.js') ?>"></script>
-<script type="text/javascript">
-
-(function () {
-  let chatSocket = io('<?php echo $_SERVER['HTTP_HOST'] ?>:18080' + '/chat');
-
-  let apiUrl = '<?php echo base_url('chat/chat') ?>';
-
-  let token = getCookie('resources_chat_token');
-
-  chatSocket.emit('new-client', {access_token: token});
-  
-  chatSocket.on('client-confirmed', init);
-
-  function init(user) {
-
-    let chatRooms = document.getElementById('chat-rooms');
-
-    let templateChatRoom = document.querySelector('.chat-templates .chat-room');
-    let templateChatRoomMessage = document.querySelector('.chat-templates .chat-room-message');
-    let templateFriendSuggestion = document.querySelector('.chat-templates .chat-friend-suggestion');
-
-    let userId = user.id;
-
-    ajax.get(apiUrl + '/room', [], function (rep) {
-      rep = JSON.parse(rep);
-
-      if (rep && typeof rep.rooms !== 'undefined' && rep.rooms) {
-        for (let room of rep.rooms) {
-          let chatRoomEl = templateChatRoom.cloneNode(true);
-          let innerHTML = chatRoomEl.innerHTML;
-
-          innerHTML = innerHTML.replace('{{chat_room_name}}', '#conversation' + room.id);
-
-          chatRoomEl.innerHTML = innerHTML;
-
-          chatRooms.append(chatRoomEl);
-
-          chatRoomEl.getElementsByClassName('chat-form-message')[0]
-            .addEventListener('submit', function (e) {
-              e.preventDefault();
-              let inputMessage = this.getElementsByClassName('chat-message-content')[0];
-              let message = inputMessage.value;
-              if (message) {
-                inputMessage.value = '';
-                chatSocket.emit('new-message', {
-                  message: message,
-                  room_id: room.id,
-                  access_token: token
-                });
-              }
-            }, false);
-
-          function displayRoom(e) {
-            e.preventDefault();
-            chatRoomEl.removeEventListener('click', displayRoom);
-            chatRoomEl.getElementsByClassName('chat-room-content')[0].classList.toggle('displayed');
-            ajax.get(apiUrl + '/room/' + room.id, [], function (rep) {
-              rep = JSON.parse(rep);
-              if (rep && typeof rep.room.messages != 'undefined' && rep.room.messages) {
-                let messages = chatRoomEl.getElementsByClassName('chat-room-messages')[0];
-                for (let message of rep.room.messages) {
-                  let messageEl = templateChatRoomMessage.cloneNode(true);
-                  let innerHTMLMessage = messageEl.innerHTML;
-                  innerHTMLMessage = innerHTMLMessage.replace('{{message.content}}', message.content);
-                  innerHTMLMessage = innerHTMLMessage.replace('{{author_class}}', userId == message.from_id ? 'is-self' : 'is-other');
-                  messageEl.innerHTML = innerHTMLMessage;
-                  messages.append(messageEl);
-                }
-
-              }
-            });
-          }
-
-          chatRoomEl.addEventListener('click', displayRoom, false);
-        }
-      }
-    });
-
-    friendList = document.querySelector('#friend-suggestion');
-
-    document.getElementById("search-friend").addEventListener('input', function () {
-      ajax.get(apiUrl + '/friends?search=' + encodeURIComponent(this.value), [], function (rep) {
-        friendList.innerHTML = '';
-        rep = JSON.parse(rep);
-        if (rep) {
-          for (let user of rep) {
-            let el = templateFriendSuggestion.cloneNode(true);
-            let innerHTML = el.innerHTML;
-            for (let userProp in user) {
-              console.log('{{user.' + userProp + '}}');
-              innerHTML = innerHTML.replace('{{user.' + userProp + '}}', user[userProp]);
-            }
-            el.innerHTML = innerHTML;
-            friendList.append(el);
-            let destId = user.id;
-            console.log(destId);
-            el.addEventListener('click', function () {
-                chatSocket.emit('request-room', {
-                    'to_id' : destId,
-                    'access_token' : token
-                });
-            }, false);
-          }
-        }
-      });
-    });
-
-  }
-})();
-
-</script>
+        <script type="text/javascript" src="<?php echo base_url('assets/vendor/js/chat/cookie.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/vendor/js/chat/socket.io.js') ?>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <!--<script src="https://unpkg.com/vue-async-computed@3.3.0"></script>-->
+        <script type="text/javascript">
+            var chatSocket = io('<?php echo $_SERVER['HTTP_HOST'] ?>:18080' + '/chat');
+            var apiUrl = '<?php echo base_url('chat/chat') ?>';
+            var token = getCookie('resources_chat_token');
+            var userId;
+        </script>
+        <script type="text/javascript" src="<?php echo base_url('assets/vendor/js/chat/chat.js') ?>"></script>
+    </body>
+</html>
