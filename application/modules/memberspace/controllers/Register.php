@@ -49,6 +49,8 @@ class Register extends MX_Controller {
 			add_error($this->form_validation->error_string());
 			return $post;
 		}
+        
+        $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
 		
 		if(!isset($post['id'])) {
 			$this->sendMailConfirmation($userId, $mailRedirect);
