@@ -58,6 +58,7 @@ class UserManager {
 					return $datas;
 				}
 			}
+            $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 			if($CI->$model->fromPost()) {
 				if($is_update) {
 					add_success($this->config['update-success']);
