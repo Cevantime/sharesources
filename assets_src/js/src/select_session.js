@@ -7,7 +7,7 @@ $(function() {
 	});
 	$('.session-select').change(function() {
 		var redirect = window.currentURL || 'home';
-		window.location = window.baseURL+'/sessions/setcurrent/'+$(this).val()+'?redirect='+encodeURIComponent(redirect);
+		window.location = window.baseURL+'sessions/setcurrent/'+$(this).val()+'?redirect='+encodeURIComponent(redirect);
 	});
 });
 
