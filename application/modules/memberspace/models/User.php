@@ -180,13 +180,19 @@ class User extends DATA_Model
         if (isset($to_insert['preferences'])) {
             $to_insert['preferences'] = json_encode($to_insert['preferences']);
         }
+        $to_insert['password'] = password_hash($to_insert['password'], PASSWORD_DEFAULT);
+        
     }
 
     protected function beforeUpdate(&$datas = null, $where = null)
     {
         parent::beforeUpdate($datas, $where);
-        if (isset($to_insert['preferences'])) {
-            $to_insert['preferences'] = json_encode($to_insert['preferences']);
+        if (isset($datas['preferences'])) {
+            $datas['preferences'] = json_encode($datas['preferences']);
+        }
+        
+        if(isset($datas['password']) && password_get_info($datas['password'])['algo'] === 0) {
+            $datas['password'] = password_hash($datas['password'], PASSWORD_DEFAULT);
         }
     }
 

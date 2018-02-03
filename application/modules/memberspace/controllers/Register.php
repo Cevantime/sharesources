@@ -42,8 +42,6 @@ class Register extends MX_Controller {
 		}
 		
 		$this->load->model($userModel);
-        
-        $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
 		
 		$userId = $this->$modelName->fromData($post);
 		
