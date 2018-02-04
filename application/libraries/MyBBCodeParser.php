@@ -77,6 +77,12 @@ class MyBBCodeParser extends BBCodeParser {
 			'[code=(.*?)](.*?)[/code]' => function($matches) {
 				return '\lstset{language='.$matches[1].'}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
 			},
+			'[inlineCode](.*?)[/inlineCode]' => function($matches) {
+				return "\begin{lstlisting}\n".latex_decode($matches[1])."\n". '\end{lstlisting}';
+			},
+			'[inlineCode=(.*?)](.*?)[/inlineCode]' => function($matches) {
+				return '\lstset{language='.$matches[1].'}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
+			},
 			'[list](.*?)[/list]' => '\begin{itemize}' . "\n" . '$1' . "\n" . '\end{itemize}',
 			'[list=1](.*?)[/list]' => '\begin{enumerate}' . "\n" . '$1' . "\n" . '\end{enumerate}',
 			'[ul](.*?)[/ul]' => '\begin{itemize}' . "\n" . '$1' . "\n" . '\end{itemize}',
@@ -107,6 +113,8 @@ class MyBBCodeParser extends BBCodeParser {
 			},
 			'[file=(.*?)](.*?)[/file]' => $parseFiles,
 			'[image=(.*?)](.*?)[/image]' => $parseFiles,
+			'[imageLeft=(.*?)](.*?)[/imageLeft]' => $parseFiles,
+			'[imageRight=(.*?)](.*?)[/imageRight]' => $parseFiles,
 			'[video](.*?)[/video]' => function($matches) {
 				return '\href{'.latex_decode($matches[1]).'}';
 			},
