@@ -803,7 +803,6 @@ abstract class DATA_Model extends CI_Model {
 		if ($datas == null) {
 			$datas = $this->toArray();
 		}
-		$this->convertArrayColumnsToJson($datas);
 		if ($this->updateDatas($datas)) {
 			return $this->update($datas, $where);
 		} else {
@@ -814,7 +813,7 @@ abstract class DATA_Model extends CI_Model {
 	private function convertArrayColumnsToJson(&$datas) {
 		foreach ($datas as $key => $value) {
 			if (is_array($value)) { // automatic conversion of an array to json format
-				$datas[$key] = json_encode($value);
+				$datas[$key] = json_encode($value, true);
 			}
 		}
 	}

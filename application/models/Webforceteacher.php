@@ -18,7 +18,6 @@ class Webforceteacher extends Webforceuser {
 		} else if(is_object($row)) {
 			$row->preferences = json_decode($row->preferences);
 		}
-		
 		return $row;
 	}
 
