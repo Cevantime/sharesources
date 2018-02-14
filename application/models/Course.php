@@ -254,7 +254,6 @@ class Course extends Blogpost {
 		$this->load->library('MyBBCodeParser', '', 'parser');
 		$this->parser->parse($datas['content_bbcode']);
 		$datas['content'] = $this->parser->getAsHtml();
-
 		$this->parser->parse($datas['description_bbcode']);
 		$datas['description'] = $this->parser->getAsHtml();
 

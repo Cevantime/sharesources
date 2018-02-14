@@ -78,7 +78,7 @@ class BBCodeParser extends JBBCode\Parser {
 		$builder = new JBBCode\CodeDefinitionBuilder('justify', '<div align="justify">{param}</div>');
 		$this->addCodeDefinition($builder->build());
 
-		$builder = new JBBCode\CodeDefinitionBuilder('h2', '<h2 class="section">{param}</h1>');
+		$builder = new JBBCode\CodeDefinitionBuilder('h2', '<h2 class="section">{param}</h2>');
 		//$builder->setUseOption(true);
 		$this->addCodeDefinition($builder->build());
 
