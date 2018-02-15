@@ -355,7 +355,7 @@ class Course extends Blogpost {
 	}
 	
 	public function getSharedToSession($sessionId = null, $limit = null, $offset = null, $type = 'object', $columns = null) {
-		$this->prepareForSession($sessionId);
+//		$this->prepareForSession($sessionId);
 		return $this->getListWithCategoriesTagsFilesAndShares($limit, $offset, $type, $columns);
 	}
 
