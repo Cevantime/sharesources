@@ -307,7 +307,7 @@ class CoursesController extends MY_Controller {
 		if(user_is('teacher')){
 			$courses = $this->course->getAll(user_id());
 		} else {
-			$course = $this->course->getForSession(user_id());
+			$courses = $this->course->getSharedToSession(user_id());
 		}
 		
 		$this->layout->title(translate('Tous les cours'));
