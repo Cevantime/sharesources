@@ -70,9 +70,10 @@ class MyBBCodeParser extends BBCodeParser
         };
 
         $map = array(
-            '[h2](.*?)[/h2]' => '\section{$1}' . "\n" . '',
-            '[h3](.*?)[/h3]' => '\subsection{$1}' . "\n" . '',
-            '[h4](.*?)[/h4]' => '\subsubsection{$1}' . "\n" . '',
+            '[br][/br]' => "\n",
+            '[h2](.*?)[/h2]' => '\section{$1}' . "\n" ,
+            '[h3](.*?)[/h3]' => '\subsection{$1}' . "\n" ,
+            '[h4](.*?)[/h4]' => '\subsubsection{$1}' . "\n" ,
             '[p](.*?)[/p]' => '\paragraph{}' . "\n" . '$1',
             '[code](.*?)[/code]' => function($matches) {
                 return "\begin{lstlisting}\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
@@ -90,8 +91,8 @@ class MyBBCodeParser extends BBCodeParser
             '[list=1](.*?)[/list]' => '\begin{enumerate}' . "\n" . '$1' . "\n" . '\end{enumerate}',
             '[ul](.*?)[/ul]' => '\begin{itemize}' . "\n" . '$1' . "\n" . '\end{itemize}',
             '[ol](.*?)[/ol]' => '\begin{enumerate}' . "\n" . '$1' . "\n" . '\end{enumerate}',
-            '[\*](.*?)[/\*]' => '\item $1' . "\n" . '',
-            '[li](.*?)[/li]' => '\item $1' . "\n" . '',
+            '[\*](.*?)[/\*]' => '\item $1' . "\n" ,
+            '[li](.*?)[/li]' => '\item $1' . "\n" ,
             '[sectioncode](.*?)[/sectioncode]' => function($matches) {
                 return '\begin{lstlisting}' . "\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
             },
