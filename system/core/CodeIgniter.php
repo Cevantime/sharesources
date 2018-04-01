@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2015, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,10 @@
  *
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
+ * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
  */
@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	CodeIgniter
  * @category	Front-controller
  * @author		EllisLab Dev Team
- * @link		http://codeigniter.com/user_guide/
+ * @link		https://codeigniter.com/user_guide/
  */
 
 /**
@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @var	string
  *
  */
-	define('CI_VERSION', '3.0.1-dev');
+	const CI_VERSION = '3.1.8';
 
 /*
  * ------------------------------------------------------
@@ -67,7 +67,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		require_once(APPPATH.'config/'.ENVIRONMENT.'/constants.php');
 	}
 
-	require_once(APPPATH.'config/constants.php');
+	if (file_exists(APPPATH.'config/constants.php'))
+	{
+		require_once(APPPATH.'config/constants.php');
+	}
 
 /*
  * ------------------------------------------------------
@@ -359,7 +362,7 @@ if ( ! is_php('5.4'))
 	 *
 	 * Returns current CI instance object
 	 *
-	 * @return object
+	 * @return CI_Controller
 	 */
 	function &get_instance()
 	{
@@ -398,6 +401,7 @@ if ( ! is_php('5.4'))
 	$e404 = FALSE;
 	$class = ucfirst($RTR->class);
 	$method = $RTR->method;
+
 	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
 	{
 		$e404 = TRUE;
@@ -406,7 +410,6 @@ if ( ! is_php('5.4'))
 	{
 		require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
 
-        
 		if ( ! class_exists($class, FALSE) OR $method[0] === '_' OR method_exists('CI_Controller', $method))
 		{
 			$e404 = TRUE;
@@ -416,16 +419,31 @@ if ( ! is_php('5.4'))
 			$params = array($method, array_slice($URI->rsegments, 2));
 			$method = '_remap';
 		}
-		// WARNING: It appears that there are issues with is_callable() even in PHP 5.2!
-		// Furthermore, there are bug reports and feature/change requests related to it
-		// that make it unreliable to use in this context. Please, DO NOT change this
-		// work-around until a better alternative is available.
-		elseif ( ! in_array(strtolower($method), array_map('strtolower', get_class_methods($class)), TRUE))
+		elseif ( ! method_exists($class, $method))
 		{
 			$e404 = TRUE;
 		}
+		/**
+		 * DO NOT CHANGE THIS, NOTHING ELSE WORKS!
+		 *
+		 * - method_exists() returns true for non-public methods, which passes the previous elseif
+		 * - is_callable() returns false for PHP 4-style constructors, even if there's a __construct()
+		 * - method_exists($class, '__construct') won't work because CI_Controller::__construct() is inherited
+		 * - People will only complain if this doesn't work, even though it is documented that it shouldn't.
+		 *
+		 * ReflectionMethod::isConstructor() is the ONLY reliable check,
+		 * knowing which method will be executed as a constructor.
+		 */
+		elseif ( ! is_callable(array($class, $method)))
+		{
+			$reflection = new ReflectionMethod($class, $method);
+			if ( ! $reflection->isPublic() OR $reflection->isConstructor())
+			{
+				$e404 = TRUE;
+			}
+		}
 	}
-    
+
 	if ($e404)
 	{
 		if ( ! empty($RTR->routes['404_override']))
@@ -481,6 +499,7 @@ if ( ! is_php('5.4'))
 	{
 		$params = array_slice($URI->rsegments, 2);
 	}
+
 /*
  * ------------------------------------------------------
  *  Is there a "pre_controller" hook?
@@ -495,7 +514,9 @@ if ( ! is_php('5.4'))
  */
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
+
 	$CI = new $class();
+
 /*
  * ------------------------------------------------------
  *  Is there a "post_controller_constructor" hook?
