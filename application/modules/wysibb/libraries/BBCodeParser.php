@@ -9,7 +9,6 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 require_once APPPATH . 'modules/wysibb/third_party/FileCodeDefinition.php';
-require_once APPPATH . 'third_party/bbcode/LinkVisitor.php';
 
 class BBCodeParser extends JBBCode\Parser
 {
@@ -172,16 +171,6 @@ class BBCodeParser extends JBBCode\Parser
                 $child->setAttribute('tuto-section-' . $i++);
             }
         }
-        $linkVisitor = new LinkVisitor();
-        $treeRoot->accept($linkVisitor);
-        foreach ($linkVisitor->getLinkTags() as $tag) {
-            $code = $this->getCode($tag);
-            if($code){
-                $code->setUseOption(true);
-                $code->setReplacementText('<'.$tag.' id="{option}">{param}</'.$tag.'>');
-                
-            }
-        }
     }
 
     public function clean($str)
@@ -218,23 +207,6 @@ class BBCodeParser extends JBBCode\Parser
     {
         $this->parse($content);
         $content = $this->getAsHTML();
-    }
-    
-    public function getAsHTML()
-    {
-        $html = parent::getAsHTML();
-        $linkVisitor = new LinkVisitor();
-        foreach ($linkVisitor->getLinkTags() as $tag) {
-            $code = $this->getCode($tag);
-            if($code){
-                $code->setUseOption(false);
-                $code->setReplacementText('<'.$tag.'>{param}</'.$tag.'>');
-                
-            }
-        }
-        
-        return $html;
-        
     }
 
     public function convertToLatex($str)

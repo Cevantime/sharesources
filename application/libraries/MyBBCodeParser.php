@@ -10,15 +10,15 @@ if (!defined('BASEPATH'))
 
 require_once APPPATH . 'modules/wysibb/libraries/BBCodeParser.php';
 
-
 class MyBBCodeParser extends BBCodeParser
 {
+
+    private $structureTags = ['h2', 'h3', 'h4', 'h5', 'h6'];
+    private $numbers = [];
 
     public function __construct()
     {
         parent::__construct();
-        
-        $this->accept(new LinkVisitor());
 
         $baseUrl = base_url();
 
@@ -43,10 +43,10 @@ class MyBBCodeParser extends BBCodeParser
         $builder = new JBBCode\CodeDefinitionBuilder('inlineCode', '<code class="{option} inline">{param}</code>');
         $builder->setUseOption(true);
         $this->addCodeDefinition($builder->build());
-        
+
         $builder = new JBBCode\CodeDefinitionBuilder('p', '<p id="{option}">{param}</p>');
-		$builder->setUseOption(true);
-		$this->addCodeDefinition($builder->build());
+        $builder->setUseOption(true);
+        $this->addCodeDefinition($builder->build());
     }
 
     public function convertToLatex($str)
@@ -78,9 +78,9 @@ class MyBBCodeParser extends BBCodeParser
 
         $map = array(
             '[br][/br]' => "\n",
-            '[h2](.*?)[/h2]' => '\section{$1}' . "\n" ,
-            '[h3](.*?)[/h3]' => '\subsection{$1}' . "\n" ,
-            '[h4](.*?)[/h4]' => '\subsubsection{$1}' . "\n" ,
+            '[h2](.*?)[/h2]' => '\section{$1}' . "\n",
+            '[h3](.*?)[/h3]' => '\subsection{$1}' . "\n",
+            '[h4](.*?)[/h4]' => '\subsubsection{$1}' . "\n",
             '[p](.*?)[/p]' => '\paragraph{}' . "\n" . '$1',
             '[code](.*?)[/code]' => function($matches) {
                 return "\begin{lstlisting}\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
@@ -98,8 +98,8 @@ class MyBBCodeParser extends BBCodeParser
             '[list=1](.*?)[/list]' => '\begin{enumerate}' . "\n" . '$1' . "\n" . '\end{enumerate}',
             '[ul](.*?)[/ul]' => '\begin{itemize}' . "\n" . '$1' . "\n" . '\end{itemize}',
             '[ol](.*?)[/ol]' => '\begin{enumerate}' . "\n" . '$1' . "\n" . '\end{enumerate}',
-            '[\*](.*?)[/\*]' => '\item $1' . "\n" ,
-            '[li](.*?)[/li]' => '\item $1' . "\n" ,
+            '[\*](.*?)[/\*]' => '\item $1' . "\n",
+            '[li](.*?)[/li]' => '\item $1' . "\n",
             '[sectioncode](.*?)[/sectioncode]' => function($matches) {
                 return '\begin{lstlisting}' . "\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
             },
@@ -170,7 +170,7 @@ class MyBBCodeParser extends BBCodeParser
 
     public function clean($str)
     {
-        
+
         $bbcode = str_replace("\t", "    ", $str);
 
         $out = '';
@@ -184,7 +184,7 @@ class MyBBCodeParser extends BBCodeParser
         ];
 
         $strictTagList = [
-            'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'section2', 'section3', 'ol', 'list', 'youtube', 'video', 'table', 'tr'
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'section2', 'section3', 'ol', 'list', 'youtube', 'video', 'table', 'tr', 'img'
         ];
 
         $respectTag = [
@@ -235,7 +235,8 @@ class MyBBCodeParser extends BBCodeParser
                 }
                 $substring = substr($substring, 1);
             } else {
-                if ($c !== PHP_EOL) $out .= $c;
+                if ($c !== PHP_EOL)
+                    $out .= $c;
                 $substring = substr($substring, 1);
             }
         }
@@ -250,6 +251,73 @@ class MyBBCodeParser extends BBCodeParser
         $out = preg_replace("#(\[br\]\[\/br\]" . PHP_EOL . ")+#s", "[br][/br]\n", $out);
 
         return $out;
+    }
+
+    public function getAsHTML()
+    {
+        $html = parent::getAsHTML();
+
+        // add ids to direct childs
+
+        $dom = new DOMDocument();
+
+        $dom->loadHTML('<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>' . $html . '</body>
+</html>');
+
+        $body = $dom->getElementsByTagName('body')[0];
+
+        $i = 0;
+
+        $this->numbers = array_fill(0, count($this->structureTags) + 1, 0);
+
+        foreach ($body->childNodes as $child) {
+            if ($child instanceof DOMElement) {
+                $this->visitElementNode($child);
+            }
+        }
+
+        $html = $dom->saveHTML($body);
+
+        $html = substr($html, 7, strlen($html) - 15);
+
+        return $html;
+    }
+
+    public function visitElementNode(DOMElement $elementNode)
+    {
+        $tagName = $elementNode->tagName;
+        $structureTagPos = array_search($tagName, $this->structureTags);
+
+        $this->incSectionNumbers($this->numbers, $structureTagPos !== FALSE ? $structureTagPos : count($this->structureTags));
+        
+        $elementNode->setAttribute('id', $this->buildSectionName($this->numbers));
+
+//        foreach ($elementNode->childNodes as $child) {
+//            if ($child instanceof DOMElement) {
+//                $this->visitElementNode($child);
+//            }
+//        }
+    }
+
+    private function incSectionNumbers(&$numbers, $index)
+    {
+        $numbers[$index] ++;
+        for ($i = $index + 1; $i < count($numbers); $i++) {
+            $numbers[$i] = 0;
+        }
+    }
+
+    private function buildSectionName($numbers)
+    {
+        $linkRadical = 'link';
+        foreach ($numbers as $number) {
+            $linkRadical .= '-' . $number;
+        }
+        return $linkRadical;
     }
 
     public function isMatchingTag($str, &$tagList)
