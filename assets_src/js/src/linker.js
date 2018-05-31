@@ -10,7 +10,7 @@ $(function () {
       var $a = $('<a>').addClass('linker').attr('href', "#").text('#').click(function (e) {
         e.preventDefault();
         var anchorPos = window.location.href.indexOf('#');
-        if(anchorPos){
+        if( ! anchorPos){
           var url = window.location.href;
         } else {
           var url = window.location.href.substring(0, window.location.href.indexOf('#'));
