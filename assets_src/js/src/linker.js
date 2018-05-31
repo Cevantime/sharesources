@@ -10,10 +10,11 @@ $(function () {
       var $a = $('<a>').addClass('linker').attr('href', "#").text('#').click(function (e) {
         e.preventDefault();
         var anchorPos = window.location.href.indexOf('#');
-        if( ! anchorPos){
-          var url = window.location.href;
+        var url;
+        if( anchorPos === -1){
+          url = window.location.href;
         } else {
-          var url = window.location.href.substring(0, window.location.href.indexOf('#'));
+          url = window.location.href.substring(0, anchorPos);
         }
         url += "#" + $el.attr('id');
         var dt = new clipboard.DT();
