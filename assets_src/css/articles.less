@@ -1,5 +1,16 @@
 @import url("fonts.css");
 
+.linker {
+    position: absolute;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    left: -20px;
+    &.displayed {
+        display: initial;
+    }
+}
+
 .article {
 
     font-family: Merriweather, open_sansregular, arial, sans-serif;
@@ -96,6 +107,10 @@
         float: left;
         vertical-align: middle;
         margin-right: 20px;
+    }
+    
+    h2,h3,h4,h5,h6,p,ul,table {
+        position: relative;
     }
 
 }

@@ -10,12 +10,15 @@ if (!defined('BASEPATH'))
 
 require_once APPPATH . 'modules/wysibb/libraries/BBCodeParser.php';
 
+
 class MyBBCodeParser extends BBCodeParser
 {
 
     public function __construct()
     {
         parent::__construct();
+        
+        $this->accept(new LinkVisitor());
 
         $baseUrl = base_url();
 
@@ -40,6 +43,10 @@ class MyBBCodeParser extends BBCodeParser
         $builder = new JBBCode\CodeDefinitionBuilder('inlineCode', '<code class="{option} inline">{param}</code>');
         $builder->setUseOption(true);
         $this->addCodeDefinition($builder->build());
+        
+        $builder = new JBBCode\CodeDefinitionBuilder('p', '<p id="{option}">{param}</p>');
+		$builder->setUseOption(true);
+		$this->addCodeDefinition($builder->build());
     }
 
     public function convertToLatex($str)

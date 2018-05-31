@@ -4,16 +4,17 @@ global.$ = $;
 
 require('bootstrap');
 
-$('#minimizeSidebar').click(function(){
-	var miniActive = typeof md.misc.sidebar_mini_active === 'undefined' || ! md.misc.sidebar_mini_active;
-	$.ajax(window.baseURL+'userprefs/sidebar_collapsed/'+(miniActive ? 1 : 0));
+$('#minimizeSidebar').click(function () {
+  var miniActive = typeof md.misc.sidebar_mini_active === 'undefined' || !md.misc.sidebar_mini_active;
+  $.ajax(window.baseURL + 'userprefs/sidebar_collapsed/' + (miniActive ? 1 : 0));
 });
 
-if(typeof hljs !== 'undefined'){
-  
-  $(document).ready(function() {
-    $('code.inline').each(function(i, block) {
+if (typeof hljs !== 'undefined') {
+
+  $(document).ready(function () {
+    $('code.inline').each(function (i, block) {
       hljs.highlightBlock(block);
     });
   });
 }
+
