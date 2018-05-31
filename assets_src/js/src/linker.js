@@ -4,9 +4,14 @@ $(function () {
   $('.article > *, .tutorial > *').each(function () {
     var $el = $(this);
     if ($el.attr('id')) {
-      var offset = $el.offset();
-      offset.top = offset.top + $el.height() / 2 - 10;
-      offset.left = offset.left - 20;
+      if($el.prop('tagName') === 'PRE'){
+        var id = $el.attr('id');
+        $el.attr('id', '');
+        var $wrapper = $('<div>');
+        $el.wrap($wrapper);
+        $el = $el.parent();
+        $el.attr('id', id);
+      }
       var $a = $('<a>').addClass('linker').attr('href', "#").text('#').click(function (e) {
         e.preventDefault();
         var anchorPos = window.location.href.indexOf('#');
