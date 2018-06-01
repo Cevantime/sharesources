@@ -281,8 +281,7 @@ class MyBBCodeParser extends BBCodeParser
         }
 
         $html = $dom->saveHTML($body);
-
-        $html = substr($html, 7, strlen($html) - 15);
+        $html = substr($html, 6, strlen($html) - 13);
 
         return $html;
     }

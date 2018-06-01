@@ -317,6 +317,7 @@ class Course extends Blogpost {
 //		if(isset($datas['title']) && $datas['title']) {
 //			$datas['alias'] = $this->createAliasFrom($datas['title'], true);
 //		}
+        die();
 		parent::beforeUpdate($datas, $where);
 	}
 	
