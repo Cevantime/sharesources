@@ -923,7 +923,7 @@ abstract class DATA_Model extends CI_Model {
 				}
 				$values[] = implode(',', $datas);
 			}
-			$sql = 'INSERT INTO {PRE}' . $this->$model->getTableName() . '(`' . implode('`,`', $keys) . '`) VALUES (' . implode('),(', $values) . ');';
+			$sql = 'INSERT INTO ' . $this->$model->getTableName() . '(`' . implode('`,`', $keys) . '`) VALUES (' . implode('),(', $values) . ');';
 			return $this->db->query($sql);
 		}
 	}
@@ -967,13 +967,13 @@ abstract class DATA_Model extends CI_Model {
 			$this->loadExtendedInstance($model);
 			$dataColumns = array_diff($keys, $this->$model->getPrimaryColumns());
 			if (!$dataColumns) {
-				$sql = 'INSERT IGNORE INTO {PRE}' . $this->$model->getTableName() . '(`' . implode('`,`', $keys) . '`) VALUES (' . implode('),(', $values) . ')';
+				$sql = 'INSERT IGNORE INTO ' . $this->$model->getTableName() . '(`' . implode('`,`', $keys) . '`) VALUES (' . implode('),(', $values) . ')';
 			} else {
 				$on_duplicate_col = array();
 				foreach ($dataColumns as $dataColumn) {
 					$on_duplicate_col[] = '`' . $dataColumn . '`=VALUES(`' . $dataColumn . '`)';
 				}
-				$sql = 'INSERT INTO {PRE}' . $this->$model->getTableName() . '(`' . implode('`,`', $keys) . '`) VALUES (' . implode('),(', $values) . ')'
+				$sql = 'INSERT INTO ' . $this->$model->getTableName() . '(`' . implode('`,`', $keys) . '`) VALUES (' . implode('),(', $values) . ')'
 						. ' ON DUPLICATE KEY UPDATE ' . implode(',', $on_duplicate_col) . ';';
 			}
 
@@ -1013,8 +1013,8 @@ abstract class DATA_Model extends CI_Model {
 			$this->loadRow(array('id' => $id));
 		}
 		$query = 'SELECT COUNT(*) as count
-        FROM {PRE}' . $this->getTableName() . '
-		WHERE {PRE}' . $this->getTableName() . '.' . $order . ' >= ' . $this->db->escape($this->{$order}) . '';
+        FROM ' . $this->getTableName() . '
+		WHERE ' . $this->getTableName() . '.' . $order . ' >= ' . $this->db->escape($this->{$order}) . '';
 		$res = $this->db->query($query)->result();
 
 		return $res[0]->count;

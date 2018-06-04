@@ -301,6 +301,7 @@ class Course extends Blogpost {
 				}
 			}
 		}
+        
 		if(isset($datas['publish']) && $datas['publish']) {
 			$this->load->model('notification');
 			$where = $where ? $where : $this->buildPrimaryWhere($datas);
