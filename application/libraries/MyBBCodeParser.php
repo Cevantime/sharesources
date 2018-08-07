@@ -89,10 +89,10 @@ class MyBBCodeParser extends BBCodeParser
                 return '\lstset{language=' . $matches[1] . '}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
             },
             '[inlineCode](.*?)[/inlineCode]' => function($matches) {
-                return "\begin{lstlisting}\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
+                return "\n\begin{lstlisting}\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
             },
             '[inlineCode=(.*?)](.*?)[/inlineCode]' => function($matches) {
-                return '\lstset{language=' . $matches[1] . '}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
+                return "\n" . '\lstset{language=' . $matches[1] . '}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
             },
             '[list](.*?)[/list]' => '\begin{itemize}' . "\n" . '$1' . "\n" . '\end{itemize}',
             '[list=1](.*?)[/list]' => '\begin{enumerate}' . "\n" . '$1' . "\n" . '\end{enumerate}',
@@ -133,8 +133,8 @@ class MyBBCodeParser extends BBCodeParser
             '[i](.*?)[/i]' => '\textit{$1}',
             '[h5](.*?)[/h5]' => '\paragraph{}' . "\n" . '\textbf{$1}' . "\n",
             '[h6](.*?)[/h6]' => '\paragraph{}' . "\n" . '\textbf{$1}' . "\n",
-            '[keynotion](.*?)[/keynotion]' => '\paragraph{}' . "\n" . '\textbf{$1}' . "\n",
-            '[warning](.*?)[/warning]' => '\paragraph{}' . "\n" . '\textbf{$1}' . "\n",
+            '[keynotion](.*?)[/keynotion]' => '\paragraph{}' . "\n" . '$1' . "\n",
+            '[warning](.*?)[/warning]' => '\paragraph{}' . "\n" . '$1' . "\n",
             '[table](.*?)[/table]' => function($matches) {
                 $content = $matches[1];
                 $nbTr = substr_count($content, '[tr]');
