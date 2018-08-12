@@ -1,1 +1,0 @@
-<em>Notification obsolète</em>
