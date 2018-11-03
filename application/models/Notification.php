@@ -63,7 +63,7 @@ class Notification extends DATA_Model {
 				if(!$course) {
 					$text = $this->load->view(
 						'notifications/obsolete',
-						array('course' => $course),
+						array(),
 						true
 					);
 				} else {

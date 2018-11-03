@@ -22,9 +22,7 @@ $(function () {
           url = window.location.href.substring(0, anchorPos);
         }
         url += "#" + $el.attr('id');
-        var dt = new clipboard.DT();
-        dt.setData('text/plain', url);
-        clipboard.write(dt);
+        clipboard.writeText(url);
       }).prependTo($el);
       $el.hover(function () {
         $('.linker').removeClass('displayed');

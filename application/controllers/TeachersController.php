@@ -6,7 +6,6 @@ if (!defined('BASEPATH'))
 class TeachersController extends MY_Controller {
 	
 	public function search() {
-		
 		if(!$this->input->is_ajax_request()) {
 			show_404();
 		}

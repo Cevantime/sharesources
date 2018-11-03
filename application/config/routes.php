@@ -54,6 +54,9 @@ $route['tags/(:any)'] = 'TagsController/courses/$1';
 
 $route['chat/chat(.*)'] = 'ChatController$1';
 
+$route['teachers/search'] = 'TeachersController/search';
+$route['teacher/profile'] = 'TeachersController/profile';
+
 $route['teachers(.*)'] = 'admin/UsersController/all/webforceteacher$1';
 $route['teacher/add(.*)'] = 'admin/UsersController/add/webforceteacher$1';
 $route['teacher/edit(.*)'] = 'admin/UsersController/edit/webforceteacher$1';
@@ -101,9 +104,6 @@ $route['sessions/setcurrent/(:num)'] = 'SessionsController/setCurrent/$1';
 $route['sessions/delete/(:num)'] = 'SessionsController/delete/$1';
 $route['sessions/requestshare/(:num)'] = 'SessionsController/requestShare/$1';
 $route['sessions/requestunshare/(:num)'] = 'SessionsController/requestUnshare/$1';
-
-$route['teachers/search'] = 'TeachersController/search';
-$route['teacher/profile'] = 'TeachersController/profile';
 
 $route['notifications/index'] = 'NotificationsController/index';
 $route['notifications/see/(:num)'] = 'NotificationsController/see/$1';
