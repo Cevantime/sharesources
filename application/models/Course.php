@@ -29,7 +29,7 @@ class Course extends Blogpost {
 		unset($rules['content']);
         $rules['keywords'] = array(
             'field' => 'keywords',
-            'label' => translate('Mots clÃ©'),
+            'label' => translate('Mots clé'),
             'rules' => 'trim'
         );
 		return $rules;
@@ -45,7 +45,7 @@ class Course extends Blogpost {
 		unset($rules['content']);
         $rules['keywords'] = array(
             'field' => 'keywords',
-            'label' => translate('Mots clÃ©'),
+            'label' => translate('Mots clé'),
             'rules' => 'trim'
         );
 		return $rules;
@@ -92,19 +92,6 @@ class Course extends Blogpost {
 			$idCat = $this->getData('catID');
 		}
 		$this->db->where(array('category_id' => $idCat));
-	}
-
-	public function getRowWithAuthor($where, $type = 'object', $columns = '*') {
-		$this->load->model('redactor');
-		$usersTableName = $this->redactor->getTableName();
-		$this->join($usersTableName, $usersTableName . '.id=user_id');
-		$this->join('users', 'users.id=user_id');
-		$this->db->select($this->db->dbprefix('users') . '.login as author');
-		$this->db->select($this->db->dbprefix('users') . '.login as author');
-		$this->db->select($this->db->dbprefix('users') . '.login as author');
-		$this->db->select($this->db->dbprefix($usersTableName) . '.photo as author_photo');
-		$this->db->select($this->db->dbprefix($usersTableName) . '.bio as author_bio');
-		return $this->getRow($where, $type, $columns);
 	}
 
 	protected function prepareShares() {
