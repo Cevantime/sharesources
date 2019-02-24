@@ -8,11 +8,11 @@ echo "Running liquibase\n";
 passthru('php dbchanges/liquibase/update.php');
 
 echo "Executing node update\n";
-passthru('npm update');
+passthru('npm install');
 
 echo "Composer update\n";
 passthru('php tools/composer self-update');
-passthru('php tools/composer update --working-dir=application/');
+passthru('php tools/composer install --working-dir=application/');
 
 echo "Updating assets\n";
 passthru('./node_modules/.bin/gulp production');

@@ -116,7 +116,11 @@ var codeModal = function (command, opt, queryState) {
         'cpp': 'C++',
         'c#': 'C#',
         'sql': 'SQL',
-        'markdown': 'Markdown'
+        'markdown': 'Markdown',
+        'twig' : 'Twig',
+        'typescript' :'Typescript',
+        'json' : 'JSON',
+        'yaml': 'Yaml'
     }
     var form = '<form id="wysibb-code-form">\n\
     <div class="form-group">\n\
