@@ -25,7 +25,7 @@ class Course extends Blogpost {
 		unset($rules['description']);
 		$rules['content_bbcode'] = $rules['content'];
 		$rules['content_bbcode']['field'] = 'content_bbcode';
-		$rules['image'] = str_replace('file_required|', "", $rules['image']);
+		$rules['image']['rules'] = str_replace('file_required|', "", $rules['image']['rules']);
 		unset($rules['content']);
         $rules['keywords'] = array(
             'field' => 'keywords',

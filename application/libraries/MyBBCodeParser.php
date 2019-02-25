@@ -219,8 +219,12 @@ class MyBBCodeParser extends BBCodeParser
                 $substring = substr($substring, $endPos + 1);
                 $paragraphing = false;
             } else if (!$paragraphing && empty($nodeStack)) {
-                $out .= '[p]';
-                $paragraphing = true;
+                if($c != ' ') {
+                    $out .= '[p]';
+                    $paragraphing = true;
+                } else {
+                    $substring = substr($substring, 1);
+                }
             } else if ($paragraphing && ($c === "\r" || $c === "\n")) {
                 $out .= "[/p]\n[p]";
                 $substring = substr($substring, 1);
@@ -247,7 +251,7 @@ class MyBBCodeParser extends BBCodeParser
 
         $out = trim(str_replace("[p][/p]", PHP_EOL, $out));
 
-        $out = preg_replace("#(" . PHP_EOL . ")+#", "\n", $out);
+        $out = preg_replace("#(" . PHP_EOL . ")+#", PHP_EOL, $out);
         $out = preg_replace("#(\[br\]\[\/br\]" . PHP_EOL . ")+#s", "[br][/br]\n", $out);
 
         return $out;
@@ -312,11 +316,7 @@ class MyBBCodeParser extends BBCodeParser
 
     private function buildSectionName($numbers)
     {
-        $linkRadical = 'link';
-        foreach ($numbers as $number) {
-            $linkRadical .= '-' . $number;
-        }
-        return $linkRadical;
+        return 'link-'.implode('-',$numbers);
     }
 
     public function isMatchingTag($str, &$tagList)

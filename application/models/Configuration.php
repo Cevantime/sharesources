@@ -156,6 +156,10 @@ class Configuration extends DATA_Model
                 'field' => 'color2',
                 'label' => translate('Couleur'),
                 'rules' => 'regex_match[/^([A-Fa-f0-9]{6})$/i]'
+            ),
+            'font_code' => array(
+                'field' => 'font_code',
+                'label' => translate('Thème du code')
             )
         );
     }

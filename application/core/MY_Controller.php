@@ -45,7 +45,7 @@ class MY_Controller extends MX_Controller {
 	}
 	
 	public function addSynthaxHighlightning() {
-		$this->layout->css('assets/vendor/css/highlightjs/styles/monokai-sublime.css');
+		$this->layout->css('assets/vendor/css/highlightjs/styles/'.config('font_code', 'monokai-sublime').'.css');
 		$this->layout->js('assets/vendor/js/highlightjs/highlight.pack.js');
 		$this->layout->jscript('hljs.initHighlightingOnLoad();');
 	}
