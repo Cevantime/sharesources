@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="<?php echo base_url('assets/local/css/selectize.css'); ?>"/>
 		<link href="<?php echo base_url("assets/local/css/stylesheet.css"); ?>" rel="stylesheet" />
 		<!--     Fonts and icons     -->
-		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
 		<script>
 			var baseURL = '<?php echo base_url(); ?>';
@@ -294,7 +294,7 @@
 							<script>
 								document.write(new Date().getFullYear())
 							</script>
-							<a href="http://www.haveasite.fr">HaveASite</a>, made with <i class="fa fa-heart"></i>
+							<a href="https://www.haveasite.fr">HaveASite</a>, made with <i class="fa fa-heart"></i>
 						</p>
 					</div>
 				</footer>
@@ -338,7 +338,7 @@
 
 		<!-- Sweet Alert 2 plugin -->
 		<script src="<?php echo base_url('assets/vendor/js/sweetalert2.js'); ?>"></script>
-		<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+		<!--	Plugin for Fileupload, full documentation here: https://www.jasny.net/bootstrap/javascript/#fileinput -->
 		<script src="<?php echo base_url('assets/vendor/js/jasny-bootstrap.min.js'); ?>"></script>
 		<!-- TagsInput Plugin -->
 		<script src="<?php echo base_url('assets/vendor/js/jquery.tagsinput.js'); ?>"></script>
