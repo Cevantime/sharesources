@@ -1,5 +1,6 @@
-<?php if (!defined('BASEPATH'))
-{
+<?php
+
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -84,15 +85,12 @@ class MY_Form_validation extends CI_Form_validation
 
     public function set_rules($field, $label = '', $rules = array(), $errors = array())
     {
-        if (count($_POST) === 0 AND count($_FILES) > 0) //it will prevent the form_validation from working
-        {
+        if (count($_POST) === 0 AND count($_FILES) > 0) { //it will prevent the form_validation from working
             //add a dummy $_POST
             $_POST['DUMMY_ITEM'] = '';
             parent::set_rules($field, $label, $rules, $errors);
             unset($_POST['DUMMY_ITEM']);
-        }
-        else
-        {
+        } else {
             //we are safe just run as is
             parent::set_rules($field, $label, $rules, $errors);
         }
@@ -102,15 +100,12 @@ class MY_Form_validation extends CI_Form_validation
     {
         $rc = FALSE;
         log_message('DEBUG', 'called MY_form_validation:run()');
-        if (count($_POST) === 0 AND count($_FILES) > 0)//does it have a file only form?
-        {
+        if (count($_POST) === 0 AND count($_FILES) > 0) {//does it have a file only form?
             //add a dummy $_POST
             $_POST['DUMMY_ITEM'] = '';
             $rc = parent::run($group);
             unset($_POST['DUMMY_ITEM']);
-        }
-        else
-        {
+        } else {
             //we are safe just run as is
             $rc = parent::run($group);
         }
@@ -128,16 +123,14 @@ class MY_Form_validation extends CI_Form_validation
         // now will throw an error of required field if the $_FILES array
         // doesn't hold any data of that field.
 
-        if (in_array('file_required', $rules) && !in_array('required', $rules) && !isset($_FILES[$row['field']]))
-        {
+        if (in_array('file_required', $rules) && !in_array('required', $rules) && !isset($_FILES[$row['field']])) {
             $rules[] = 'required';
         }
 
 
         //changed based on
         //http://codeigniter.com/forums/viewthread/123816/P10/#619868
-        if (isset($_FILES[$row['field']]))
-        {
+        if (isset($_FILES[$row['field']])) {
             // it is a file so process as a file
             log_message('DEBUG', 'processing as a file');
             $postdata = $_FILES[$row['field']];
@@ -145,23 +138,18 @@ class MY_Form_validation extends CI_Form_validation
             //required bug
             //if some stupid like me never remember that it's file_required and not required
             //this will save a lot of var_dumping time.
-            if (in_array('required', $rules))
-            {
+            if (in_array('required', $rules)) {
                 $rules[array_search('required', $rules)] = 'file_required';
             }
             //before doing anything check for errors
-            if ($postdata['error'] !== UPLOAD_ERR_OK)
-            {
+            if ($postdata['error'] !== UPLOAD_ERR_OK) {
                 //If the error it's 4 (ERR_NO_FILE) and the file required it's deactivated don't call an error
-                if ($postdata['error'] != UPLOAD_ERR_NO_FILE)
-                {
+                if ($postdata['error'] != UPLOAD_ERR_NO_FILE) {
                     $this->_error_array[$row['field']] = $this->file_upload_error_message($row['label'], $postdata['error']);
                     $this->_field_data[$row['field']]['error'] = $this->file_upload_error_message($row['label'], $postdata['error']);
 
                     return FALSE;
-                }
-                elseif ($postdata['error'] == UPLOAD_ERR_NO_FILE and in_array('file_required', $rules))
-                {
+                } elseif ($postdata['error'] == UPLOAD_ERR_NO_FILE and in_array('file_required', $rules)) {
                     $this->_error_array[$row['field']] = $this->file_upload_error_message($row['label'], $postdata['error']);
                     $this->_field_data[$row['field']]['error'] = $this->file_upload_error_message($row['label'], $postdata['error']);
 
@@ -173,152 +161,107 @@ class MY_Form_validation extends CI_Form_validation
 
             // If the field is blank, but NOT required, no further tests are necessary
             $callback = FALSE;
-            if (!in_array('file_required', $rules) AND $postdata['size'] == 0)
-            {
+            if (!in_array('file_required', $rules) AND $postdata['size'] == 0) {
                 // Before we bail out, does the rule contain a callback?
-                if (preg_match("/(callback_\w+)/", implode(' ', $rules), $match))
-                {
+                if (preg_match("/(callback_\w+)/", implode(' ', $rules), $match)) {
                     $callback = TRUE;
                     $rules = (array('1' => $match[1]));
-                }
-                else
-                {
+                } else {
                     return;
                 }
             }
 
-            foreach ($rules as $rule)
-            {
+            foreach ($rules as $rule) {
                 /// COPIED FROM the original class
-
                 // Is the rule a callback?			
                 $callback = $callable = FALSE;
-                if (is_string($rule))
-                {
-                    if (strpos($rule, 'callback_') === 0)
-                    {
+                if (is_string($rule)) {
+                    if (strpos($rule, 'callback_') === 0) {
                         $rule = substr($rule, 9);
                         $callback = TRUE;
                     }
-                }
-                elseif (is_callable($rule))
-                {
+                } elseif (is_callable($rule)) {
                     $callable = TRUE;
                 }
 
                 // Strip the parameter (if exists) from the rule
                 // Rules can contain a parameter: max_length[5]
                 $param = FALSE;
-                if (!$callable && preg_match('/(.*?)\[(.*)\]/', $rule, $match))
-                {
+                if (!$callable && preg_match('/(.*?)\[(.*)\]/', $rule, $match)) {
                     $rule = $match[1];
                     $param = $match[2];
                 }
 
                 // Call the function that corresponds to the rule
-                if ($callback OR $callable)
-                {
-                    if ($callback)
-                    {
-                        if (!method_exists($this->CI, $rule))
-                        {
+                if ($callback OR $callable) {
+                    if ($callback) {
+                        if (!method_exists($this->CI, $rule)) {
                             log_message('debug', 'Unable to find callback validation rule: ' . $rule);
                             $result = FALSE;
-                        }
-                        else
-                        {
+                        } else {
                             // Run the function and grab the result
                             $result = $this->CI->$rule($postdata, $param);
                         }
-                    }
-                    else
-                    {
-                        $result = is_array($rule)
-                            ? $rule[0]->{$rule[1]}($postdata, $param)
-                            : $rule($postdata, $param);
+                    } else {
+                        $result = is_array($rule) ? $rule[0]->{$rule[1]}($postdata, $param) : $rule($postdata, $param);
                     }
 
                     // Re-assign the result to the master data array
-                    if ($_in_array == TRUE)
-                    {
+                    if ($_in_array == TRUE) {
                         $this->_field_data[$row['field']]['postdata'][$cycles] = (is_bool($result)) ? $postdata : $result;
-                    }
-                    else
-                    {
+                    } else {
                         $this->_field_data[$row['field']]['postdata'] = (is_bool($result)) ? $postdata : $result;
                     }
 
                     // If the field isn't required and we just processed a callback we'll move on...
-                    if (!in_array('file_required', $rules, TRUE) AND $result !== FALSE)
-                    {
+                    if (!in_array('file_required', $rules, TRUE) AND $result !== FALSE) {
                         return;
                     }
-                }
-                elseif (!method_exists($this, $rule))
-                {
+                } elseif (!method_exists($this, $rule)) {
                     // If our own wrapper function doesn't exist we see if a native PHP function does.
                     // Users can use any native PHP function call that has one param.
-                    if (function_exists($rule))
-                    {
+                    if (function_exists($rule)) {
                         // Native PHP functions issue warnings if you pass them more parameters than they use
                         $result = ($param !== FALSE) ? $rule($postdata, $param) : $rule($postdata);
 
-                        if ($_in_array === TRUE)
-                        {
+                        if ($_in_array === TRUE) {
                             $this->_field_data[$row['field']]['postdata'][$cycles] = is_bool($result) ? $postdata : $result;
-                        }
-                        else
-                        {
+                        } else {
                             $this->_field_data[$row['field']]['postdata'] = is_bool($result) ? $postdata : $result;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         log_message('debug', 'Unable to find validation rule: ' . $rule);
                         $result = FALSE;
                     }
-                }
-                else
-                {
+                } else {
                     $result = $this->$rule($postdata, $param);
 
-                    if ($_in_array === TRUE)
-                    {
+                    if ($_in_array === TRUE) {
                         $this->_field_data[$row['field']]['postdata'][$cycles] = is_bool($result) ? $postdata : $result;
-                    }
-                    else
-                    {
+                    } else {
                         $this->_field_data[$row['field']]['postdata'] = is_bool($result) ? $postdata : $result;
                     }
                 }
 
                 // Did the rule test negatively?  If so, grab the error.
-                if ($result === FALSE)
-                {
+                if ($result === FALSE) {
                     // Check if a custom message is defined
-                    if (isset($this->_field_data[$row['field']]['errors'][$rule]))
-                    {
+                    if (isset($this->_field_data[$row['field']]['errors'][$rule])) {
                         $line = $this->_field_data[$row['field']]['errors'][$rule];
-                    }
-                    elseif (!isset($this->_error_messages[$rule]))
-                    {
+                    } elseif (!isset($this->_error_messages[$rule])) {
                         if (FALSE === ($line = $this->CI->lang->line('form_validation_' . $rule))
                             // DEPRECATED support for non-prefixed keys
                             && FALSE === ($line = $this->CI->lang->line($rule, FALSE))
-                        )
-                        {
+                        ) {
                             $line = 'Unable to access an error message corresponding to your field name.';
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $line = $this->_error_messages[$rule];
                     }
 
                     // Is the parameter we are inserting into the error message the name
                     // of another field? If so we need to grab its "field label"
-                    if (isset($this->_field_data[$param], $this->_field_data[$param]['label']))
-                    {
+                    if (isset($this->_field_data[$param], $this->_field_data[$param]['label'])) {
                         $param = $this->_translate_fieldname($this->_field_data[$param]['label']);
                     }
 
@@ -326,15 +269,16 @@ class MY_Form_validation extends CI_Form_validation
                     $message = $this->_build_error_msg($line, $this->_translate_fieldname($row['label']), $param);
 
                     // Save the error message
-                    $this->_field_data[$row['field']]['error'][] = $message;
+                    if (is_array($this->_field_data[$row['field']]['error'])) {
+                        $this->_field_data[$row['field']]['error'][] = $message;
+                    } else {
+                        $this->_field_data[$row['field']]['error'] .= $message;
+                    }
 
                     $this->_error_array[$row['field']][] = $message;
-
                 }
             }
-        }
-        else
-        {
+        } else {
             log_message('DEBUG', 'Called parent _execute');
             parent::_execute($row, $rules, $postdata, $cycles);
         }
@@ -344,8 +288,7 @@ class MY_Form_validation extends CI_Form_validation
     {
         $param = '';
 
-        switch ($error_code)
-        {
+        switch ($error_code) {
             case UPLOAD_ERR_INI_SIZE:
                 $message = $this->CI->lang->line('error_max_filesize_phpini');
                 break;
@@ -372,7 +315,6 @@ class MY_Form_validation extends CI_Form_validation
         }
 
         return $this->_build_error_msg($message, $this->_translate_fieldname($field), $param);
-
     }
 
     /**
@@ -383,7 +325,7 @@ class MY_Form_validation extends CI_Form_validation
      */
     function set_error($msg)
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         $CI->lang->load('upload');
 
         return ($CI->lang->line($msg) == FALSE) ? $msg : $CI->lang->line($msg);
@@ -400,8 +342,7 @@ class MY_Form_validation extends CI_Form_validation
      */
     function file_required($file)
     {
-        if ($file['size'] === 0)
-        {
+        if ($file['size'] === 0) {
             return FALSE;
         }
 
@@ -421,8 +362,7 @@ class MY_Form_validation extends CI_Form_validation
     function file_size_max($file, $max_size)
     {
         $max_size_bit = $this->let_to_bit($max_size);
-        if ($file['size'] > $max_size_bit)
-        {
+        if ($file['size'] > $max_size_bit) {
             return FALSE;
         }
 
@@ -441,26 +381,22 @@ class MY_Form_validation extends CI_Form_validation
     function let_to_bit($sValue)
     {
         // Split value from name
-        if (!preg_match('/([0-9]+)([ptgmkb]{1,2}|)/ui', $sValue, $aMatches))
-        { // Invalid input
+        if (!preg_match('/([0-9]+)([ptgmkb]{1,2}|)/ui', $sValue, $aMatches)) { // Invalid input
             return FALSE;
         }
 
-        if (empty($aMatches[2]))
-        { // No name -> Enter default value
+        if (empty($aMatches[2])) { // No name -> Enter default value
             $aMatches[2] = 'KB';
         }
 
-        if (strlen($aMatches[2]) == 1)
-        { // Shorted name -> full name
+        if (strlen($aMatches[2]) == 1) { // Shorted name -> full name
             $aMatches[2] .= 'B';
         }
 
         $iBit = (substr($aMatches[2], -1) == 'B') ? 1024 : 1000;
         // Calculate bits:
 
-        switch (strtoupper(substr($aMatches[2], 0, 1)))
-        {
+        switch (strtoupper(substr($aMatches[2], 0, 1))) {
             case 'P':
                 $aMatches[1] *= $iBit;
             case 'T':
@@ -491,8 +427,7 @@ class MY_Form_validation extends CI_Form_validation
     function file_size_min($file, $min_size)
     {
         $min_size_bit = $this->let_to_bit($min_size);
-        if ($file['size'] < $min_size_bit)
-        {
+        if ($file['size'] < $min_size_bit) {
             return FALSE;
         }
 
@@ -511,8 +446,7 @@ class MY_Form_validation extends CI_Form_validation
      */
     function file_disallowed_type($file, $type)
     {
-        if ($this->file_allowed_type($file, $type) == FALSE)
-        {
+        if ($this->file_allowed_type($file, $type) == FALSE) {
             return TRUE;
         }
 
@@ -536,13 +470,10 @@ class MY_Form_validation extends CI_Form_validation
         $exts = explode(',', $type);
 
         //is $type array? run self recursively
-        if (count($exts) > 1)
-        {
-            foreach ($exts as $v)
-            {
+        if (count($exts) > 1) {
+            foreach ($exts as $v) {
                 $rc = $this->file_allowed_type($file, $v);
-                if ($rc === TRUE)
-                {
+                if ($rc === TRUE) {
                     return TRUE;
                 }
             }
@@ -559,8 +490,7 @@ class MY_Form_validation extends CI_Form_validation
         $ext_groups['document'] = array('txt', 'text', 'doc', 'docx', 'dot', 'dotx', 'word', 'rtf', 'rtx');
 
         //if there is a group type in the $type var and not a ext alone, we get it
-        if (array_key_exists($exts[0], $ext_groups))
-        {
+        if (array_key_exists($exts[0], $ext_groups)) {
             $exts = $ext_groups[$exts[0]];
         }
 
@@ -569,39 +499,28 @@ class MY_Form_validation extends CI_Form_validation
 
         //if we can use the finfo function to check the mime AND the mime
         //exists in the mime file of codeigniter...
-        if (function_exists('finfo_open') and !empty($intersection))
-        {
+        if (function_exists('finfo_open') and ! empty($intersection)) {
             $exts = array();
 
-            foreach ($intersection as $in)
-            {
-                if (is_array($in))
-                {
+            foreach ($intersection as $in) {
+                if (is_array($in)) {
                     $exts = array_merge($exts, $in);
-                }
-                else
-                {
+                } else {
                     $exts[] = $in;
                 }
             }
-			
+
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $file_type = finfo_file($finfo, $file['tmp_name']);
-
-        }
-        else
-        {
+        } else {
             //get file ext
             $file_type = strtolower(strrchr($file['name'], '.'));
             $file_type = substr($file_type, 1);
         }
 
-        if (!in_array($file_type, $exts))
-        {
+        if (!in_array($file_type, $exts)) {
             return FALSE;
-        }
-        else
-        {
+        } else {
             return TRUE;
         }
     }
@@ -621,8 +540,7 @@ class MY_Form_validation extends CI_Form_validation
         log_message('debug', 'MY_form_validation: file_image_maxdim ' . $dim);
         $dim = explode(',', $dim);
 
-        if (count($dim) !== 2)
-        {
+        if (count($dim) !== 2) {
             // Bad size given
             log_message('error', 'MY_Form_validation: invalid rule, expected similar to 150,300.');
 
@@ -636,15 +554,13 @@ class MY_Form_validation extends CI_Form_validation
 
         log_message('debug', $d[0] . ' ' . $d[1]);
 
-        if (!$d)
-        {
+        if (!$d) {
             log_message('error', 'MY_Form_validation: dimensions not detected.');
 
             return FALSE;
         }
 
-        if ($d[0] <= $dim[0] && $d[1] <= $dim[1])
-        {
+        if ($d[0] <= $dim[0] && $d[1] <= $dim[1]) {
             return TRUE;
         }
 
@@ -663,8 +579,7 @@ class MY_Form_validation extends CI_Form_validation
     function get_image_dimension($file_name)
     {
         log_message('debug', $file_name);
-        if (function_exists('getimagesize'))
-        {
+        if (function_exists('getimagesize')) {
             $D = @getimagesize($file_name);
 
             return $D;
@@ -687,8 +602,7 @@ class MY_Form_validation extends CI_Form_validation
     {
         $dim = explode(',', $dim);
 
-        if (count($dim) !== 2)
-        {
+        if (count($dim) !== 2) {
             // Bad size given
             log_message('error', 'MY_Form_validation: invalid rule, expected similar to 150,300.');
 
@@ -698,8 +612,7 @@ class MY_Form_validation extends CI_Form_validation
         //get image size
         $d = $this->get_image_dimension($file['tmp_name']);
 
-        if (!$d)
-        {
+        if (!$d) {
             log_message('error', 'MY_Form_validation: dimensions not detected.');
 
             return FALSE;
@@ -707,8 +620,7 @@ class MY_Form_validation extends CI_Form_validation
 
         log_message('debug', $d[0] . ' ' . $d[1]);
 
-        if ($d[0] >= $dim[0] && $d[1] >= $dim[1])
-        {
+        if ($d[0] >= $dim[0] && $d[1] >= $dim[1]) {
             return TRUE;
         }
 
@@ -729,8 +641,7 @@ class MY_Form_validation extends CI_Form_validation
     {
         $dim = explode(',', $dim);
 
-        if (count($dim) !== 2)
-        {
+        if (count($dim) !== 2) {
             // Bad size given
             log_message('error', 'MY_Form_validation: invalid rule, expected similar to 150,300.');
 
@@ -740,8 +651,7 @@ class MY_Form_validation extends CI_Form_validation
         //get image size
         $d = $this->get_image_dimension($file['tmp_name']);
 
-        if (!$d)
-        {
+        if (!$d) {
             log_message('error', 'MY_Form_validation: dimensions not detected.');
 
             return FALSE;
@@ -749,8 +659,7 @@ class MY_Form_validation extends CI_Form_validation
 
         log_message('debug', $d[0] . ' ' . $d[1]);
 
-        if ($d[0] == $dim[0] && $d[1] == $dim[1])
-        {
+        if ($d[0] == $dim[0] && $d[1] == $dim[1]) {
             return TRUE;
         }
 
@@ -772,12 +681,9 @@ class MY_Form_validation extends CI_Form_validation
         $list = str_replace(', ', ',', $list); // Just taking some precautions
         $list = explode(',', $list);
 
-        if (!in_array(trim($str), $list))
-        {
+        if (!in_array(trim($str), $list)) {
             return FALSE;
-        }
-        else
-        {
+        } else {
             return TRUE;
         }
     }
@@ -797,16 +703,12 @@ class MY_Form_validation extends CI_Form_validation
         $list = str_replace(', ', ',', $list); // Just taking some precautions
         $list = explode(',', $list);
 
-        if (in_array(trim($str), $list))
-        {
+        if (in_array(trim($str), $list)) {
             return FALSE;
-        }
-        else
-        {
+        } else {
             return TRUE;
         }
     }
-
 
     /**
      * Get Error Message
@@ -820,33 +722,26 @@ class MY_Form_validation extends CI_Form_validation
      */
     public function error($field, $prefix = '', $suffix = '')
     {
-        if (empty($this->_field_data[$field]['error']))
-        {
+        if (empty($this->_field_data[$field]['error'])) {
             return '';
         }
 
-        if ($prefix === '')
-        {
+        if ($prefix === '') {
             $prefix = $this->_error_prefix;
         }
 
-        if ($suffix === '')
-        {
+        if ($suffix === '') {
             $suffix = $this->_error_suffix;
         }
 
-        if (is_array($this->_field_data[$field]['error']))
-        {
+        if (is_array($this->_field_data[$field]['error'])) {
             $error_messages = implode("<br />", $this->_field_data[$field]['error']);
-        }
-        else
-        {
+        } else {
             $error_messages = $this->_field_data[$field]['error'];
         }
 
         return $prefix . $error_messages . $suffix;
     }
-
 
     /**
      * Error String
@@ -860,58 +755,40 @@ class MY_Form_validation extends CI_Form_validation
     public function error_string($prefix = '', $suffix = '')
     {
         // No errors, validation passes!
-        if (count($this->_error_array) === 0)
-        {
+        if (count($this->_error_array) === 0) {
             return '';
         }
 
-        if ($prefix === '')
-        {
+        if ($prefix === '') {
             $prefix = $this->_error_prefix;
         }
 
-        if ($suffix === '')
-        {
+        if ($suffix === '') {
             $suffix = $this->_error_suffix;
         }
 
         // Generate the error string
         $str = '';
-        foreach ($this->_error_array as $val)
-        {
-            if ($val !== '')
-            {
+        foreach ($this->_error_array as $val) {
+            if ($val !== '') {
                 //if field has more than one error, then all will be listed
-                if (is_array($val))
-                {
-                    foreach ($val as $v)
-                    {
+                if (is_array($val)) {
+                    foreach ($val as $v) {
                         $str .= $prefix . $v . $suffix . "\n";
                     }
-                }
-                else
-                {
+                } else {
                     $str .= $prefix . $val . $suffix . "\n";
                 }
-
             }
         }
 
         return $str;
     }
 
-
     public function wysiwyg_strip_tags($str)
     {
         return strip_tags($str, '<strong><b><p><ul><ol><li><a><span>');
     }
-
-
-
-
-
-
-
 
     // --------------------------------------------------------------------
 
@@ -924,27 +801,20 @@ class MY_Form_validation extends CI_Form_validation
      */
     function valid_hour($hour, $type)
     {
-        if (substr_count($hour, ':') >= 2)
-        {
+        if (substr_count($hour, ':') >= 2) {
             $has_seconds = TRUE;
-        }
-        else
-        {
+        } else {
             $has_seconds = FALSE;
         }
 
         $pattern = "/^" . (($type == '24H') ? "([1-2][0-3]|[01]?[1-9])" : "(1[0-2]|0?[1-9])") . ":([0-5]?[0-9])" . (($has_seconds) ? ":([0-5]?[0-9])" : "") . (($type == '24H') ? '' : '( AM| PM| am| pm)') . "$/";
 
-        if (preg_match($pattern, $hour))
-        {
+        if (preg_match($pattern, $hour)) {
             return TRUE;
-        }
-        else
-        {
+        } else {
             return FALSE;
         }
     }
-
 
     // Function that simulates a date_parse_from_format for PHP versions 5.2 or lower.
     // snippet of code thanks to http://stackoverflow.com/questions/6668223/php-date-parse-from-format-alternative-in-php-5-2
@@ -959,25 +829,19 @@ class MY_Form_validation extends CI_Form_validation
      * @param    string
      * @return    bool
      */
-
     public function valid_date($str, $format = NULL)
     {
-        if (is_null($format) or $format === FALSE)
-        {
+        if (is_null($format) or $format === FALSE) {
             $format = $this->_standard_date_format;
         }
 
-        if (function_exists('date_parse_from_format'))
-        {
+        if (function_exists('date_parse_from_format')) {
             $parsed = date_parse_from_format($format, $str);
-        }
-        else
-        {
+        } else {
             $parsed = $this->_date_parse_from_format($format, $str);
         }
 
-        if ($parsed['warning_count'] > 0 or $parsed['error_count'] > 0)
-        {
+        if ($parsed['warning_count'] > 0 or $parsed['error_count'] > 0) {
             return FALSE;
         }
 
@@ -1012,22 +876,15 @@ class MY_Form_validation extends CI_Form_validation
         // convert format string to regex
         $regex = '';
         $chars = str_split($format);
-        foreach ($chars AS $n => $char)
-        {
+        foreach ($chars AS $n => $char) {
             $lastChar = isset($chars[$n - 1]) ? $chars[$n - 1] : '';
             $skipCurrent = '\\' == $lastChar;
-            if (!$skipCurrent && isset($keys[$char]))
-            {
+            if (!$skipCurrent && isset($keys[$char])) {
                 $regex .= '(?P<' . $keys[$char][0] . '>' . $keys[$char][1] . ')';
-            }
-            else
-            {
-                if ('\\' == $char)
-                {
+            } else {
+                if ('\\' == $char) {
                     $regex .= $char;
-                }
-                else
-                {
+                } else {
                     $regex .= preg_quote($char);
                 }
             }
@@ -1036,26 +893,18 @@ class MY_Form_validation extends CI_Form_validation
         $dt = array();
 
         // now try to match it
-        if (preg_match('#^' . $regex . '$#', $date, $dt))
-        {
-            foreach ($dt AS $k => $v)
-            {
-                if (is_int($k))
-                {
+        if (preg_match('#^' . $regex . '$#', $date, $dt)) {
+            foreach ($dt AS $k => $v) {
+                if (is_int($k)) {
                     unset($dt[$k]);
                 }
             }
-            if (!checkdate($dt['month'], $dt['day'], $dt['year']))
-            {
+            if (!checkdate($dt['month'], $dt['day'], $dt['year'])) {
                 $dt['error_count'] = 1;
-            }
-            else
-            {
+            } else {
                 $dt['error_count'] = 0;
             }
-        }
-        else
-        {
+        } else {
             $dt['error_count'] = 1;
         }
 
@@ -1081,12 +930,10 @@ class MY_Form_validation extends CI_Form_validation
      * @param    string
      * @return    bool
      */
-
     public function valid_range_date($str, $format = NULL)
     {
 
-        if (is_null($format) or $format === FALSE)
-        {
+        if (is_null($format) or $format === FALSE) {
             $format = $this->_standard_date_format;
         }
 
@@ -1095,13 +942,11 @@ class MY_Form_validation extends CI_Form_validation
 
         $exploded = explode($separation_char, $str);
 
-        foreach ($exploded as $key => $e)
-        {
+        foreach ($exploded as $key => $e) {
             $exploded[$key] = trim($e);
         }
 
-        if (count($exploded) > 2)
-        {
+        if (count($exploded) > 2) {
             //in case we are using dates like Y-m-d and separation char is - etc...
 
             $sub_exploded = $exploded;
@@ -1111,58 +956,47 @@ class MY_Form_validation extends CI_Form_validation
 
             $vector_exploded = array();
 
-            for ($i = 0; $i < ($count_rows / 2); $i++)
-            {
+            for ($i = 0; $i < ($count_rows / 2); $i++) {
                 $vector_exploded[] = $sub_exploded[$i];
             }
 
             $exploded[0] = implode($separation_char, $vector_exploded);
             $vector_exploded = array();
 
-            for ($i = ($count_rows / 2); $i < $count_rows; $i++)
-            {
+            for ($i = ($count_rows / 2); $i < $count_rows; $i++) {
                 $vector_exploded[] = $sub_exploded[$i];
             }
 
             $exploded[1] = implode($separation_char, $vector_exploded);
-
         }
 
         $dates = array();
         $valid_dates = TRUE;
-        foreach ($exploded as $e)
-        {
-            if (function_exists('date_parse_from_format'))
-            {
+        foreach ($exploded as $e) {
+            if (function_exists('date_parse_from_format')) {
                 $parsed = date_parse_from_format($format, $e);
-            }
-            else
-            {
+            } else {
                 $parsed = $this->_date_parse_from_format($format, $e);
             }
 
 
             $dates[] = $parsed;
-            if ($parsed['warning_count'] > 0 or $parsed['error_count'] > 0)
-            {
+            if ($parsed['warning_count'] > 0 or $parsed['error_count'] > 0) {
                 $valid_dates = FALSE;
             }
         }
-        if ($valid_dates == FALSE)
-        {
+        if ($valid_dates == FALSE) {
             return FALSE;
         }
         //why use strtotime when you can get hardcore!
         if (mktime($dates[0]['hour'], $dates[0]['minute'], $dates[0]['second'], $dates[0]['month'], $dates[0]['day'], $dates[0]['year']) >
             mktime($dates[1]['hour'], $dates[1]['minute'], $dates[1]['second'], $dates[1]['month'], $dates[1]['day'], $dates[1]['year'])
-        )
-        {
+        ) {
             return FALSE;
         }
 
         return TRUE;
     }
-
 
     /**
      *
@@ -1174,15 +1008,12 @@ class MY_Form_validation extends CI_Form_validation
      */
     public function valid_geopos($coords)
     {
-        if (preg_match('/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?);[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $coords))
-        {
+        if (preg_match('/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?);[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $coords)) {
             return TRUE;
         }
 
         return FALSE;
-
     }
-
 
     /**
      * 
@@ -1196,30 +1027,30 @@ class MY_Form_validation extends CI_Form_validation
     {
         $json = json_decode($coords);
 
-        if (!empty($json))
-        {
-            foreach ($json as $pos)
-            {
-                if (!preg_match('/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?);[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $coords))
-                {
+        if (!empty($json)) {
+            foreach ($json as $pos) {
+                if (!preg_match('/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?);[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $coords)) {
                     return FALSE;
                 }
             }
 
             return TRUE;
         }
-        
+
         return FALSE;
     }
 
-	/**
-	 * Validate french zip code
-	 * @param string $zip
-	 * @return boolean
-	 */
-	public function valid_french_zip($zip) {
-		return preg_match('#^(2[ab]|0[1-9]|[1-9][0-9])[0-9]{3}$#', $zip) === 1;
-	}
+    /**
+     * Validate french zip code
+     * @param string $zip
+     * @return boolean
+     */
+    public function valid_french_zip($zip)
+    {
+        return preg_match('#^(2[ab]|0[1-9]|[1-9][0-9])[0-9]{3}$#', $zip) === 1;
+    }
+
 }
+
 /* End of file MY_form_validation.php */
 /* Location: ./application/libraries/MY_form_validation.php */

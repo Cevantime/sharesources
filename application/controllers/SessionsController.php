@@ -104,6 +104,7 @@ class SessionsController extends MY_Controller {
 		$this->load->model($sessionModel);
 		$this->load->helper('form');
 		$datas = $this->$model->getId($id,'array');
+        $datas = $datas ?: [];
 		if(isset($_POST) && isset($_POST['save-session'])) {
 			$datas = array_merge($datas,$_POST);
 			unset($_POST['save-session']);
