@@ -303,6 +303,16 @@ class CoursesController extends MY_Controller {
 		}
 	}
 
+	public function duplicate($id) {
+	    $this->checkIfUserCan('see', 'course', $id);
+	    $this->checkIfUserCan('add', 'course', '*');
+        $this->course->loadRow(['courses.id' => $id]);
+        $this->course->id = null;
+        $this->course->title .= ' (copié)';
+        $newCourseId = $this->course->save();
+        redirect('courses/edit/'.$newCourseId);
+    }
+
 	public function all() {
 		if(user_is('teacher')){
 			$courses = $this->course->getAll(user_id());

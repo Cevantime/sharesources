@@ -80,6 +80,7 @@ $route['courses/courseDetails'] = 'CoursesController/courseDetails';
 $route['courses/mines'] = 'CoursesController/mines';
 $route['courses/edit/(:num)'] = 'CoursesController/edit/$1';
 $route['courses/see/(:num)'] = 'CoursesController/see/$1';
+$route['courses/duplicate/(:num)'] = 'CoursesController/duplicate/$1';
 $route['courses/requestshare/(:num)'] = 'CoursesController/requestShare/$1';
 $route['courses/requestunshare/(:num)'] = 'CoursesController/requestUnshare/$1';
 $route['courses/delete/(:num)'] = 'CoursesController/delete/$1';
