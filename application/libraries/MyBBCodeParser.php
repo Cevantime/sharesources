@@ -62,6 +62,7 @@ class MyBBCodeParser extends BBCodeParser
 
         $CI = &get_instance();
         $CI->load->helper('latex_escape');
+        $CI->load->helper('images/image');
 
         $newstr = latex_special_chars($newstr);
 
@@ -72,8 +73,18 @@ class MyBBCodeParser extends BBCodeParser
             if ($filerealpath) {
                 $infos = getimagesize($filerealpath);
                 $maxwidth = 380;
-                $width = min(array($infos[0], $maxwidth));;
-                return '\includegraphics[width=' . $width . 'px]{' . realpath(latex_decode($matches[1])) . '}';
+                $width = min(array($infos[0], $maxwidth));
+                $pathinfo = pathinfo($filerealpath);
+                if ($pathinfo['extension'] == 'gif') {
+                    $dir = $pathinfo['dirname'];
+                    $newname = $dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.png';
+                    if (!file_exists($newname)) imagepng(imagecreatefromgif($filerealpath), $newname, 0.9);
+                    $path = $newname;
+                } else {
+                    $path = $filerealpath;
+                }
+
+                return '\includegraphics[width=' . $width . 'px]{' . $path . '}';
             } else {
                 return translate('image non trouvée');
             }
@@ -130,7 +141,7 @@ class MyBBCodeParser extends BBCodeParser
             '[imageLeft=(.*?)](.*?)[/imageLeft]' => $parseFiles,
             '[imageRight=(.*?)](.*?)[/imageRight]' => $parseFiles,
             '[video](.*?)[/video]' => function ($matches) {
-                return '\href{' . latex_decode($matches[1]) . '}';
+                return '\href{' . latex_decode("https://www.youtube.com/embed/${$matches[1]}?enablejsapi=1") . '}';
             },
             '[b](.*?)[/b]' => '\textbf{$1}',
             '[i](.*?)[/i]' => '\textit{$1}',

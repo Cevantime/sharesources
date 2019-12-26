@@ -15,14 +15,17 @@ if (!defined('BASEPATH'))
  *
  * @author thibault
  */
-class CoursesController extends MY_Controller {
+class CoursesController extends MY_Controller
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->model('course');
 	}
 
-	public function index() {
+	public function index()
+	{
 		if (teachsession()) {
 			redirect('courses/calendar');
 		}
@@ -30,7 +33,8 @@ class CoursesController extends MY_Controller {
 		redirect('courses/all');
 	}
 
-	public function calendar() {
+	public function calendar()
+	{
 		if (!teachsession()) {
 			redirect('courses/all');
 		}
@@ -39,7 +43,8 @@ class CoursesController extends MY_Controller {
 		$this->layout->view('courses/calendar');
 	}
 
-	public function calendarAjax() {
+	public function calendarAjax()
+	{
 
 		if (!teachsession() || !$this->input->is_ajax_request()) {
 			die();
@@ -81,20 +86,20 @@ class CoursesController extends MY_Controller {
 
 		$datetime->modify('+' . (7 - $lastOfMonthInWeek) . ' day');
 
-        $to = $datetime->format('U');
-        $days = $this->course->getGroupByDayForSession(teachsession('id'), $from, $to);
+		$to = $datetime->format('U');
+		$days = $this->course->getGroupByDayForSession(teachsession('id'), $from, $to);
 
-        $this->load->view('courses/includes/calendar', array(
-            'firstOfMonth' => $firstOfMonth,
-            'lastOfMonth' => $lastOfMonth,
-            'days' => $days,
-            'prevMonth' => $prevMonth,
-            'nextMonth' => $nextMonth
-        ));
-        
+		$this->load->view('courses/includes/calendar', array(
+			'firstOfMonth' => $firstOfMonth,
+			'lastOfMonth' => $lastOfMonth,
+			'days' => $days,
+			'prevMonth' => $prevMonth,
+			'nextMonth' => $nextMonth
+		));
 	}
 
-	public function courseDetails() {
+	public function courseDetails()
+	{
 		if (!teachsession()) {
 			die(translate("Impossible d'obtenir des informations sur ce cours."));
 		}
@@ -124,13 +129,15 @@ class CoursesController extends MY_Controller {
 		));
 	}
 
-	public function bootstrap($id = null, $model = 'course') {
+	public function bootstrap($id = null, $model = 'course')
+	{
 		$this->layout->title($id ? translate('Éditer un cours') : translate('Ajouter un cours'));
 		$datas = $this->doSave($id, $model, 'courses/see/{row:id}');
 		$this->layout->view('blog/forms/bo-style', array('blogpost_add_pop' => $datas, 'model_name' => pathinfo($model)['filename'], 'lang' => $this->getLang()));
 	}
 
-	private function getLang() {
+	private function getLang()
+	{
 		$lang = $this->input->post_get('lang');
 		if ($lang)
 			return $lang;
@@ -138,7 +145,8 @@ class CoursesController extends MY_Controller {
 		return locale();
 	}
 
-	public function doSave($id = null, $model = 'course', $redirect = false) {
+	public function doSave($id = null, $model = 'course', $redirect = false)
+	{
 		$this->load->model($model);
 
 		$modelName = pathinfo($model)['filename'];
@@ -148,7 +156,8 @@ class CoursesController extends MY_Controller {
 		return $ret;
 	}
 
-	private function processSave($modelInst, $id = null, $model = 'course', $redirect = false) {
+	private function processSave($modelInst, $id = null, $model = 'course', $redirect = false)
+	{
 
 		$post = $this->input->post();
 
@@ -157,7 +166,7 @@ class CoursesController extends MY_Controller {
 		} else {
 			$pop = array();
 		}
-		
+
 		if (!$post || !isset($post['save-' . strtolower(get_class($modelInst))])) {
 			return $pop;
 		}
@@ -201,7 +210,7 @@ class CoursesController extends MY_Controller {
 		if ($is_update) {
 			$new_id = $datas['id'];
 		}
-//		$this->user->allowTo('*', $model, $new_id);
+		//		$this->user->allowTo('*', $model, $new_id);
 
 		add_success(translate('Le cours a bien été ') . ($is_update ? translate('mis à jour') : translate('ajouté')));
 
@@ -219,9 +228,10 @@ class CoursesController extends MY_Controller {
 		return $datas;
 	}
 
-	public function see($id) {
+	public function see($id)
+	{
 		$course = $this->course->getId($id);
-		
+
 		if (!$course) {
 			add_error(translate('le tutoriel n\'existe pas'));
 			redirect('home');
@@ -232,7 +242,7 @@ class CoursesController extends MY_Controller {
 		$this->layout->css('assets/local/css/tutorials.css');
 
 		$format = $this->input->get('format');
-		if(in_array($format, array('pdf', 'latex'))){
+		if (in_array($format, array('pdf', 'latex'))) {
 			$this->checkIfUserCan('see_pdfs', 'course', $course);
 		} else {
 			$this->checkIfUserCan('see', 'course', $course);
@@ -255,20 +265,20 @@ class CoursesController extends MY_Controller {
 
 			$course->latex = $this->bbparser->convertToLatex($course->content_bbcode);
 			$latex = $this->layout->view('courses/seeLatex', array('course' => $course), true);
-//			echo str_replace("\n", "<br>", $latex);
-//			die();
+			// echo str_replace("\n", "<br>", $latex);
+			// die();
 			$filename = md5(time() . uniqid());
 			$this->load->helper('latex_escape');
 			$tmp = sys_get_temp_dir();
 			file_put_contents($tmp . '/' . $filename . '.tex', $latex);
-			exec("cd $tmp && pdflatex -synctex=1 -interaction=nonstopmode " . $filename . '.tex', $output);
+			exec("cd $tmp && pdflatex -shell-escape -synctex=1 -interaction=nonstopmode " . $filename . '.tex', $output);
 			// must be executed twice for toc, so don't remove below line !
-			exec("cd $tmp && pdflatex -synctex=1 -interaction=nonstopmode " . $filename . '.tex', $output);
-//			var_dump($output);
-//			foreach($output as $out) {
-//				echo $out.'<br/>';
-//			}
-//			die();
+			exec("cd $tmp && pdflatex -shell-escape -synctex=1 -interaction=nonstopmode " . $filename . '.tex', $output);
+			// var_dump($output);
+			// foreach ($output as $out) {
+			// 	echo $out . '<br/>';
+			// }
+			// die();
 			$pdffile = "$tmp/" . $filename . '.pdf';
 
 			$pdfcontent = file_get_contents($pdffile);
@@ -295,71 +305,77 @@ class CoursesController extends MY_Controller {
 
 			echo $pdfcontent;
 			exit();
-//			$this->load->helper('download');
-//			force_download($course->alias.'.pdf', $pdfcontent);
+			//			$this->load->helper('download');
+			//			force_download($course->alias.'.pdf', $pdfcontent);
 		} else {
 			$this->load->helper('filerender');
 			$this->layout->view('courses/see', array('course' => $course));
 		}
 	}
 
-	public function duplicate($id) {
-	    $this->checkIfUserCan('see', 'course', $id);
-	    $this->checkIfUserCan('add', 'course', '*');
-        $this->course->loadRow(['courses.id' => $id]);
-        $this->course->id = null;
-        $this->course->title .= ' (copié)';
-        $newCourseId = $this->course->save();
-        redirect('courses/edit/'.$newCourseId);
-    }
+	public function duplicate($id)
+	{
+		$this->checkIfUserCan('see', 'course', $id);
+		$this->checkIfUserCan('add', 'course', '*');
+		$this->course->loadRow(['courses.id' => $id]);
+		$this->course->id = null;
+		$this->course->title .= ' (copié)';
+		$newCourseId = $this->course->save();
+		redirect('courses/edit/' . $newCourseId);
+	}
 
-	public function all() {
-		if(user_is('teacher')){
+	public function all()
+	{
+		if (user_is('teacher')) {
 			$courses = $this->course->getAll(user_id());
 		} else {
 			$courses = $this->course->getSharedToSession(user_id());
 		}
-		
+
 		$this->layout->title(translate('Tous les cours'));
 		$this->layout->view('courses/all', array('courses' => $courses));
 	}
-	
-	public function allByTag($tag) {
+
+	public function allByTag($tag)
+	{
 		$this->load->model('tag');
 		$this->tag->where('alias', $tag);
 		$tag = $this->tag->getRow();
-		if(!$tag) {
+		if (!$tag) {
 			show_404();
 		}
 		$this->load->helper('filerender');
-		$this->course->where($this->tag->getTableName().'.id='.$tag->id);
+		$this->course->where($this->tag->getTableName() . '.id=' . $tag->id);
 		$courses = $this->course->getListWithCategoriesTagsFilesAndShares();
-		$this->layout->title(translate('Tous les cours associés au Tag "'.$tag->label.'"'));
+		$this->layout->title(translate('Tous les cours associés au Tag "' . $tag->label . '"'));
 		$this->layout->view('courses/all', array('courses' => $courses));
 	}
 
-	public function mines() {
+	public function mines()
+	{
 		if (user_is('users')) {
 			redirect('courses/all');
 		}
-		
+
 		$courses = $this->course->getMines(user_id());
 		$this->layout->title(translate('Mes cours'));
 		$this->layout->view('courses/all', array('courses' => $courses));
 	}
 
-	public function edit($id, $model = 'course') {
+	public function edit($id, $model = 'course')
+	{
 		$this->checkIfUserCan('update', 'course', $id);
 		$datas = $this->doSave($id, $model, 'courses/see/{row:id}');
 		$this->layout->title(translate('Edition du cours : ' . $datas['title']));
 		$this->layout->view('blog/forms/bo-style', array('blogpost_add_pop' => $datas, 'model_name' => pathinfo($model)['filename'], 'lang' => $this->getLang()));
 	}
 
-	public function delete($id = null) {
+	public function delete($id = null)
+	{
 		$this->checkIfUserCan('delete', 'course', $id);
 		$this->load->model('course');
 		$course = $this->course->getId($id);
-		add_success(translate('Le cours ').$course->title.translate(' a bien été supprimé'));
+		add_success(translate('Le cours ') . $course->title . translate(' a bien été supprimé'));
 		$this->course->deleteId($id);
 		if ($this->input->get('redirect')) {
 			redirect($this->input->get('redirect'));
@@ -367,51 +383,57 @@ class CoursesController extends MY_Controller {
 		redirect('home');
 	}
 
-	public function requestShare($courseId) {
+	public function requestShare($courseId)
+	{
 
 		$this->processShare($courseId);
 	}
 
-	public function requestUnshare($courseId) {
+	public function requestUnshare($courseId)
+	{
 		$this->processShare($courseId, false);
 	}
-	
-	private function processShare($courseId, $share = true) {
-		if( ! $this->input->is_ajax_request()
-			|| ! user_can('grab', 'teachsession', $courseId)) {
+
+	private function processShare($courseId, $share = true)
+	{
+		if (
+			!$this->input->is_ajax_request()
+			|| !user_can('grab', 'teachsession', $courseId)
+		) {
 			show_404();
 			return;
 		}
-		
+
 		$this->load->model('teachsession');
-		
+
 		$course = $this->course->getId($courseId);
-		
-		if(! $course) {
+
+		if (!$course) {
 			$status = 'failed';
 			$html = translate('Erreur');
 		} else {
-			if($share) {
+			if ($share) {
 				$this->course->shareWithSession(teachsession('id'), $courseId);
 			} else {
 				$this->course->unshareWithSession(teachsession('id'), $courseId);
 			}
 			$status = 'ok';
-			$html = $this->load->view('courses/includes/course-actions',
+			$html = $this->load->view(
+				'courses/includes/course-actions',
 				array(
 					'course' => $course,
 					'teachsession' => teachsession()
 				),
 				true
 			);
-			
 		}
-		
-		
-		die(json_encode(array('status'=>$status, 'html'=> $html)));
+
+
+		die(json_encode(array('status' => $status, 'html' => $html)));
 	}
 
-	public function changeDateShare() {
+	public function changeDateShare()
+	{
 
 		if (!$this->input->is_ajax_request() || !teachsession() || !user_can('share_to_teachsession', 'course', $this->input->post('course-id'))) {
 			show_404();
@@ -422,58 +444,61 @@ class CoursesController extends MY_Controller {
 		$courseId = $this->input->post('course-id');
 
 		$datetime = DateTime::createFromFormat('d/m/Y', $date);
-		
-		if( ! $datetime) {
-			return ;
+
+		if (!$datetime) {
+			return;
 		}
- 		
+
 		$date = $datetime->format('U');
 
 		$this->load->model('sharecourseteachsession');
 		$share = $this->sharecourseteachsession->getRow(array('course_id' => $courseId, 'teach_session_id' => teachsession('id')));
 		$this->sharecourseteachsession->update(
-				array('date' => $date), array('course_id' => $share->course_id, 'teach_session_id' => teachsession('id')
-		));
+			array('date' => $date),
+			array(
+				'course_id' => $share->course_id, 'teach_session_id' => teachsession('id')
+			)
+		);
 	}
-	
-	public function sendMsg($idCourse = null) {
-		if( ! user_can('see','course', $idCourse)) {
+
+	public function sendMsg($idCourse = null)
+	{
+		if (!user_can('see', 'course', $idCourse)) {
 			add_error(translate('Vous ne pouvez pas envoyer de message à l\'auteur de ce cours'));
-		} else if(!empty($_POST)) {
+		} else if (!empty($_POST)) {
 			$this->load->model('message');
-			if($this->message->fromPost()) {
+			if ($this->message->fromPost()) {
 				add_success(translate('Votre message a bien été ajouté'));
 			} else {
 				add_error($this->message->getLastErrorsString());
 			}
-			
 		} else {
 			add_error('Requête invalide');
 		}
-		if($idCourse) {
-			redirect('courses/see/'.$idCourse);
+		if ($idCourse) {
+			redirect('courses/see/' . $idCourse);
 		} else {
 			redirect('home');
 		}
 	}
-	
-	public function search() {
-		
-//		if(!$this->input->is_ajax_request()) {
-//			show_404();
-//		}
+
+	public function search()
+	{
+
+		//		if(!$this->input->is_ajax_request()) {
+		//			show_404();
+		//		}
 		$this->output->enable_profiler(false);
 		$search = $this->input->get('q');
 		$this->load->model('course');
-		if(!$search) {
+		if (!$search) {
 			$foundCourses = $this->course->getList();
 		} else {
-			$foundCourses = $this->course->search(null, null,$search, array('title'));
+			$foundCourses = $this->course->search(null, null, $search, array('title'));
 		}
-		if(!$foundCourses) {
+		if (!$foundCourses) {
 			$foundCourses = array();
 		}
-		die( json_encode(array('datas' => $foundCourses)) );
+		die(json_encode(array('datas' => $foundCourses)));
 	}
-
 }

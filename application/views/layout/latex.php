@@ -1,7 +1,7 @@
 \documentclass[hidelinks,12pt]{article}
 
 \usepackage[french]{babel}
-\usepackage[utf8]{inputenc}  
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath}
