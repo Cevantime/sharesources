@@ -34,7 +34,7 @@ var codeModal = function (command, opt, queryState) {
 		'c#',
 		'sql',
 		'javascript'
-	]
+	];
 	var form = '<form id="wysibb-code-form">\n\
 		<div class="row"><label>Language :</label><select name="language">';
 	for (var i = 0; i < languages.length; i++) {

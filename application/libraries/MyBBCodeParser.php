@@ -47,6 +47,10 @@ class MyBBCodeParser extends BBCodeParser
         $builder = new JBBCode\CodeDefinitionBuilder('p', '<p id="{option}">{param}</p>');
         $builder->setUseOption(true);
         $this->addCodeDefinition($builder->build());
+
+        $this->getCode('video')->setReplacementText('<iframe type="text/html" \n\
+        width="560" height="315" src="https://www.youtube.com/embed/{param}?enablejsapi=1" \n\
+        frameborder="0" allowfullscreen></iframe>');
     }
 
     public function convertToLatex($str)
@@ -56,20 +60,19 @@ class MyBBCodeParser extends BBCodeParser
         $newstr = $str;
         $newstr = $this->clean($newstr);
 
-        $CI = & get_instance();
+        $CI = &get_instance();
         $CI->load->helper('latex_escape');
 
         $newstr = latex_special_chars($newstr);
 
         $baseUrl = base_url();
 
-        $parseFiles = function($matches) {
+        $parseFiles = function ($matches) {
             $filerealpath = realpath(latex_decode($matches[1]));
             if ($filerealpath) {
                 $infos = getimagesize($filerealpath);
                 $maxwidth = 380;
-                $width = min(array($infos[0], $maxwidth));
-                ;
+                $width = min(array($infos[0], $maxwidth));;
                 return '\includegraphics[width=' . $width . 'px]{' . realpath(latex_decode($matches[1])) . '}';
             } else {
                 return translate('image non trouvée');
@@ -82,16 +85,16 @@ class MyBBCodeParser extends BBCodeParser
             '[h3](.*?)[/h3]' => '\subsection{$1}' . "\n",
             '[h4](.*?)[/h4]' => '\subsubsection{$1}' . "\n",
             '[p](.*?)[/p]' => '\paragraph{}' . "\n" . '$1',
-            '[code](.*?)[/code]' => function($matches) {
+            '[code](.*?)[/code]' => function ($matches) {
                 return "\begin{lstlisting}\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
             },
-            '[code=(.*?)](.*?)[/code]' => function($matches) {
+            '[code=(.*?)](.*?)[/code]' => function ($matches) {
                 return '\lstset{language=' . $matches[1] . '}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
             },
-            '[inlineCode](.*?)[/inlineCode]' => function($matches) {
+            '[inlineCode](.*?)[/inlineCode]' => function ($matches) {
                 return "\n\begin{lstlisting}\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
             },
-            '[inlineCode=(.*?)](.*?)[/inlineCode]' => function($matches) {
+            '[inlineCode=(.*?)](.*?)[/inlineCode]' => function ($matches) {
                 return "\n" . '\lstset{language=' . $matches[1] . '}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
             },
             '[list](.*?)[/list]' => '\begin{itemize}' . "\n" . '$1' . "\n" . '\end{itemize}',
@@ -100,10 +103,10 @@ class MyBBCodeParser extends BBCodeParser
             '[ol](.*?)[/ol]' => '\begin{enumerate}' . "\n" . '$1' . "\n" . '\end{enumerate}',
             '[\*](.*?)[/\*]' => '\item $1' . "\n",
             '[li](.*?)[/li]' => '\item $1' . "\n",
-            '[sectioncode](.*?)[/sectioncode]' => function($matches) {
+            '[sectioncode](.*?)[/sectioncode]' => function ($matches) {
                 return '\begin{lstlisting}' . "\n" . latex_decode($matches[1]) . "\n" . '\end{lstlisting}';
             },
-            '[sectioncode=(.*)](.*?)[/sectioncode]' => function($matches) {
+            '[sectioncode=(.*)](.*?)[/sectioncode]' => function ($matches) {
                 return '\lstset{language=' . $matches[1] . '}' . "\n" . '\begin{lstlisting}' . "\n" . latex_decode($matches[2]) . "\n" . '\end{lstlisting}';
             },
             '[legend](.*?)[/legend]' => '\paragraph{}' . "\n" . '$1',
@@ -113,20 +116,20 @@ class MyBBCodeParser extends BBCodeParser
             '[left](.*?)[/left]' => '\paragraph{}' . "\n" . '$1',
             '[center](.*?)[/center]' => '\paragraph{}' . "\n" . '$1',
             '[leftedcode](.*?)[/leftedcode]' => '\paragraph{}' . "\n" . '$1',
-            '[a=(.*?)](.*?)[/a]' => function($matches) {
+            '[a=(.*?)](.*?)[/a]' => function ($matches) {
                 return '\href{' . latex_decode($matches[1]) . '}{' . $matches[2] . '}';
             },
-            '[url=(.*?)](.*?)[/url]' => function($matches) {
+            '[url=(.*?)](.*?)[/url]' => function ($matches) {
                 return '\href{' . latex_decode($matches[1]) . '}{' . $matches[2] . '}';
             },
-            '[course=(.*?)](.*?)[/course]' => function($matches) use ($baseUrl) {
+            '[course=(.*?)](.*?)[/course]' => function ($matches) use ($baseUrl) {
                 return '\href{' . latex_decode($baseUrl . 'courses/see/' . $matches[1]) . '?format=latex}{' . $matches[2] . '}';
             },
             '[file=(.*?)](.*?)[/file]' => $parseFiles,
             '[image=(.*?)](.*?)[/image]' => $parseFiles,
             '[imageLeft=(.*?)](.*?)[/imageLeft]' => $parseFiles,
             '[imageRight=(.*?)](.*?)[/imageRight]' => $parseFiles,
-            '[video](.*?)[/video]' => function($matches) {
+            '[video](.*?)[/video]' => function ($matches) {
                 return '\href{' . latex_decode($matches[1]) . '}';
             },
             '[b](.*?)[/b]' => '\textbf{$1}',
@@ -135,7 +138,7 @@ class MyBBCodeParser extends BBCodeParser
             '[h6](.*?)[/h6]' => '\paragraph{}' . "\n" . '\textbf{$1}' . "\n",
             '[keynotion](.*?)[/keynotion]' => '\paragraph{}' . "\n" . '$1' . "\n",
             '[warning](.*?)[/warning]' => '\paragraph{}' . "\n" . '$1' . "\n",
-            '[table](.*?)[/table]' => function($matches) {
+            '[table](.*?)[/table]' => function ($matches) {
                 $content = $matches[1];
                 $nbTr = substr_count($content, '[tr]');
                 $nbTd = substr_count($content, '[td]');
@@ -193,7 +196,7 @@ class MyBBCodeParser extends BBCodeParser
 
         $tagList = array_merge($brTagList, $strictTagList, $respectTag);
 
-        usort($tagList, function($t1, $t2) {
+        usort($tagList, function ($t1, $t2) {
             return strlen($t1) < strlen($t2);
         });
 
@@ -219,7 +222,7 @@ class MyBBCodeParser extends BBCodeParser
                 $substring = substr($substring, $endPos + 1);
                 $paragraphing = false;
             } else if (!$paragraphing && empty($nodeStack)) {
-                if($c != ' ') {
+                if ($c != ' ') {
                     $out .= '[p]';
                     $paragraphing = true;
                 } else {
@@ -296,19 +299,19 @@ class MyBBCodeParser extends BBCodeParser
         $structureTagPos = array_search($tagName, $this->structureTags);
 
         $this->incSectionNumbers($this->numbers, $structureTagPos !== FALSE ? $structureTagPos : count($this->structureTags));
-        
+
         $elementNode->setAttribute('id', $this->buildSectionName($this->numbers));
 
-//        foreach ($elementNode->childNodes as $child) {
-//            if ($child instanceof DOMElement) {
-//                $this->visitElementNode($child);
-//            }
-//        }
+        //        foreach ($elementNode->childNodes as $child) {
+        //            if ($child instanceof DOMElement) {
+        //                $this->visitElementNode($child);
+        //            }
+        //        }
     }
 
     private function incSectionNumbers(&$numbers, $index)
     {
-        $numbers[$index] ++;
+        $numbers[$index]++;
         for ($i = $index + 1; $i < count($numbers); $i++) {
             $numbers[$i] = 0;
         }
@@ -316,7 +319,7 @@ class MyBBCodeParser extends BBCodeParser
 
     private function buildSectionName($numbers)
     {
-        return 'link-'.implode('-',$numbers);
+        return 'link-' . implode('-', $numbers);
     }
 
     public function isMatchingTag($str, &$tagList)
@@ -332,7 +335,4 @@ class MyBBCodeParser extends BBCodeParser
 
         return false;
     }
-
 }
-
-?>

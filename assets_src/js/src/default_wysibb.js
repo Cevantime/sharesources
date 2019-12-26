@@ -408,7 +408,12 @@ var wbbOpt = {
             transform: {
                 '<div class="info info-warning"><i class="fa fa-exclamation-triangle main"></i>{SELTEXT}</div>': '[warning]{SELTEXT}[/warning]'
             }
-        }
+        },
+        video: {
+            transform: {
+                '<iframe src="https://www.youtube.com/embed/{SRC}" width="640" height="480" frameborder="0"></iframe>':'[video]{SRC}[/video]'
+            }
+        },
 
     }
 }
